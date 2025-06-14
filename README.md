@@ -93,6 +93,11 @@ Este documento descreve a análise, projeto e instruções de implementação de
    mvn javadoc:javadoc
    open backend/target/site/apidocs/index.html
    ```
-
+/src
+ ├── model/           → Classes de domínio (Produto, Pedido, Estoque, etc.)
+ ├── service/         → Regras de negócio (TotemService, PagamentoService, etc.)
+ ├── admin/           → Área administrativa (gestão de estoque, relatórios)
+ ├── ui/              → Interface gráfica (JFrames, painéis, botões, etc.)
+ └── util/            → Utilitários (formatação, datas, geração de relatórios)
 ---
 
