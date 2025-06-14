@@ -1,0 +1,13 @@
+package com.cantinasa.cantinasa;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CantinasaApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CantinasaApplication.class, args);
+	}
+
+}
