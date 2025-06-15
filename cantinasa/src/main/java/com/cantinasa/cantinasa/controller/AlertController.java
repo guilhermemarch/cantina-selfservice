@@ -1,8 +1,4 @@
 package com.cantinasa.cantinasa.controller;
 
-
-
-public class UsuarioController {
-
-
+public class AlertController {
 }

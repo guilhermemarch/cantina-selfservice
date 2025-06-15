@@ -1,45 +1,42 @@
 package com.cantinasa.cantinasa.model;
 
-import com.cantinasa.cantinasa.model.enums.status;
+import com.cantinasa.cantinasa.model.enums.tipoPagamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "pedidos")
+@Table(name = "pagamentos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pedido {
+public class Pagamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPedido;
+    private Long idPagamento;
 
-    @NotNull(message = "Data e hora é preciso")
-    @Column(name = "data_hora", nullable = false)
-    private LocalDateTime data_hora;
-
-    @NotNull(message = "Status nao pode ser nulo")
+    @NotNull(message = "Tipo de pagamento nao pode ser nulo")
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_pagamento", nullable = false)
+    private tipoPagamento tipoPagamento;
+
+    @NotNull(message = "Valor nao pode ser nulo")
+    @Positive(message = "Valor precisa ser positivo")
     @Column(nullable = false)
-    private status status;
+    private double valor;
+
+    @Column
+    private Double troco;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "produto_id", nullable = false)
-    private Produto produto;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
-
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<Pagamento> pagamentos;
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -51,9 +48,6 @@ public class Pedido {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-        if (data_hora == null) {
-            data_hora = LocalDateTime.now();
-        }
     }
 
     @PreUpdate
