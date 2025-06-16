@@ -2,12 +2,17 @@ package com.cantinasa.cantinasa.controller;
 
 
 import com.cantinasa.cantinasa.model.dto.ProdutoDTO;
+import com.cantinasa.cantinasa.service.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("/cantina/produtos")
 public class ProdutoController {
 
+
+    @Autowired
+    private ProdutoService PRODUTOSERVICE;
 
 
     //    precisa ser admin aq
@@ -16,7 +21,9 @@ public class ProdutoController {
 
         // Lógica para cadastrar um novo produto
 
-        return ResponseEntity.ok(new ProdutoDTO());
+        PRODUTOSERVICE.cadastrarProduto();
+
+        return ResponseEntity.ok();
     }
 
     @GetMapping("/produtos")
