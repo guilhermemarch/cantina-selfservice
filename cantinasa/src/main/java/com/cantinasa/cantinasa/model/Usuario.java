@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Usuario {
 
     @Id
@@ -59,5 +57,84 @@ public class Usuario {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public role getRole() {
+        return role;
+    }
+
+    public void setRole(role role) {
+        this.role = role;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Usuario(Long idUsuario, String username, String email, String password, role role, List<Pedido> pedidos, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.idUsuario = idUsuario;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.pedidos = pedidos;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Usuario() {
     }
 }

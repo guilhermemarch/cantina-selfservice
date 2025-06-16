@@ -12,9 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pagamentos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Pagamento {
 
     @Id
@@ -53,5 +51,74 @@ public class Pagamento {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public Long getIdPagamento() {
+        return idPagamento;
+    }
+
+    public void setIdPagamento(Long idPagamento) {
+        this.idPagamento = idPagamento;
+    }
+
+    public tipoPagamento getTipoPagamento() {
+        return tipoPagamento;
+    }
+
+    public void setTipoPagamento(tipoPagamento tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public Double getTroco() {
+        return troco;
+    }
+
+    public void setTroco(Double troco) {
+        this.troco = troco;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Pagamento(Long idPagamento, tipoPagamento tipoPagamento, double valor, Double troco, Pedido pedido, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.idPagamento = idPagamento;
+        this.tipoPagamento = tipoPagamento;
+        this.valor = valor;
+        this.troco = troco;
+        this.pedido = pedido;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Pagamento() {
     }
 }

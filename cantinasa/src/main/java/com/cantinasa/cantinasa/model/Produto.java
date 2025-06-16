@@ -16,9 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "produtos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Produto {
 
     @Id
@@ -54,7 +52,7 @@ public class Produto {
     private categoria categoria;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<Pedido> pedidos;
+    private List<Item_pedido> itens;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -71,5 +69,89 @@ public class Produto {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+
+    public Long getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public int getQuantidade_estoque() {
+        return quantidade_estoque;
+    }
+
+    public void setQuantidade_estoque(int quantidade_estoque) {
+        this.quantidade_estoque = quantidade_estoque;
+    }
+
+    public int getEstoque_minimo() {
+        return estoque_minimo;
+    }
+
+    public void setEstoque_minimo(int estoque_minimo) {
+        this.estoque_minimo = estoque_minimo;
+    }
+
+    public LocalDate getValidade() {
+        return validade;
+    }
+
+    public void setValidade(LocalDate validade) {
+        this.validade = validade;
+    }
+
+    public categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<Item_pedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Item_pedido> itens) {
+        this.itens = itens;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Produto() {
     }
 }
