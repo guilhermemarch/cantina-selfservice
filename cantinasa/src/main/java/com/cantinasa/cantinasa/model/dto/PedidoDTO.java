@@ -9,9 +9,7 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class PedidoDTO {
     private Long idPedido;
 
@@ -26,4 +24,64 @@ public class PedidoDTO {
 
     private List<ItemPedidoDTO> itens;
     private List<PagamentoDTO> pagamentos;
+
+    public Long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public LocalDateTime getData_hora() {
+        return data_hora;
+    }
+
+    public void setData_hora(LocalDateTime data_hora) {
+        this.data_hora = data_hora;
+    }
+
+    public status getStatus() {
+        return status;
+    }
+
+    public void setStatus(status status) {
+        this.status = status;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public List<ItemPedidoDTO> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedidoDTO> itens) {
+        this.itens = itens;
+    }
+
+    public List<PagamentoDTO> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<PagamentoDTO> pagamentos) {
+        this.pagamentos = pagamentos;
+    }
+
+    public PedidoDTO() {
+    }
+
+    public PedidoDTO(Long idPedido, LocalDateTime data_hora, status status, Long usuarioId, List<ItemPedidoDTO> itens, List<PagamentoDTO> pagamentos) {
+        this.idPedido = idPedido;
+        this.data_hora = data_hora;
+        this.status = status;
+        this.usuarioId = usuarioId;
+        this.itens = itens;
+        this.pagamentos = pagamentos;
+    }
 }
