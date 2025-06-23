@@ -77,15 +77,15 @@ Este documento descreve a análise, projeto e instruções de implementação de
 
 2. **Clone e Build**
    ```bash
-   git clone https://github.com/<user>/cantina-kiosk.git
-   cd cantina-kiosk
+   git clone https://github.com/guilhermemarch/cantinasa.git
+   cd cantinasa
    mvn clean package -DskipTests
    ```
 
 3. **Execução**
    ```bash
-   java -jar backend/target/kiosk-api.jar
-   java -jar desktop/target/kiosk-ui.jar
+   java -jar backend/target/cantinasa-api.jar
+   java -jar desktop/target/cantinasa-ui.jar
    ```
 
 4. **Gerar Javadoc**
