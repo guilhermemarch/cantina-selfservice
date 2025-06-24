@@ -35,6 +35,7 @@ public class UIStyles {
             SHADOW_RADIUS, SHADOW_SPREAD, 0, 0);
         card.setEffect(shadow);
         
+        // Add hover effect
         card.setOnMouseEntered(e -> {
             FadeTransition ft = new FadeTransition(Duration.millis(200), card);
             ft.setFromValue(1.0);
@@ -59,6 +60,7 @@ public class UIStyles {
         button.setPadding(new javafx.geometry.Insets(UIConfig.BUTTON_PADDING));
         button.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         
+        // Add hover effect
         button.setOnMouseEntered(e -> {
             button.setBackground(new Background(new BackgroundFill(
                 UIConfig.PRIMARY_COLOR.brighter(), new CornerRadii(8), null)));
@@ -78,6 +80,7 @@ public class UIStyles {
         textField.setPadding(new javafx.geometry.Insets(10));
         textField.setStyle("-fx-font-size: 14px;");
         
+        // Add focus effect
         textField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 textField.setBorder(new Border(new BorderStroke(UIConfig.PRIMARY_COLOR, 
@@ -96,6 +99,7 @@ public class UIStyles {
             BorderStrokeStyle.SOLID, new CornerRadii(8), new BorderWidths(1))));
         comboBox.setStyle("-fx-font-size: 14px; -fx-padding: 5px;");
         
+        // Add focus effect
         comboBox.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 comboBox.setBorder(new Border(new BorderStroke(UIConfig.PRIMARY_COLOR, 
@@ -113,6 +117,7 @@ public class UIStyles {
             BorderStrokeStyle.SOLID, new CornerRadii(8), new BorderWidths(1))));
         tableView.setStyle("-fx-font-size: 14px;");
         
+        // Style the header
         tableView.lookup(".column-header").setStyle(
             "-fx-background-color: " + toRGBCode(UIConfig.PRIMARY_COLOR) + "; " +
             "-fx-text-fill: white; " +
@@ -133,6 +138,7 @@ public class UIStyles {
             "-fx-font-weight: bold;"
         );
         
+        // Add hover effect
         tab.getContent().setOnMouseEntered(e -> {
             tab.setStyle(
                 "-fx-background-color: " + toRGBCode(Color.rgb(
@@ -161,11 +167,13 @@ public class UIStyles {
         dialogPane.setBorder(new Border(new BorderStroke(UIConfig.BORDER_COLOR, 
             BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(1))));
         
+        // Style the header
         dialogPane.lookup(".header-panel").setStyle(
             "-fx-background-color: " + toRGBCode(UIConfig.PRIMARY_COLOR) + "; " +
             "-fx-text-fill: white;"
         );
         
+        // Style the buttons
         for (ButtonType buttonType : alert.getButtonTypes()) {
             Node button = dialogPane.lookupButton(buttonType);
             button.setStyle(
@@ -184,6 +192,7 @@ public class UIStyles {
             "-fx-background-radius: 10px;"
         );
         
+        // Add loading animation
         FadeTransition ft = new FadeTransition(Duration.millis(1000), node);
         ft.setFromValue(0.5);
         ft.setToValue(1.0);

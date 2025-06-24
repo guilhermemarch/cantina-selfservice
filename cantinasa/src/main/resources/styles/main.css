@@ -1,12 +1,15 @@
+/* Clean & Modern JavaFX Theme */
 
+/* ===== Global ===== */
 .root {
     -fx-font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    -fx-background-color: #f4f6f8;
+    -fx-background-color: #f4f6f8; /* light neutral */
     -fx-text-fill: #333333;
 }
 
+/* ===== Header ===== */
 .header {
-    -fx-background-color: linear-gradient(to right, #1976d2, #42a5f5);
+    -fx-background-color: linear-gradient(to right, #1976d2, #42a5f5); /* brand gradient */
     -fx-padding: 12px 24px;
     -fx-alignment: center-left;
     -fx-spacing: 12px;
@@ -19,8 +22,9 @@
     -fx-font-weight: 600;
 }
 
+/* ===== Buttons ===== */
 .button, .admin-button, .back-button, .welcome-button {
-    -fx-background-color: #1976d2;
+    -fx-background-color: #1976d2; /* primary */
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
@@ -29,7 +33,7 @@
 }
 
 .button:hover, .admin-button:hover, .back-button:hover, .welcome-button:hover {
-    -fx-background-color: #1565c0;
+    -fx-background-color: #1565c0; /* darker on hover */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 6, 0, 0, 1);
     -fx-cursor: hand;
 }
@@ -45,18 +49,20 @@
 }
 
 .back-button {
-    -fx-background-color: #90a4ae;
+    -fx-background-color: #90a4ae; /* muted slate */
 }
 .back-button:hover {
     -fx-background-color: #78909c;
 }
 
+/* ===== Content Area ===== */
 .content-area {
     -fx-padding: 24px;
     -fx-background-color: #ffffff;
     -fx-background-radius: 8px;
 }
 
+/* ===== TextField ===== */
 .text-field {
     -fx-padding: 12px;
     -fx-background-radius: 6px;
@@ -69,6 +75,7 @@
     -fx-effect: dropshadow(gaussian, rgba(25,118,210,0.18), 6, 0, 0, 1);
 }
 
+/* ===== TableView ===== */
 .table-view {
     -fx-background-color: #ffffff;
     -fx-border-color: #d0d5da;
@@ -90,6 +97,7 @@
     -fx-text-fill: white;
 }
 
+/* ===== Product Card ===== */
 .product-card {
     -fx-background-color: #ffffff;
     -fx-padding: 16px;
@@ -103,6 +111,7 @@
     -fx-cursor: hand;
 }
 
+/* ===== Labels ===== */
 .total-label {
     -fx-font-size: 20px;
     -fx-font-weight: 700;
@@ -117,6 +126,7 @@
     -fx-font-weight: 600;
 }
 
+/* ===== Welcome Screen ===== */
 .welcome-screen {
     -fx-background-color: #ffffff;
     -fx-padding: 48px;
@@ -127,6 +137,7 @@
     -fx-text-fill: #333333;
 }
 
+/* ===== ScrollPane ===== */
 .scroll-pane {
     -fx-background-color: transparent;
 }
@@ -145,6 +156,7 @@
     -fx-background-color: #9aa0a6;
 }
 
+/* ===== TabPane ===== */
 .tab-pane {
     -fx-background-color: transparent;
 }
@@ -169,6 +181,7 @@
     -fx-text-fill: #1976d2;
 }
 
+/* ===== Alert Dialog ===== */
 .alert {
     -fx-background-color: #ffffff;
     -fx-background-radius: 8px;

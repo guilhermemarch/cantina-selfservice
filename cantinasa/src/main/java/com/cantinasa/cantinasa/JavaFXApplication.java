@@ -19,7 +19,7 @@ public class JavaFXApplication extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/styles/main.css").toExternalForm());
         
-        primaryStage.setTitle("Cantina - Sistema de Autoatendimento");
+        primaryStage.setTitle("CantinaSA - Sistema de Autoatendimento");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();

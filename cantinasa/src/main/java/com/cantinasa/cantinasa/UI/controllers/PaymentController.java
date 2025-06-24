@@ -209,6 +209,7 @@ public class PaymentController {
         }
 
         try {
+            // 1. Monta o JSON dos itens
             StringBuilder itensJson = new StringBuilder();
             ObservableList<Item_pedido> cartItems = cartController.getCartItems();
             for (int i = 0; i < cartItems.size(); i++) {
@@ -226,7 +227,7 @@ public class PaymentController {
             String pedidoJson = String.format("{"
                             + "\"dataHora\":\"%s\","
                             + "\"status\":\"PENDENTE\","
-                            + "\"usuarioId\":1,"
+                            + "\"usuarioId\":1," // TODO: Usar usuário logado
                             + "\"itens\":[%s],"
                             + "\"pagamento\":%s"
                             + "}",
@@ -235,6 +236,7 @@ public class PaymentController {
                     pagamentoJson
             );
 
+            // 4. Envia para o endpoint
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -244,7 +246,7 @@ public class PaymentController {
             restTemplate.postForEntity(url, entity, String.class);
 
             showAlert("Pagamento realizado", "O pagamento foi processado com sucesso!");
-            MainController.getInstance().loadView("receipt");
+            MainController.getInstance().loadView("receipt"); // ou uma tela de sucesso
 
         } catch (Exception e) {
             showAlert("Erro no pagamento", "Ocorreu um erro ao processar o pagamento: " + e.getMessage());
