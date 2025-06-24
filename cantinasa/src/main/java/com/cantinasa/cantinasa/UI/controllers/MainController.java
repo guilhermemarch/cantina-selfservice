@@ -47,9 +47,8 @@ public class MainController {
     public void initialize() {
         instance = this;
 
-        // ✅ Garante que o carrinho é carregado antes da navegação normal
-        loadView("shopping-cart");         // Instancia o controller do carrinho
-        loadView("welcome");               // Vai para a tela inicial
+        loadView("shopping-cart");
+        loadView("welcome");
     }
 
     @FXML
@@ -72,7 +71,6 @@ public class MainController {
                     loader.setControllerFactory(CantinasaApplication.getSpringContext()::getBean);
                     Parent view = loader.load();
 
-                    // ✅ Salva a instância do carrinho se for essa a view
                     if ("shopping-cart".equals(viewName)) {
                         shoppingCartController = loader.getController();
                     }

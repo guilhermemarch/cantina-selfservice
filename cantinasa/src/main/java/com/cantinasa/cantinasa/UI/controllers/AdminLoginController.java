@@ -41,10 +41,8 @@ public class AdminLoginController {
             Usuario usuario = usuarioService.autenticar(username, password);
 
             if (usuario != null && usuario.getRole() == role.ADMIN) {
-                // ✅ Inicializa o carrinho (mesmo se o admin não for usar, evita erros)
                 MainController.getInstance().loadView("shopping-cart");
 
-                // ✅ Redireciona para o painel administrativo
                 MainController.getInstance().loadView("admin-dashboard");
             } else {
                 showError("Acesso restrito: apenas administradores podem acessar este painel.");
