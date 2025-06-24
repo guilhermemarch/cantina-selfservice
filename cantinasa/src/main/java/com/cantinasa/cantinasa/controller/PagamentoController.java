@@ -1,11 +1,44 @@
 package com.cantinasa.cantinasa.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.cantinasa.cantinasa.model.Pagamento;
+import com.cantinasa.cantinasa.service.PagamentoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/pagamentos")
 public class PagamentoController {
 
-//    POST	/pagamentos	Processa pagamento (dinheiro, cartão, PIX)
-//    GET	/pagamentos/status/{id}	Verifica status de pagamento
+    @Autowired
+    private PagamentoService pagamentoService;
 
+
+    @PostMapping("/processar")
+    public ResponseEntity<Pagamento> processarPagamento(@RequestBody Pagamento pagamento) {
+        try {
+            return ResponseEntity.ok(pagamentoService.processarPagamento(pagamento));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/status/{id}")
+    public ResponseEntity<String> verificarStatus(@PathVariable Long id) {
+        try {
+            Pagamento pagamento = pagamentoService.verificarStatus(id);
+            return ResponseEntity.ok(pagamento.getStatus().toString());
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/cancelar")
+    public ResponseEntity<Pagamento> cancelarPagamento(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(pagamentoService.cancelarPagamento(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
