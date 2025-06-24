@@ -21,7 +21,7 @@ public class RelatoriosController {
 
     @GetMapping("/estoque-baixo")
     public ResponseEntity<List<Produto>> produtosEstoqueBaixo(
-            @RequestParam(defaultValue = "10") int limiteMinimo) {
+            @RequestParam(defaultValue = "5") int limiteMinimo) {
         return ResponseEntity.ok(relatoriosService.produtosEstoqueBaixo(limiteMinimo));
     }
 

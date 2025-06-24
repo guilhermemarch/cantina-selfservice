@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="28.0" styleClass="welcome-screen" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController">
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cantinasa.cantinasa.UI.controllers.ReceiptController"
+      alignment="CENTER"
+      spacing="24.0"
+      styleClass="receipt-container">
+
     <padding>
-        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+        <Insets top="40" bottom="40" left="32" right="32"/>
     </padding>
 
-    <Text text="Bem-vindo à Cantina" styleClass="welcome-title"/>
-    <Label text="Faça seu pedido de forma rápida e fácil!" styleClass="section-title" alignment="CENTER"/>
-    
-    <VBox alignment="CENTER" spacing="16.0">
-        <Button text="Continuar" onAction="#handleContinue" styleClass="primary-button">
-            <tooltip>
-                <Tooltip text="Ir para a seleção de produtos"/>
-            </tooltip>
-        </Button>
-        <Button text="Entrar como Administrador" onAction="#handleAdminLogin" styleClass="secondary-button">
-            <tooltip>
-                <Tooltip text="Acesso ao painel administrativo"/>
-            </tooltip>
-        </Button>
-    </VBox>
-</VBox> 
+    <Text text="Compra Confirmada!" styleClass="receipt-title"/>
+
+    <Label fx:id="orderNumberLabel"
+           text="Número do pedido: #12345"
+           styleClass="receipt-order-number"
+           wrapText="true"
+           textAlignment="CENTER" />
+
+    <Label text="Seu pedido foi processado com sucesso."
+           styleClass="receipt-message"
+           wrapText="true"
+           textAlignment="CENTER" />
+
+    <Button text="Voltar ao Início"
+            onAction="#handleBackToHome"
+            styleClass="primary-button"/>
+
+</VBox>

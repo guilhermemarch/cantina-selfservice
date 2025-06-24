@@ -152,16 +152,10 @@ public class RelatoriosService {
         return new ArrayList<>();
     }
 
+
+
     public List<Produto> produtosEstoqueBaixo(int limiteMinimo) {
-
-        List<Produto> produtos = produtoRepository.findAll();
-
-
-        List<Produto> lowStockProducts = produtos.stream()
-                .filter(produto -> produto.getQuantidade() < 10)
-                .collect(Collectors.toList());
-
-        return lowStockProducts;
+        return produtoRepository.findByQuantidadeBelow(limiteMinimo);
     }
 
     public List<Map<String, Object>> produtosValidade(int diasParaVencer) {

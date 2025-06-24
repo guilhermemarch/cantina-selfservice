@@ -15,7 +15,7 @@ import javafx.util.Duration;
 import javafx.scene.image.ImageView;
 import com.cantinasa.cantinasa.UI.styles.UIStyles;
 
-public class UIComponents {
+public class    UIComponents {
     
     public static VBox createProductCard(String name, double price, String imageUrl) {
         VBox card = new VBox(10);
