@@ -24,10 +24,10 @@ public class PagamentoController {
     }
 
     @GetMapping("/status/{id}")
-    public ResponseEntity<String> verificarStatus(@PathVariable Long id) {
+    public ResponseEntity<?> verificarStatus(@PathVariable Long id) {
         try {
             Pagamento pagamento = pagamentoService.verificarStatus(id);
-            return ResponseEntity.ok(pagamento.getStatus().toString());
+            return ResponseEntity.ok(pagamento);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }

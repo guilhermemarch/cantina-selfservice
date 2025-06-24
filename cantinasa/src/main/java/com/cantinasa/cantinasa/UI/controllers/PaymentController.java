@@ -81,6 +81,7 @@ public class PaymentController {
         setupPaymentMethodListeners();
         setupInputValidation();
 
+        // Puxa os dados do carrinho ao iniciar
         ShoppingCartController cartController = MainController.getInstance().getShoppingCartController();
         if (cartController != null) {
             this.totalAmount = cartController.getTotal().doubleValue();
@@ -209,6 +210,7 @@ public class PaymentController {
         }
 
         try {
+            // 1. Monta o JSON dos itens
             StringBuilder itensJson = new StringBuilder();
             ObservableList<Item_pedido> cartItems = cartController.getCartItems();
             for (int i = 0; i < cartItems.size(); i++) {
@@ -220,9 +222,11 @@ public class PaymentController {
                 }
             }
 
+            // 2. Monta o JSON do pagamento
             String pagamentoJson = String.format(java.util.Locale.US, "{\"tipoPagamento\":\"%s\",\"valor\":%.2f}",
                     method.name(), totalAmount);
 
+            // 3. Monta o JSON completo do pedido
             String pedidoJson = String.format("{"
                             + "\"dataHora\":\"%s\","
                             + "\"status\":\"PENDENTE\","
@@ -235,6 +239,7 @@ public class PaymentController {
                     pagamentoJson
             );
 
+            // 4. Envia para o endpoint
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

@@ -1,0 +1,13 @@
+# Diretórios de build
+/target/
+
+# Configurações do IntelliJ
+/.idea/
+
+# Arquivos de banco de dados H2
+/data/cantinasa.mv.db
+/data/cantinasa.trace.db
+
+# Outras regras úteis
+*.log
+*.tmp

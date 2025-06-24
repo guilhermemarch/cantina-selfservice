@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.net.URL;
 
 @Controller
 public class MainController {
@@ -47,8 +48,9 @@ public class MainController {
     public void initialize() {
         instance = this;
 
-        loadView("shopping-cart");
-        loadView("welcome");
+        // ✅ Garante que o carrinho é carregado antes da navegação normal
+        loadView("shopping-cart");         // Instancia o controller do carrinho
+        loadView("welcome");               // Vai para a tela inicial
     }
 
     @FXML
@@ -67,11 +69,14 @@ public class MainController {
 
             new Thread(() -> {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + viewName + ".fxml"));
+                    URL fxmlUrl = getClass().getResource("/fxml/" + viewName + ".fxml");
+                    if (fxmlUrl == null) {
+                        throw new IllegalStateException("FXML não encontrado: /fxml/" + viewName + ".fxml");
+                    }
+                    FXMLLoader loader = new FXMLLoader(fxmlUrl);
                     loader.setControllerFactory(CantinasaApplication.getSpringContext()::getBean);
                     Parent view = loader.load();
 
-                    // ✅ Salva a instância do carrinho se for essa a view
                     if ("shopping-cart".equals(viewName)) {
                         shoppingCartController = loader.getController();
                     }
