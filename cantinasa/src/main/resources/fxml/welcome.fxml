@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="28.0" styleClass="welcome-screen" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController">
-    <padding>
-        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
-    </padding>
+<StackPane fx:id="root"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController"
+           styleClass="root-bg">
 
-    <Text text="Bem-vindo à Cantina" styleClass="welcome-title"/>
-    <Label text="Faça seu pedido de forma rápida e fácil!" styleClass="section-title" alignment="CENTER"/>
-    
-    <VBox alignment="CENTER" spacing="16.0">
-        <Button text="Continuar" onAction="#handleContinue" styleClass="primary-button">
-            <tooltip>
-                <Tooltip text="Ir para a seleção de produtos"/>
-            </tooltip>
-        </Button>
-        <Button text="Entrar como Administrador" onAction="#handleAdminLogin" styleClass="secondary-button">
-            <tooltip>
-                <Tooltip text="Acesso ao painel administrativo"/>
-            </tooltip>
-        </Button>
+    <!-- Hero background (imagem em CSS) e overlay escuro -->
+    <Rectangle width="Infinity" height="Infinity"
+               fill="linear-gradient(from 0% 0% to 0% 100%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%)" />
+
+    <!-- Cartão / conteúdo -->
+    <VBox alignment="CENTER" spacing="28"
+          styleClass="welcome-card">
+        <padding>
+            <Insets top="48" right="48" bottom="48" left="48"/>
+        </padding>
+
+        <Text text="Cantina Universitária" styleClass="welcome-title"/>
+        <Label text="Faça seu pedido de forma rápida e fácil!"
+               styleClass="section-subtitle" wrapText="true" maxWidth="280"/>
+
+        <VBox alignment="CENTER" spacing="16">
+
+            <Button text="Continuar" onAction="#handleContinue"
+                    styleClass="primary-button">
+                <tooltip>
+                    <Tooltip text="Ir para a seleção de produtos"/>
+                </tooltip>
+            </Button>
+
+            <Button text="Entrar como Administrador" onAction="#handleAdminLogin"
+                    styleClass="secondary-button">
+                <tooltip>
+                    <Tooltip text="Acesso ao painel administrativo"/>
+                </tooltip>
+            </Button>
+
+        </VBox>
     </VBox>
-</VBox> 
+</StackPane>
