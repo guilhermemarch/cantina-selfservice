@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.cantinasa.cantinasa.CantinasaApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.643 s -- in com.cantinasa.cantinasa.CantinasaApplicationTests
