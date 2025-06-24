@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.cantinasa.cantinasa.UI.controllers.ProductSelectionController"
+      spacing="18"
+      alignment="CENTER"
+      styleClass="content-area">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Buscar produtos..." HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="categoryFilter" promptText="Categorias" prefWidth="150"/>
+    </HBox>
+    
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="products-scroll-pane">
+        <GridPane fx:id="productsGrid" hgap="20" vgap="20" alignment="CENTER"/>
+    </ScrollPane>
+    
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Ver Carrinho" onAction="#handleViewCart" styleClass="primary-button">
+            <tooltip>
+                <Tooltip text="Ver itens do carrinho"/>
+            </tooltip>
+        </Button>
+    </HBox>
+    
+</VBox> 
