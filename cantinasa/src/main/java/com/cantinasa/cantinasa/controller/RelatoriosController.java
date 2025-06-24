@@ -1,14 +1,52 @@
 package com.cantinasa.cantinasa.controller;
 
+import com.cantinasa.cantinasa.model.Produto;
+import com.cantinasa.cantinasa.service.RelatoriosService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @RestController
+@RequestMapping("/api/relatorios")
 public class RelatoriosController {
 
-//    GET	/relatorios/vendas	Produtos mais vendidos
-//    GET	/relatorios/estoque-baixo	Produtos com estoque baixo
-//    GET	/relatorios/horarios-pico	Horários de maior venda
-//    GET	/relatorios/validade	Produtos vencidos ou a vencer
+    @Autowired
+    private RelatoriosService relatoriosService;
+
+    @GetMapping("/estoque-baixo")
+    public ResponseEntity<List<Produto>> produtosEstoqueBaixo(
+            @RequestParam(defaultValue = "10") int limiteMinimo) {
+        return ResponseEntity.ok(relatoriosService.produtosEstoqueBaixo(limiteMinimo));
+    }
+
+    @GetMapping("/horarios-pico")
+    public ResponseEntity<List<Map<String, Object>>> horariosPico(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+        return ResponseEntity.ok(relatoriosService.horariosPico(data));
+    }
+
+    @GetMapping("/validade")
+    public ResponseEntity<List<Map<String, Object>>> produtosValidade(
+            @RequestParam(defaultValue = "30") int diasParaVencer) {
+        return ResponseEntity.ok(relatoriosService.produtosValidade(diasParaVencer));
+    }
+
+    @GetMapping("/dia{localDateTime}")
+    public ResponseEntity<Map<String, Object>> relatorioDia(
+            @PathVariable LocalDateTime localTime) {
+        return ResponseEntity.ok(relatoriosService.generateDailyReport(localTime));
+    }
+    @GetMapping("/datas{data1}/{data2}")
+    public ResponseEntity<Map<String, Object>> relatorioDia(
+            @PathVariable LocalDateTime data1,
+            @PathVariable LocalDateTime data2) {
+        return ResponseEntity.ok(relatoriosService.generateReportBy2Dates(data1,data2));
+    }
 
 }
