@@ -3,10 +3,6 @@ package com.cantinasa.cantinasa.model.dto;
 import com.cantinasa.cantinasa.model.enums.tipoPagamento;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 
 public class PagamentoDTO {
     private Long idPagamento;
@@ -64,13 +60,5 @@ public class PagamentoDTO {
     }
 
     public PagamentoDTO() {
-    }
-
-    public PagamentoDTO(Long idPagamento, tipoPagamento tipoPagamento, double valor, Double troco, Long pedidoId) {
-        this.idPagamento = idPagamento;
-        this.tipoPagamento = tipoPagamento;
-        this.valor = valor;
-        this.troco = troco;
-        this.pedidoId = pedidoId;
     }
 }

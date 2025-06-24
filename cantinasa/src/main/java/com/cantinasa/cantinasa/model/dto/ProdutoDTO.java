@@ -5,12 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
-
 
 public class ProdutoDTO {
     private Long idProduto;
@@ -89,16 +85,6 @@ public class ProdutoDTO {
     }
 
     public void setCategoria(categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public ProdutoDTO(Long idProduto, String nome, Double preco, int quantidade_estoque, int estoque_minimo, LocalDate validade, categoria categoria) {
-        this.idProduto = idProduto;
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade_estoque = quantidade_estoque;
-        this.estoque_minimo = estoque_minimo;
-        this.validade = validade;
         this.categoria = categoria;
     }
 

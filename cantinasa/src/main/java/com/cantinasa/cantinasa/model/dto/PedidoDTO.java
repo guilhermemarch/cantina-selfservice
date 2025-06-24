@@ -2,19 +2,17 @@ package com.cantinasa.cantinasa.model.dto;
 
 import com.cantinasa.cantinasa.model.enums.status;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 public class PedidoDTO {
+
     private Long idPedido;
 
     @NotNull(message = "Data e hora é obrigatória")
-    private LocalDateTime data_hora;
+    private LocalDateTime dataHora;
 
     @NotNull(message = "Status é obrigatório")
     private status status;
@@ -23,7 +21,8 @@ public class PedidoDTO {
     private Long usuarioId;
 
     private List<ItemPedidoDTO> itens;
-    private List<PagamentoDTO> pagamentos;
+
+    private PagamentoDTO pagamento;
 
     public Long getIdPedido() {
         return idPedido;
@@ -33,12 +32,12 @@ public class PedidoDTO {
         this.idPedido = idPedido;
     }
 
-    public LocalDateTime getData_hora() {
-        return data_hora;
+    public LocalDateTime getDataHora() {
+        return dataHora;
     }
 
-    public void setData_hora(LocalDateTime data_hora) {
-        this.data_hora = data_hora;
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 
     public status getStatus() {
@@ -65,23 +64,11 @@ public class PedidoDTO {
         this.itens = itens;
     }
 
-    public List<PagamentoDTO> getPagamentos() {
-        return pagamentos;
+    public PagamentoDTO getPagamento() {
+        return pagamento;
     }
 
-    public void setPagamentos(List<PagamentoDTO> pagamentos) {
-        this.pagamentos = pagamentos;
-    }
-
-    public PedidoDTO() {
-    }
-
-    public PedidoDTO(Long idPedido, LocalDateTime data_hora, status status, Long usuarioId, List<ItemPedidoDTO> itens, List<PagamentoDTO> pagamentos) {
-        this.idPedido = idPedido;
-        this.data_hora = data_hora;
-        this.status = status;
-        this.usuarioId = usuarioId;
-        this.itens = itens;
-        this.pagamentos = pagamentos;
+    public void setPagamento(PagamentoDTO pagamento) {
+        this.pagamento = pagamento;
     }
 }

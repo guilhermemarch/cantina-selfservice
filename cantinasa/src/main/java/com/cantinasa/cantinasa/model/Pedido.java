@@ -3,40 +3,41 @@ package com.cantinasa.cantinasa.model;
 import com.cantinasa.cantinasa.model.enums.status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "pedidos")
-
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPedido;
+    private Long id;
 
-    @NotNull(message = "Data e hora é preciso")
-    @Column(name = "data_hora", nullable = false)
-    private LocalDateTime data_hora;
-
-    @NotNull(message = "Status nao pode ser nulo")
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private status status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonManagedReference("pedido-itens")
     private List<Item_pedido> itens;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<Pagamento> pagamentos;
+    @Column(name = "data_pedido", nullable = false)
+    private LocalDateTime dataPedido;
+
+    @Column(name = "valor_total", nullable = false)
+    private BigDecimal valorTotal;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Pagamento pagamento;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -48,8 +49,8 @@ public class Pedido {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-        if (data_hora == null) {
-            data_hora = LocalDateTime.now();
+        if (dataPedido == null) {
+            dataPedido = LocalDateTime.now();
         }
     }
 
@@ -61,29 +62,21 @@ public class Pedido {
     public Pedido() {
     }
 
-
-    public Long getIdPedido() {
-        return idPedido;
+    public enum Status {
+        PENDENTE,
+        CONFIRMADO,
+        PREPARANDO,
+        PRONTO,
+        ENTREGUE,
+        CANCELADO
     }
 
-    public void setIdPedido(Long idPedido) {
-        this.idPedido = idPedido;
+    public Long getId() {
+        return id;
     }
 
-    public LocalDateTime getData_hora() {
-        return data_hora;
-    }
-
-    public void setData_hora(LocalDateTime data_hora) {
-        this.data_hora = data_hora;
-    }
-
-    public status getStatus() {
-        return status;
-    }
-
-    public void setStatus(status status) {
-        this.status = status;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Usuario getUsuario() {
@@ -102,12 +95,36 @@ public class Pedido {
         this.itens = itens;
     }
 
-    public List<Pagamento> getPagamentos() {
-        return pagamentos;
+    public LocalDateTime getDataPedido() {
+        return dataPedido;
     }
 
-    public void setPagamentos(List<Pagamento> pagamentos) {
-        this.pagamentos = pagamentos;
+    public void setDataPedido(LocalDateTime dataPedido) {
+        this.dataPedido = dataPedido;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -123,17 +140,6 @@ public class Pedido {
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Pedido(Long idPedido, LocalDateTime data_hora, status status, Usuario usuario, List<Item_pedido> itens, List<Pagamento> pagamentos, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.idPedido = idPedido;
-        this.data_hora = data_hora;
-        this.status = status;
-        this.usuario = usuario;
-        this.itens = itens;
-        this.pagamentos = pagamentos;
-        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 }
