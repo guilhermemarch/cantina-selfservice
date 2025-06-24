@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cantinasa.cantinasa.UI.controllers.MainController"
+            stylesheets="@../styles/main.css">
+    
+    <top>
+        <HBox styleClass="header">
+            <Label text="" styleClass="header-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="adminButton" text="Admin" onAction="#handleAdminLogin" styleClass="admin-button"/>
+        </HBox>
+    </top>
+    
+    <center>
+        <StackPane fx:id="contentArea">
+        </StackPane>
+    </center>
+    
+</BorderPane> 

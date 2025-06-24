@@ -1,0 +1,9 @@
+fluxo previsto:
+
+1-- ao entrar no programa, vai ter duas opções (proseguir para o menu(visao do atendido) ou entrar como admin).
+1-- para ser atendido, nao é necessario login, mas para ser admin, é necessário.
+quando selecionado alguns itens para comprar, os itens são adicionados no carrinho,
+ se o usuario gostaria de finalizar a compra, precisa ser criado um pedido (classe pedido),
+ e para ser finalizado vai ser chamado as classes de pagamento.
+o painel de administrador vai ter as opçoes de visualizar o historico de pedidos, de adições de pedidos, bem como a criação de produtos, usuarios e relatorios
+
