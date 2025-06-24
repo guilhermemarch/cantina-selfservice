@@ -5,24 +5,20 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
-
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @NotBlank(message = "Username is required")
-    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
+    @NotBlank(message = "nao pode ser nulo")
     @Column(unique = true, nullable = false)
     private String username;
 
@@ -36,10 +32,10 @@ public class Usuario {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private role role;
+    private role role = com.cantinasa.cantinasa.model.enums.role.USERS;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Pedido> pedidos;
 
     @Column(name = "created_at")
@@ -59,13 +55,12 @@ public class Usuario {
         updatedAt = LocalDateTime.now();
     }
 
-
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -91,6 +86,7 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public role getRole() {
         return role;
@@ -121,17 +117,6 @@ public class Usuario {
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Usuario(Long idUsuario, String username, String email, String password, role role, List<Pedido> pedidos, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.idUsuario = idUsuario;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.pedidos = pedidos;
-        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 

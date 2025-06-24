@@ -2,8 +2,10 @@ package com.cantinasa.cantinasa.model.mapper;
 
 import com.cantinasa.cantinasa.model.Pagamento;
 import com.cantinasa.cantinasa.model.dto.PagamentoDTO;
+import com.cantinasa.cantinasa.model.enums.tipoPagamento;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,11 +16,11 @@ public class PagamentoMapper {
         if (pagamento == null) return null;
         
         PagamentoDTO dto = new PagamentoDTO();
-        dto.setIdPagamento(pagamento.getIdPagamento());
-        dto.setTipoPagamento(pagamento.getTipoPagamento());
-        dto.setValor(pagamento.getValor());
+        dto.setIdPagamento(pagamento.getId());
+        dto.setPedidoId(pagamento.getPedido().getId());
+        dto.setValor(pagamento.getValor().doubleValue());
+        dto.setTipoPagamento(convertToDTOMetodoPagamento(pagamento.getMetodo()));
         dto.setTroco(pagamento.getTroco());
-        dto.setPedidoId(pagamento.getPedido().getIdPedido());
         
         return dto;
     }
@@ -27,9 +29,9 @@ public class PagamentoMapper {
         if (dto == null) return null;
         
         Pagamento pagamento = new Pagamento();
-        pagamento.setIdPagamento(dto.getIdPagamento());
-        pagamento.setTipoPagamento(dto.getTipoPagamento());
-        pagamento.setValor(dto.getValor());
+        pagamento.setId(dto.getIdPagamento());
+        pagamento.setValor(BigDecimal.valueOf(dto.getValor()));
+        pagamento.setMetodo(convertToEntityMetodoPagamento(dto.getTipoPagamento()));
         pagamento.setTroco(dto.getTroco());
         
         return pagamento;
@@ -47,5 +49,25 @@ public class PagamentoMapper {
         return dtos.stream()
             .map(this::toEntity)
             .collect(Collectors.toList());
+    }
+
+    private tipoPagamento convertToDTOMetodoPagamento(Pagamento.MetodoPagamento metodo) {
+        if (metodo == null) return null;
+        
+        return switch (metodo) {
+            case DINHEIRO -> tipoPagamento.DINHEIRO;
+            case CARTAO -> tipoPagamento.CARTAO;
+            case PIX -> tipoPagamento.PIX;
+        };
+    }
+
+    private Pagamento.MetodoPagamento convertToEntityMetodoPagamento(tipoPagamento tipo) {
+        if (tipo == null) return null;
+        
+        return switch (tipo) {
+            case DINHEIRO -> Pagamento.MetodoPagamento.DINHEIRO;
+            case CARTAO -> Pagamento.MetodoPagamento.CARTAO;
+            case PIX -> Pagamento.MetodoPagamento.PIX;
+        };
     }
 } 

@@ -4,43 +4,51 @@ import com.cantinasa.cantinasa.model.enums.tipoPagamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "pagamentos")
-
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPagamento;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @NotNull(message = "Tipo de pagamento nao pode ser nulo")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_pagamento", nullable = false)
-    private tipoPagamento tipoPagamento;
+    @OneToOne
+    @JoinColumn(name = "pedido_id", nullable = false)
+    @JsonBackReference
+    private Pedido pedido;
 
-    @NotNull(message = "Valor nao pode ser nulo")
-    @Positive(message = "Valor precisa ser positivo")
     @Column(nullable = false)
-    private double valor;
+    private BigDecimal valor;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MetodoPagamento metodo;
+
+    @Column(nullable = false)
+    private LocalDateTime data_pagamento;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Column
+    private String codigo_pix;
 
     @Column
     private Double troco;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pedido_id", nullable = false)
-    private Pedido pedido;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+
 
     @PrePersist
     protected void onCreate() {
@@ -53,36 +61,25 @@ public class Pagamento {
         updatedAt = LocalDateTime.now();
     }
 
-    public Long getIdPagamento() {
-        return idPagamento;
+    public enum MetodoPagamento {
+        DINHEIRO,
+        CARTAO,
+        PIX
     }
 
-    public void setIdPagamento(Long idPagamento) {
-        this.idPagamento = idPagamento;
+    public enum Status {
+        PENDENTE,
+        APROVADO,
+        RECUSADO,
+        CANCELADO
     }
 
-    public tipoPagamento getTipoPagamento() {
-        return tipoPagamento;
+    public Long getId() {
+        return id;
     }
 
-    public void setTipoPagamento(tipoPagamento tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
-    public Double getTroco() {
-        return troco;
-    }
-
-    public void setTroco(Double troco) {
-        this.troco = troco;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Pedido getPedido() {
@@ -91,6 +88,54 @@ public class Pagamento {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public MetodoPagamento getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(MetodoPagamento metodo) {
+        this.metodo = metodo;
+    }
+
+    public LocalDateTime getData_pagamento() {
+        return data_pagamento;
+    }
+
+    public void setData_pagamento(LocalDateTime data_pagamento) {
+        this.data_pagamento = data_pagamento;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getCodigo_pix() {
+        return codigo_pix;
+    }
+
+    public void setCodigo_pix(String codigo_pix) {
+        this.codigo_pix = codigo_pix;
+    }
+
+    public Double getTroco() {
+        return troco;
+    }
+
+    public void setTroco(Double troco) {
+        this.troco = troco;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -106,16 +151,6 @@ public class Pagamento {
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Pagamento(Long idPagamento, tipoPagamento tipoPagamento, double valor, Double troco, Pedido pedido, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.idPagamento = idPagamento;
-        this.tipoPagamento = tipoPagamento;
-        this.valor = valor;
-        this.troco = troco;
-        this.pedido = pedido;
-        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 

@@ -3,24 +3,22 @@ package com.cantinasa.cantinasa.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "itens_pedido")
-
 public class Item_pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idItem_pedido;
+    private Long id;
 
     @NotNull(message = "Pedido é obrigatório")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false)
+    @JsonBackReference("pedido-itens")
     private Pedido pedido;
 
     @NotNull(message = "Produto é obrigatório")
@@ -33,6 +31,12 @@ public class Item_pedido {
     @Column(nullable = false)
     private int quantidade;
 
+    @Column(nullable = false)
+    private BigDecimal precoUnitario;
+
+    @Column(nullable = false)
+    private BigDecimal subtotal;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -43,31 +47,31 @@ public class Item_pedido {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+        calcularSubtotal();
     }
 
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+        calcularSubtotal();
     }
+
+    public void calcularSubtotal() {
+        if (precoUnitario != null && quantidade > 0) {
+            subtotal = precoUnitario.multiply(BigDecimal.valueOf(quantidade));
+        }
+    }
+
 
     public Item_pedido() {
     }
 
-    public Item_pedido(Long idItem_pedido, Pedido pedido, Produto produto, int quantidade, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.idItem_pedido = idItem_pedido;
-        this.pedido = pedido;
-        this.produto = produto;
-        this.quantidade = quantidade;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public Long getId() {
+        return id;
     }
 
-    public Long getIdItem_pedido() {
-        return idItem_pedido;
-    }
-
-    public void setIdItem_pedido(Long idItem_pedido) {
-        this.idItem_pedido = idItem_pedido;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Pedido getPedido() {
@@ -92,6 +96,25 @@ public class Item_pedido {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public BigDecimal getPrecoUnitario() {
+        return precoUnitario;
+    }
+
+    public void setPrecoUnitario(BigDecimal precoUnitario) {
+        this.precoUnitario = precoUnitario;
+    }
+
+    public BigDecimal getSubtotal() {
+    if (precoUnitario == null || quantidade <= 0) {
+        return BigDecimal.ZERO;
+    }
+    return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
+}
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 
     public LocalDateTime getCreatedAt() {

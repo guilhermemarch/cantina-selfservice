@@ -13,28 +13,30 @@ public class ProdutoMapper {
     public ProdutoDTO toDTO(Produto produto) {
         if (produto == null) return null;
         
-        return new ProdutoDTO(
-            produto.getIdProduto(),
-            produto.getNome(),
-            produto.getPreco(),
-            produto.getQuantidade_estoque(),
-            produto.getEstoque_minimo(),
-            produto.getValidade(),
-            produto.getCategoria()
-        );
+        ProdutoDTO dto = new ProdutoDTO();
+        dto.setIdProduto(produto.getId());
+        dto.setNome(produto.getNome());
+        dto.setPreco(produto.getPreco().doubleValue());
+        dto.setQuantidade_estoque(produto.getQuantidade());
+        dto.setEstoque_minimo(produto.getEstoque_minimo());
+        dto.setValidade(produto.getValidade());
+        dto.setCategoria(produto.getCategoria());
+        
+        return dto;
     }
 
     public Produto toEntity(ProdutoDTO dto) {
         if (dto == null) return null;
         
         Produto produto = new Produto();
-        produto.setIdProduto(dto.getIdProduto());
+        produto.setId(dto.getIdProduto());
         produto.setNome(dto.getNome());
-        produto.setPreco(dto.getPreco());
-        produto.setQuantidade_estoque(dto.getQuantidade_estoque());
+        produto.setPreco(java.math.BigDecimal.valueOf(dto.getPreco()));
+        produto.setQuantidade(dto.getQuantidade_estoque());
         produto.setEstoque_minimo(dto.getEstoque_minimo());
         produto.setValidade(dto.getValidade());
         produto.setCategoria(dto.getCategoria());
+        
         return produto;
     }
 

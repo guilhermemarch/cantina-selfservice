@@ -2,15 +2,10 @@ package com.cantinasa.cantinasa.model.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 public class ItemPedidoDTO {
-    private Long idItem_pedido;
 
-    @NotNull(message = "ID do pedido é obrigatório")
-    private Long pedidoId;
+    private Long idItem_pedido;
 
     @NotNull(message = "ID do produto é obrigatório")
     private Long produtoId;
@@ -19,9 +14,13 @@ public class ItemPedidoDTO {
     @Min(value = 1, message = "Quantidade deve ser maior que zero")
     private int quantidade;
 
+    // Esses campos são preenchidos no backend e devolvidos no response
     private String nomeProduto;
     private Double precoUnitario;
     private Double subtotal;
+
+    public ItemPedidoDTO() {
+    }
 
     public Long getIdItem_pedido() {
         return idItem_pedido;
@@ -29,14 +28,6 @@ public class ItemPedidoDTO {
 
     public void setIdItem_pedido(Long idItem_pedido) {
         this.idItem_pedido = idItem_pedido;
-    }
-
-    public Long getPedidoId() {
-        return pedidoId;
-    }
-
-    public void setPedidoId(Long pedidoId) {
-        this.pedidoId = pedidoId;
     }
 
     public Long getProdutoId() {
@@ -76,19 +67,6 @@ public class ItemPedidoDTO {
     }
 
     public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public ItemPedidoDTO() {
-    }
-
-    public ItemPedidoDTO(Long idItem_pedido, Long pedidoId, Long produtoId, int quantidade, String nomeProduto, Double precoUnitario, Double subtotal) {
-        this.idItem_pedido = idItem_pedido;
-        this.pedidoId = pedidoId;
-        this.produtoId = produtoId;
-        this.quantidade = quantidade;
-        this.nomeProduto = nomeProduto;
-        this.precoUnitario = precoUnitario;
         this.subtotal = subtotal;
     }
 }

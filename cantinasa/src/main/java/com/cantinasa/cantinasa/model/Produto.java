@@ -6,36 +6,37 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "produtos")
-
 public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduto;
+    private Long id;
 
     @NotBlank(message = "precisa colocar nome")
     @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
+    private String descricao;
+
     @NotNull(message = "precisa obrigatoriamente de preço")
     @Positive(message = "Preço must be positive")
     @Column(nullable = false)
-    private Double preco;
+    private BigDecimal preco;
 
     @NotNull(message = "Quantidade em estoque precisa")
     @Min(value = 0, message = "Quantidade em estoque nao pode ser negativa")
     @Column(name = "quantidade_estoque", nullable = false)
-    private int quantidade_estoque;
+    private int quantidade;
 
     @NotNull(message = "Estoque mínimo is required")
     @Min(value = 0, message = "Estoque mínimo cannot be negative")
@@ -51,7 +52,14 @@ public class Produto {
     @Column(nullable = false)
     private categoria categoria;
 
+    @Column
+    private String imagem;
+
+    @Column
+    private String imagemUrl;
+
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Item_pedido> itens;
 
     @Column(name = "created_at")
@@ -71,13 +79,12 @@ public class Produto {
         updatedAt = LocalDateTime.now();
     }
 
-
-    public Long getIdProduto() {
-        return idProduto;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdProduto(Long idProduto) {
-        this.idProduto = idProduto;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -88,20 +95,28 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 
-    public int getQuantidade_estoque() {
-        return quantidade_estoque;
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuantidade_estoque(int quantidade_estoque) {
-        this.quantidade_estoque = quantidade_estoque;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public int getEstoque_minimo() {
@@ -126,6 +141,22 @@ public class Produto {
 
     public void setCategoria(categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl != null ? imagemUrl : "/images/default-product.png";
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 
     public List<Item_pedido> getItens() {
