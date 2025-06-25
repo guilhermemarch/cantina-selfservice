@@ -149,7 +149,26 @@ public class RelatoriosService {
 
 
     public List<Map<String, Object>> horariosPico(LocalDate data) {
-        return new ArrayList<>();
+
+
+        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(
+                data.atStartOfDay(), data.atTime(23, 59, 59));
+
+
+        Map<Integer, Long> hourCounts = pedidos.stream()
+                .collect(Collectors.groupingBy(
+                        pedido -> pedido.getDataPedido().getHour(),
+                        Collectors.counting()
+                ));
+
+        List<Map<String, Object>> horariosPico = new ArrayList<>();
+        for (Map.Entry<Integer, Long> entry : hourCounts.entrySet()) {
+            Map<String, Object> horario = new HashMap<>();
+            horario.put("hora", entry.getKey());
+            horario.put("quantidade", entry.getValue());
+            horariosPico.add(horario);
+        }
+        return horariosPico;
     }
 
 

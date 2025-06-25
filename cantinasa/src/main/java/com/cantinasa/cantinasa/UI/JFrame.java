@@ -31,12 +31,15 @@ public class JFrame extends Application {
             UIStyles.applyMainContainerStyle((VBox) rootNode);
         }
         
-        Scene scene = new Scene(rootNode);
+        Scene scene = new Scene(rootNode, 1024, 768);
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         
-        // Set window size
-        primaryStage.setMinWidth(800);
-        primaryStage.setMinHeight(600);
+        // Set fixed window size
+        primaryStage.setResizable(false);
+        primaryStage.setMinWidth(1024);
+        primaryStage.setMinHeight(768);
+        primaryStage.setMaxWidth(1024);
+        primaryStage.setMaxHeight(768);
         
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -3,13 +3,13 @@
 /* ===== Global ===== */
 .root {
     -fx-font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    -fx-background-color: #f4f6f8; /* light neutral */
+    -fx-background-color: #000000; /* light neutral */
     -fx-text-fill: #333333;
 }
 
 /* ===== Header ===== */
 .header {
-    -fx-background-color: linear-gradient(to right, #1976d2, #42a5f5); /* brand gradient */
+    -fx-background-color: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(218, 218, 218, 0)); /* brand gradient */
     -fx-padding: 12px 24px;
     -fx-alignment: center-left;
     -fx-spacing: 12px;
@@ -126,12 +126,139 @@
     -fx-font-weight: 600;
 }
 
-/* ===== Welcome Screen ===== */
+.welcome-overlay {
+    -fx-fill: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+}
+
+.welcome-content {
+    -fx-padding: 60px;
+    -fx-spacing: 40px;
+}
+
+.welcome-header {
+    -fx-alignment: center;
+    -fx-spacing: 16px;
+}
+
+/*.welcome-icon {*/
+/*    -fx-font-size: 80px;*/
+/*    -fx-font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;*/
+/*    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.3), 20, 0, 0, 0);*/
+/*}*/
+
+.welcome-title {
+    -fx-font-size: 48px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 10, 0, 0, 2);
+    -fx-font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    -fx-letter-spacing: 2px;
+}
+
+.welcome-subtitle {
+    -fx-font-size: 18px;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(255,255,255,0.9);
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 5, 0, 0, 1);
+    -fx-letter-spacing: 1px;
+}
+
+.welcome-description {
+    -fx-alignment: center;
+    -fx-spacing: 8px;
+}
+
+.welcome-text {
+    -fx-font-size: 20px;
+    -fx-font-weight: 600;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 8, 0, 0, 1);
+}
+
+.welcome-text-secondary {
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(255,255,255,0.8);
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 5, 0, 0, 1);
+}
+
+.welcome-buttons {
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+}
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #FF6B35, #F7931E);
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-padding: 16px 32px;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-min-width: 280px;
+    -fx-min-height: 50px;
+    -fx-effect: dropshadow(gaussian, rgba(255,107,53,0.4), 15, 0, 0, 5);
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #E55A2B, #E0851A);
+    -fx-effect: dropshadow(gaussian, rgba(255,107,53,0.6), 20, 0, 0, 8);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.primary-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-padding: 12px 24px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: rgba(255,255,255,0.6);
+    -fx-border-width: 2px;
+    -fx-min-width: 240px;
+    -fx-min-height: 45px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-color: rgba(255,255,255,0.9);
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.3), 10, 0, 0, 3);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.secondary-button:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+.welcome-footer {
+    -fx-alignment: center;
+    -fx-padding: 20px 0 0 0;
+}
+
+.footer-text {
+    -fx-font-size: 12px;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(255,255,255,0.6);
+    -fx-effect: dropshadow(gaussian, rgb(255, 255, 255), 3, 0, 0, 1);
+}
+
+/* ===== Welcome Screen - ESTILO ANTIGO (mantido para compatibilidade) ===== */
 .welcome-screen {
     -fx-background-color: #ffffff;
     -fx-padding: 48px;
 }
-.welcome-title {
+.welcome-title-old {
     -fx-font-size: 32px;
     -fx-font-weight: 700;
     -fx-text-fill: #333333;
@@ -188,7 +315,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
 }
 .alert .header-panel {
-    -fx-background-color: #1976d2;
+    -fx-background-color: #ffffff;
     -fx-background-radius: 8px 8px 0 0;
 }
 .alert .header-panel .label {
