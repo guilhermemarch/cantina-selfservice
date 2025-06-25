@@ -150,22 +150,28 @@ public class RelatoriosService {
     }
 
     public List<Map<String, Object>> horariosPico(LocalDate data) {
-        LocalDateTime start = data.atStartOfDay();
-        LocalDateTime end = data.atTime(23, 59, 59);
+        LocalDateTime inicioDoDia = data.atStartOfDay();
+        LocalDateTime fimDoDia = data.atTime(23, 59, 59);
 
-        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(start, end);
+        List<Pedido> pedidosDoDia = pedidoRepository.findByDataPedidoBetween(inicioDoDia, fimDoDia);
 
-        return pedidos.stream()
+        Map<Integer, Long> pedidosPorHora = pedidosDoDia.stream()
                 .collect(Collectors.groupingBy(
-                        p -> p.getDataPedido().getHour(),
+                        pedido -> pedido.getDataPedido().getHour(),
                         Collectors.counting()
-                )).entrySet().stream()
-                .sorted(Map.Entry.<Integer, Long>comparingByValue().reversed())
-                .map(e -> Map.of(
-                        "hora", e.getKey(),
-                        "totalPedidos", e.getValue()))
+                ));
+
+        return pedidosPorHora.entrySet().stream()
+                .sorted(Map.Entry.<Integer, Long>comparingByValue(Comparator.reverseOrder()))
+                .map(e -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("hora", e.getKey());
+                    map.put("totalPedidos", e.getValue());
+                    return map;
+                })
                 .collect(Collectors.toList());
     }
+
 
     public List<Produto> produtosEstoqueBaixo(int limiteMinimo) {
         return produtoRepository.findAll().stream()
@@ -178,12 +184,12 @@ public class RelatoriosService {
         LocalDate limite = hoje.plusDays(diasParaVencer);
 
         return produtoRepository.findAll().stream()
-                .filter(p -> p.getDataValidade() != null
-                        && !p.getDataValidade().isBefore(hoje)
-                        && !p.getDataValidade().isAfter(limite))
+                .filter(p -> p.getValidade() != null
+                        && !p.getValidade().isBefore(hoje)
+                        && !p.getValidade().isAfter(limite))
                 .map(p -> Map.of(
                         "produto", p,
-                        "diasParaVencer", ChronoUnit.DAYS.between(hoje, p.getDataValidade())
+                        "diasParaVencer", ChronoUnit.DAYS.between(hoje, p.getValidade())
                 ))
                 .sorted(Comparator.comparingLong(m -> (Long) m.get("diasParaVencer")))
                 .collect(Collectors.toList());

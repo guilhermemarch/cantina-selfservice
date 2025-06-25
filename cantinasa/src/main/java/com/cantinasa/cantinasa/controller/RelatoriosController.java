@@ -26,10 +26,13 @@ public class RelatoriosController {
     }
 
     @GetMapping("/horarios-pico")
-    public ResponseEntity<List<Map<String, Object>>> horariosPico(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
-        return ResponseEntity.ok(relatoriosService.horariosPico(data));
+    public ResponseEntity<List<Map<String, Object>>> buscarHorariosDePico(
+            @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+
+        List<Map<String, Object>> horarios = relatoriosService.horariosPico(data);
+        return ResponseEntity.ok(horarios);
     }
+
 
     @GetMapping("/validade")
     public ResponseEntity<List<Map<String, Object>>> produtosValidade(
@@ -46,7 +49,7 @@ public class RelatoriosController {
     public ResponseEntity<Map<String, Object>> relatorioDia(
             @PathVariable LocalDateTime data1,
             @PathVariable LocalDateTime data2) {
-        return ResponseEntity.ok(relatoriosService.generateReportBy2Dates(data1,data2));
+        return ResponseEntity.ok(relatoriosService.generateSalesReport(data1,data2));
     }
 
 }
