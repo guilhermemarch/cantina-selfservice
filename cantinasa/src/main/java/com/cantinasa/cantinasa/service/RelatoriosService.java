@@ -1,26 +1,22 @@
 package com.cantinasa.cantinasa.service;
 
-import com.cantinasa.cantinasa.model.Item_pedido;
-import com.cantinasa.cantinasa.model.Pedido;
-import com.cantinasa.cantinasa.model.Produto;
-import com.cantinasa.cantinasa.model.enums.categoria;
-import com.cantinasa.cantinasa.model.Pagamento;
+import com.cantinasa.cantinasa.controller.ProdutoController;
+import com.cantinasa.cantinasa.model.*;
+import com.cantinasa.cantinasa.model.dto.PedidoDTO;
+import com.cantinasa.cantinasa.model.enums.status;
+import com.cantinasa.cantinasa.model.mapper.PedidoMapper;
 import com.cantinasa.cantinasa.repository.PedidoRepository;
 import com.cantinasa.cantinasa.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-import java.util.ArrayList;
 
 @Service
-public class RelatoriosService {
+public class PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepository;
@@ -28,160 +24,91 @@ public class RelatoriosService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Map<String, Object> generateSalesReport(LocalDateTime startDate, LocalDateTime endDate) {
-        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(startDate, endDate);
-        
-        BigDecimal totalSales = pedidos.stream()
-            .map(Pedido::getValorTotal)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-            
-        Map<Pagamento.MetodoPagamento, BigDecimal> salesByPaymentMethod = generateSalesByPaymentMethod(startDate, endDate);
-            
-        List<Map.Entry<Produto, Long>> topSellingProducts = pedidos.stream()
-            .flatMap(pedido -> pedido.getItens().stream())
-            .collect(Collectors.groupingBy(
-                Item_pedido::getProduto,
-                Collectors.counting()
-            ))
-            .entrySet()
-            .stream()
-            .sorted(Map.Entry.<Produto, Long>comparingByValue().reversed())
-            .limit(10)
-            .collect(Collectors.toList());
-            
-        Map<String, Object> result = new HashMap<>();
-        result.put("totalSales", totalSales);
-        result.put("salesByPaymentMethod", salesByPaymentMethod);
-        result.put("topSellingProducts", topSellingProducts);
-        return result;
-    }
+    @Autowired
+    private ProdutoService produtoService;
 
-    public Map<Pagamento.MetodoPagamento, BigDecimal> generateSalesByPaymentMethod(LocalDateTime start, LocalDateTime end) {
-        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(start, end);
-        Map<Pagamento.MetodoPagamento, BigDecimal> salesByPaymentMethod = new HashMap<>();
-        for (Pedido pedido : pedidos) {
-            if (pedido.getPagamento() != null) {
-                Pagamento.MetodoPagamento metodo = pedido.getPagamento().getMetodo();
-                BigDecimal valor = pedido.getValorTotal();
-                salesByPaymentMethod.put(metodo, salesByPaymentMethod.getOrDefault(metodo, BigDecimal.ZERO).add(valor));
+    @Autowired
+    private PedidoMapper pedidoMapper;
+
+    @Transactional
+    public Pedido create(PedidoDTO dto) {
+        Pedido pedido = pedidoMapper.toEntity(dto);
+        pedido.setDataPedido(LocalDateTime.now());
+        pedido.setStatus(Pedido.Status.PENDENTE);
+
+        for (Item_pedido item : pedido.getItens()) {
+            item.setPedido(pedido);
+        }
+
+        BigDecimal valorTotal = pedido.getItens().stream()
+                .map(Item_pedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        pedido.setValorTotal(valorTotal);
+
+        if (pedido.getPagamento() != null) {
+            pedido.getPagamento().setPedido(pedido);
+            pedido.getPagamento().setValor(valorTotal);
+            if (pedido.getPagamento().getData_pagamento() == null) {
+                pedido.getPagamento().setData_pagamento(LocalDateTime.now());
+            }
+            if (pedido.getPagamento().getStatus() == null) {
+                pedido.getPagamento().setStatus(Pagamento.Status.PENDENTE);
             }
         }
-        return salesByPaymentMethod;
+
+        return pedidoRepository.save(pedido);
     }
 
-    public Map<String, Object> generateInventoryReport() {
-        List<Produto> produtos = produtoRepository.findAll();
-        
-        Map<categoria, Long> productsByCategory = produtos.stream()
-            .collect(Collectors.groupingBy(
-                Produto::getCategoria,
-                Collectors.counting()
-            ));
-            
-        BigDecimal totalValue = produtos.stream()
-            .map(produto -> produto.getPreco().multiply(BigDecimal.valueOf(produto.getQuantidade())))
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-            
-        List<Produto> lowStockProducts = produtos.stream()
-            .filter(produto -> produto.getQuantidade() < 10)
-            .collect(Collectors.toList());
-            
-        return Map.of(
-            "productsByCategory", productsByCategory,
-            "totalValue", totalValue,
-            "lowStockProducts", lowStockProducts
-        );
+    public Pedido findById(Long id) {
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
 
-    public Map<String, Object> generateDailyReport(LocalDateTime date) {
-        LocalDateTime startOfDay = date.toLocalDate().atStartOfDay();
-        LocalDateTime endOfDay = date.toLocalDate().atTime(23, 59, 59);
-        
-        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(startOfDay, endOfDay);
-        
-        BigDecimal totalSales = pedidos.stream()
-            .map(Pedido::getValorTotal)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-            
-        BigDecimal averageOrderValue = pedidos.isEmpty() ? BigDecimal.ZERO :
-            totalSales.divide(BigDecimal.valueOf(pedidos.size()), 2, BigDecimal.ROUND_HALF_UP);
-            
-        Map<Pedido.Status, Long> ordersByStatus = pedidos.stream()
-            .collect(Collectors.groupingBy(
-                Pedido::getStatus,
-                Collectors.counting()
-            ));
-            
-        return Map.of(
-            "totalSales", totalSales,
-            "averageOrderValue", averageOrderValue,
-            "ordersByStatus", ordersByStatus,
-            "totalOrders", pedidos.size()
-        );
+    public List<Pedido> findAll() {
+        return pedidoRepository.findAll();
     }
 
-    public Map<String, Object> generateReportBy2Dates(LocalDateTime date,LocalDateTime date2) {
-        LocalDateTime start = date.toLocalDate().atStartOfDay();
-        LocalDateTime end = date2.toLocalDate().atTime(23, 59, 59);
-
-        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(start, end);
-
-        BigDecimal totalSales = pedidos.stream()
-                .map(Pedido::getValorTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal averageOrderValue = pedidos.isEmpty() ? BigDecimal.ZERO :
-                totalSales.divide(BigDecimal.valueOf(pedidos.size()), 2, BigDecimal.ROUND_HALF_UP);
-
-        Map<Pedido.Status, Long> ordersByStatus = pedidos.stream()
-                .collect(Collectors.groupingBy(
-                        Pedido::getStatus,
-                        Collectors.counting()
-                ));
-
-        return Map.of(
-                "totalSales", totalSales,
-                "averageOrderValue", averageOrderValue,
-                "ordersByStatus", ordersByStatus,
-                "totalOrders", pedidos.size()
-        );
+    @Transactional
+    public Pedido update(Long id, Pedido pedido) {
+        Pedido existingPedido = findById(id);
+        existingPedido.setStatus(pedido.getStatus());
+        return pedidoRepository.save(existingPedido);
     }
 
+    @Transactional
+    public void delete(Long id) {
+        Pedido pedido = findById(id);
+        pedidoRepository.delete(pedido);
+    }
 
-    public List<Map<String, Object>> horariosPico(LocalDate data) {
-
-
-        List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(
-                data.atStartOfDay(), data.atTime(23, 59, 59));
-
-
-        Map<Integer, Long> hourCounts = pedidos.stream()
-                .collect(Collectors.groupingBy(
-                        pedido -> pedido.getDataPedido().getHour(),
-                        Collectors.counting()
-                ));
-
-        List<Map<String, Object>> horariosPico = new ArrayList<>();
-        for (Map.Entry<Integer, Long> entry : hourCounts.entrySet()) {
-            Map<String, Object> horario = new HashMap<>();
-            horario.put("hora", entry.getKey());
-            horario.put("quantidade", entry.getValue());
-            horariosPico.add(horario);
+    @Transactional
+    public void cancel(Long id) {
+        Pedido pedido = findById(id);
+        if (pedido.getStatus() != Pedido.Status.ENTREGUE) {
+            throw new RuntimeException("Apenas pedidos entregues podem ser cancelados");
         }
-        return horariosPico;
+
+        for (Item_pedido item : pedido.getItens()) {
+            Produto produto = produtoService.findById(item.getProduto().getId());
+            produto.setQuantidade(produto.getQuantidade() + item.getQuantidade());
+            produtoRepository.save(produto);
+        }
+
+        pedido.setStatus(Pedido.Status.CANCELADO);
+        pedidoRepository.save(pedido);
     }
 
-
-
-    public List<Produto> produtosEstoqueBaixo(int limiteMinimo) {
-        return produtoRepository.findByQuantidadeBelow(limiteMinimo);
+    public Pedido atualizarStatus(Long id, Pedido.Status status) {
+        Pedido pedido = findById(id);
+        pedido.setStatus(status);
+        return pedidoRepository.save(pedido);
     }
 
-    public List<Map<String, Object>> produtosValidade(int diasParaVencer) {
-        return new ArrayList<>();
+    public List<Pedido> findByPeriodo(LocalDateTime inicio, LocalDateTime fim) {
+        return pedidoRepository.findByDataPedidoBetween(inicio, fim);
     }
 
-    public List<Map<String, Object>> produtosMaisVendidos(LocalDate dataInicio, LocalDate dataFim) {
-        return new ArrayList<>();
+    public List<Pedido> findByStatus(Pedido.Status status) {
+        return pedidoRepository.findByStatus(status);
     }
 }
