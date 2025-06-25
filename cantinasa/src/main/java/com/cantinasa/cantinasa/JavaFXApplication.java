@@ -16,12 +16,16 @@ public class JavaFXApplication extends Application {
         loader.setControllerFactory(context::getBean);
         
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1024, 768);
         scene.getStylesheets().add(getClass().getResource("/styles/main.css").toExternalForm());
         
         primaryStage.setTitle("CantinaSA - Sistema de Autoatendimento");
         primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
+        primaryStage.setMinWidth(1024);
+        primaryStage.setMinHeight(768);
+        primaryStage.setMaxWidth(1024);
+        primaryStage.setMaxHeight(768);
         primaryStage.show();
     }
 

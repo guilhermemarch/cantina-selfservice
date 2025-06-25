@@ -1,16 +1,4 @@
-/* =============================================================
-   Clean & Modern JavaFX Theme – Cantina Universitária (final)
-   -------------------------------------------------------------
-   ✦ Hero‑photo login background + dark overlay    ✦ Glass‑morphism welcome card
-   ✦ Gradient header for in‑app pages
-   ✦ Unified buttons (primary, outline, muted)
-   ✦ Consistent TextField, TableView, ScrollPane, TabPane
-   ✦ Product card, alert dialog & decorative food/icons    -------------------------------------------------------------
-   Ready for JavaFX 17+ — no custom CSS variables or @const.
-   Replace image paths (bg‑cantina.jpg / logo.png / food‑*.png) as needed.
-   =============================================================*/
 
-/* ========== GLOBAL ========== */
 .root {
     -fx-font-family: "Inter", "Segoe UI", Arial, sans-serif;
     -fx-text-fill: #222831;      /* neutral‑900 */

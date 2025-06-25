@@ -3,25 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.3</version>
         <relativePath/>
     </parent>
-    
+
     <groupId>com.cantinasa</groupId>
     <artifactId>cantinasa</artifactId>
     <version>1.0.0</version>
     <name>cantinasa</name>
     <description>Sistema de Autoatendimento para Cantina Universitária</description>
-    
+
     <properties>
         <java.version>17</java.version>
         <javafx.version>21.0.2</javafx.version>
     </properties>
-    
+
     <dependencies>
 
         <!-- Spring Boot -->
@@ -37,14 +37,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        
+
         <!-- Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        
+
         <!-- JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -56,7 +56,7 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        
+
         <!-- Utilities -->
         <!-- Testing -->
         <dependency>
@@ -76,7 +76,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>

@@ -12,11 +12,9 @@
            fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController"
            styleClass="root-bg">
 
-    <!-- Hero background (imagem em CSS) e overlay escuro -->
     <Rectangle width="Infinity" height="Infinity"
                fill="linear-gradient(from 0% 0% to 0% 100%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%)" />
 
-    <!-- Cartão / conteúdo -->
     <VBox alignment="CENTER" spacing="28"
           styleClass="welcome-card">
         <padding>

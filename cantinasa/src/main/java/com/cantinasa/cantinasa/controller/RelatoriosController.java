@@ -40,7 +40,7 @@ public class RelatoriosController {
         return ResponseEntity.ok(relatoriosService.produtosValidade(diasParaVencer));
     }
 
-    @GetMapping("/dia{localDateTime}")
+    @GetMapping("/dia/{localDateTime}")
     public ResponseEntity<Map<String, Object>> relatorioDia(
             @PathVariable LocalDateTime localTime) {
         return ResponseEntity.ok(relatoriosService.generateDailyReport(localTime));
