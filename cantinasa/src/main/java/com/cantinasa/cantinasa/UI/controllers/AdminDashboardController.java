@@ -50,7 +50,6 @@ public class AdminDashboardController {
         MainController.getInstance().loadView("welcome");
     }
 
-    /* ────────────── Produto ────────────── */
     @FXML
     private void handleAddProduct() {
         if (!validateProductFields()) return;

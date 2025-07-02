@@ -14,7 +14,6 @@ public class ItemPedidoDTO {
     @Min(value = 1, message = "Quantidade deve ser maior que zero")
     private int quantidade;
 
-    // Esses campos são preenchidos no backend e devolvidos no response
     private String nomeProduto;
     private Double precoUnitario;
     private Double subtotal;
@@ -60,10 +59,6 @@ public class ItemPedidoDTO {
 
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
-    }
-
-    public Double getSubtotal() {
-        return subtotal;
     }
 
     public void setSubtotal(Double subtotal) {

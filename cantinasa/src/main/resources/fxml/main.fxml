@@ -3,23 +3,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Rectangle?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cantinasa.cantinasa.UI.controllers.MainController"
-            stylesheets="@../styles/main.css">
-    
-    <top>
-        <HBox styleClass="header">
-            <Label text="" styleClass="header-title"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="adminButton" text="Admin" onAction="#handleAdminLogin" styleClass="admin-button"/>
-        </HBox>
-    </top>
-    
-    <center>
-        <StackPane fx:id="contentArea">
-        </StackPane>
-    </center>
-    
-</BorderPane> 
+            fx:controller="com.cantinasa.cantinasa.UI.controllers.MainController">
+    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+        <image>
+            <Image url="@images/background_welcome.png"/>
+        </image>
+    </ImageView>
+    <HBox fx:id="headerBox" styleClass="header" style="-fx-background-color: transparent;" prefWidth="1024">
+        <Label text="" styleClass="header-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="adminButton" text="Admin" onAction="#handleAdminLogin" styleClass="admin-button"/>
+    </HBox>
+    <BorderPane fx:id="mainBorderPane"
+                stylesheets="@../styles/main.css"
+                style="-fx-background-color: transparent;">
+        <center>
+            <StackPane>
+                <Rectangle width="1024" height="728" fill="rgba(0,0,0,0.18)" mouseTransparent="true" />
+                <StackPane fx:id="contentArea" />
+            </StackPane>
+        </center>
+    </BorderPane>
+</StackPane> 

@@ -26,7 +26,6 @@
     </HBox>
     
     <TabPane VBox.vgrow="ALWAYS">
-        <!-- Stock Management Tab -->
         <Tab text="Estoque" closable="false">
             <VBox spacing="12">
                 <HBox spacing="10" alignment="CENTER_LEFT">
@@ -50,7 +49,6 @@
             </VBox>
         </Tab>
         
-        <!-- Sales Reports Tab -->
         <Tab text="Relatórios" closable="false">
             <VBox spacing="12">
                 <HBox spacing="10" alignment="CENTER_LEFT">
@@ -79,7 +77,6 @@
             </VBox>
         </Tab>
         
-        <!-- User Management Tab -->
         <Tab text="Usuários" closable="false">
             <VBox spacing="12">
                 <HBox spacing="10" alignment="CENTER_LEFT">

@@ -41,10 +41,7 @@ public class AdminLoginController {
             Usuario usuario = usuarioService.autenticar(username, password);
 
             if (usuario != null && usuario.getRole() == role.ADMIN) {
-                // ✅ Inicializa o carrinho (mesmo se o admin não for usar, evita erros)
                 MainController.getInstance().loadView("shopping-cart");
-
-                // ✅ Redireciona para o painel administrativo
                 MainController.getInstance().loadView("admin-dashboard");
             } else {
                 showError("Acesso restrito: apenas administradores podem acessar este painel.");
@@ -52,6 +49,11 @@ public class AdminLoginController {
         } catch (Exception e) {
             showError("Erro ao realizar login. Tente novamente.");
         }
+    }
+
+    @FXML
+    private void handleBack() {
+        com.cantinasa.cantinasa.UI.controllers.MainController.getInstance().loadView("welcome");
     }
 
     private void showError(String message) {

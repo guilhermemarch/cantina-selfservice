@@ -11,10 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.stereotype.Controller;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +35,12 @@ public class MainController {
     @FXML
     private Button adminButton;
 
+    @FXML
+    private HBox headerBox;
+
+    @FXML
+    private BorderPane mainBorderPane;
+
     public static MainController getInstance() {
         return instance;
     }
@@ -48,9 +57,8 @@ public class MainController {
     public void initialize() {
         instance = this;
 
-        // ✅ Garante que o carrinho é carregado antes da navegação normal
-        loadView("shopping-cart");         // Instancia o controller do carrinho
-        loadView("welcome");               // Vai para a tela inicial
+        loadView("shopping-cart");
+        loadView("welcome");
     }
 
     @FXML
@@ -61,6 +69,28 @@ public class MainController {
     public void loadView(String viewName) {
         if (viewName.equals(currentView)) {
             return;
+        }
+
+        if ("admin-login".equals(viewName)) {
+            if (headerBox != null) headerBox.setVisible(false);
+            if (mainBorderPane.getScene() != null) {
+                Stage stage = (Stage) mainBorderPane.getScene().getWindow();
+                stage.setMinWidth(400);
+                stage.setMinHeight(300);
+                stage.setMaxWidth(Double.MAX_VALUE);
+                stage.setMaxHeight(Double.MAX_VALUE);
+                stage.setResizable(true);
+            }
+        } else {
+            if (headerBox != null) headerBox.setVisible(true);
+            if (mainBorderPane.getScene() != null) {
+                Stage stage = (Stage) mainBorderPane.getScene().getWindow();
+                stage.setMinWidth(1024);
+                stage.setMinHeight(768);
+                stage.setMaxWidth(1024);
+                stage.setMaxHeight(768);
+                stage.setResizable(false);
+            }
         }
 
         try {

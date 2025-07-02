@@ -3,20 +3,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.cantinasa.cantinasa.UI.controllers.AdminLoginController"
-      spacing="18"
-      styleClass="content-area"
-      alignment="CENTER">
-    
+
+
+
+
+<StackPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cantinasa.cantinasa.UI.controllers.AdminLoginController">
+    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+        <image>
+            <Image url="/images/admin-page.png"/>
+        </image>
+    </ImageView>
+    <VBox alignment="CENTER" spacing="10">
+        <Button text="Voltar" styleClass="back-button" onAction="#handleBack" maxWidth="120"/>
+    </VBox>
     <VBox spacing="16" maxWidth="400" styleClass="login-container" alignment="CENTER">
         <Label text="Login Administrativo" styleClass="section-title" alignment="CENTER"/>
-        
         <TextField fx:id="usernameField" promptText="Usuário"/>
         <PasswordField fx:id="passwordField" promptText="Senha"/>
-        
         <Button text="Entrar" onAction="#handleLogin" maxWidth="Infinity" styleClass="primary-button">
             <tooltip>
                 <Tooltip text="Entrar no painel administrativo"/>
@@ -24,5 +31,4 @@
         </Button>
         <Label fx:id="errorLabel" styleClass="error-message" visible="false" alignment="CENTER"/>
     </VBox>
-    
-</VBox> 
+</StackPane> 

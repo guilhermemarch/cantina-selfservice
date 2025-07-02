@@ -26,7 +26,6 @@ public class JFrame extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("CantinaSA");
         
-        // Apply main container styles
         if (rootNode instanceof VBox) {
             UIStyles.applyMainContainerStyle((VBox) rootNode);
         }
@@ -34,7 +33,6 @@ public class JFrame extends Application {
         Scene scene = new Scene(rootNode, 1024, 768);
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         
-        // Set fixed window size
         primaryStage.setResizable(false);
         primaryStage.setMinWidth(1024);
         primaryStage.setMinHeight(768);
