@@ -1,7 +1,7 @@
 package com.cantinasa.cantinasa.controller;
 
 import com.cantinasa.cantinasa.model.Produto;
-import com.cantinasa.cantinasa.service.RelatoriosService;
+import com.cantinasa.cantinasa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class RelatoriosController {
 
     @GetMapping("/validade")
     public ResponseEntity<List<Map<String, Object>>> produtosValidade(
-            @RequestParam(defaultValue = "30") int diasParaVencer) {
+            @RequestParam(name = "diasParaVencer", defaultValue = "30") int diasParaVencer) {
         return ResponseEntity.ok(relatoriosService.produtosValidade(diasParaVencer));
     }
 
