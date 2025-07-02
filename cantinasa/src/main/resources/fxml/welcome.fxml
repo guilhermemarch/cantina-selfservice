@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
 
-<StackPane fx:id="root"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController"
-           styleClass="root-bg">
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController">
 
-    <Rectangle width="Infinity" height="Infinity"
-               fill="linear-gradient(from 0% 0% to 0% 100%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%)" />
+    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+        <image>
+            <Image url="/images/background_welcome.png"/>
+        </image>
+    </ImageView>
 
-    <VBox alignment="CENTER" spacing="28"
-          styleClass="welcome-card">
-        <padding>
-            <Insets top="48" right="48" bottom="48" left="48"/>
-        </padding>
 
-        <Text text="Cantina Universitária" styleClass="welcome-title"/>
-        <Label text="Faça seu pedido de forma rápida e fácil!"
-               styleClass="section-subtitle" wrapText="true" maxWidth="280"/>
+    <VBox alignment="CENTER" spacing="40.0" styleClass="welcome-content">
 
-        <VBox alignment="CENTER" spacing="16">
+        <VBox alignment="CENTER" spacing="16.0" styleClass="welcome-header">
+            <Text text="Cantina da URI!" styleClass="welcome-title"/>
+            <Text text="Sistema de Autoatendimento" styleClass="welcome-subtitle"/>
+        </VBox>
 
-            <Button text="Continuar" onAction="#handleContinue"
-                    styleClass="primary-button">
+        <VBox alignment="CENTER" spacing="8.0" styleClass="welcome-description">
+            <Text text="Faça seu pedido de forma rápida e fácil!" styleClass="welcome-text"/>
+            <Text text="Escolha seus produtos favoritos e finalize seu pedido em poucos cliques!" styleClass="welcome-text-secondary"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="20.0" styleClass="welcome-buttons">
+            <Button text="Fazer um pedido" onAction="#handleContinue" styleClass="primary-button">
                 <tooltip>
                     <Tooltip text="Ir para a seleção de produtos"/>
                 </tooltip>
             </Button>
-
-            <Button text="Entrar como Administrador" onAction="#handleAdminLogin"
-                    styleClass="secondary-button">
+            <Button text="Setor Administrativo" onAction="#handleAdminLogin" styleClass="secondary-button">
                 <tooltip>
                     <Tooltip text="Acesso ao painel administrativo"/>
                 </tooltip>
             </Button>
-
         </VBox>
+
+        <VBox alignment="CENTER" styleClass="welcome-footer">
+            <Text text="2025 - Feito para a Disciplina de Linguagem de Programação II" styleClass="footer-text"/>
+        </VBox>
+
     </VBox>
+
 </StackPane>

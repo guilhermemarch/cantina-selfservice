@@ -91,8 +91,8 @@ public class PedidoMapper {
         return switch (statusEntity) {
             case PENDENTE -> status.PENDENTE;
             case CONFIRMADO -> status.EM_ANDAMENTO;
-            case PREPARANDO -> status.EM_PREPARACAO;
-            case PRONTO -> status.EM_ENTREGA;
+            case PREPARANDO -> null;
+            case PRONTO -> null;
             case ENTREGUE -> status.FINALIZADO;
             case CANCELADO -> status.CANCELADO;
         };
@@ -105,10 +105,6 @@ public class PedidoMapper {
                 return Pedido.Status.PENDENTE;
             case EM_ANDAMENTO:
                 return Pedido.Status.CONFIRMADO;
-            case EM_PREPARACAO:
-                return Pedido.Status.PREPARANDO;
-            case EM_ENTREGA:
-                return Pedido.Status.PRONTO;
             case FINALIZADO:
                 return Pedido.Status.ENTREGUE;
             case CANCELADO:

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
@@ -22,4 +23,12 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     @Query("SELECT p FROM Produto p WHERE p.quantidade < :limiteMinimo")
     List<Produto> findByQuantidadeBelow(@Param("limiteMinimo") int limiteMinimo);
+
+
+    @Query(value = """
+    SELECT ID, NOME, VALIDADE 
+    FROM PRODUTOS 
+    WHERE DATEDIFF('DAY', CURRENT_DATE, VALIDADE) BETWEEN 0 AND :dias
+    """, nativeQuery = true)
+    List<Object[]> proximoValidade(@Param("dias") int diasParaVencer);
 }

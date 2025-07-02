@@ -4,7 +4,7 @@
 }
 
 .content-area {
-    -fx-background-color: white;
+    -fx-background-color: #FFA500;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: #e0e0e0;
@@ -222,6 +222,7 @@
 
 .alert .header-panel .label {
     -fx-text-fill: white;
+
     -fx-font-weight: bold;
 }
 

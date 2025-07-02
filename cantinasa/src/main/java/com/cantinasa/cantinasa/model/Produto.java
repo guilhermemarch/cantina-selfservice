@@ -52,12 +52,6 @@ public class Produto {
     @Column(nullable = false)
     private categoria categoria;
 
-    @Column
-    private String imagem;
-
-    @Column
-    private String imagemUrl;
-
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Item_pedido> itens;
@@ -141,22 +135,6 @@ public class Produto {
 
     public void setCategoria(categoria categoria) {
         this.categoria = categoria;
-    }
-
-    public String getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(String imagem) {
-        this.imagem = imagem;
-    }
-
-    public String getImagemUrl() {
-        return imagemUrl != null ? imagemUrl : "/images/default-product.png";
-    }
-
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
     }
 
     public List<Item_pedido> getItens() {
