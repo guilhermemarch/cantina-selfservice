@@ -87,7 +87,6 @@ public class PagamentoService {
     }
 
     private String generatePixCode(Pedido pedido) {
-        // In a real implementation, this would generate a valid PIX code
         return "PIX" + System.currentTimeMillis();
     }
 

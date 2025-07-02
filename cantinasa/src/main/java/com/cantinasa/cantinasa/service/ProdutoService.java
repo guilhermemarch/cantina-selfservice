@@ -156,19 +156,7 @@ public class ProdutoService {
         existingProduto.setEstoque_minimo(produto.getEstoque_minimo());
         existingProduto.setValidade(produto.getValidade());
         existingProduto.setCategoria(produto.getCategoria());
-        existingProduto.setImagem(produto.getImagem());
         return produtoRepository.save(existingProduto);
     }
 
-    public List<Produto> findByPrecoBetween(BigDecimal min, BigDecimal max) {
-        return produtoRepository.findByPrecoBetween(min, max);
-    }
-
-    public List<Produto> findByValidadeBefore(LocalDate date) {
-        return produtoRepository.findByValidadeBefore(date);
-    }
-
-    public List<Produto> findByQuantidadeLessThan(int quantidade) {
-        return produtoRepository.findByQuantidadeLessThan(quantidade);
-    }
 }
