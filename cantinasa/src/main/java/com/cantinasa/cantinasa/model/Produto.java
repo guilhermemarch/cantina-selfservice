@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.math.BigDecimal;
 
+/**
+ * Entidade que representa um produto vendido na cantina.
+ */
 @Entity
 @Table(name = "produtos")
 public class Produto {
