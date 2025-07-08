@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Controlador responsável por gerenciar operações relacionadas a pedidos.
+ */
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidosController {
@@ -23,6 +25,12 @@ public class PedidosController {
     @Autowired
     private PedidoMapper pedidoMapper;
 
+    /**
+     * Cria um novo pedido com base nos dados recebidos.
+     *
+     * @param pedidoRequest Objeto contendo os dados do novo pedido.
+     * @return Resposta com o DTO do pedido criado e URI de localização.
+     */
     @PostMapping
     public ResponseEntity<PedidoDTO> criarPedido(@RequestBody PedidoRequest pedidoRequest) {
         Pedido novoPedido = pedidoService.createFromRequest(pedidoRequest);
@@ -31,6 +39,12 @@ public class PedidosController {
         return ResponseEntity.created(location).body(pedidoDTO);
     }
 
+    /**
+     * Busca um pedido pelo seu ID.
+     *
+     * @param id Identificador do pedido.
+     * @return DTO do pedido encontrado ou erro 404 se não encontrado.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<PedidoDTO> buscarPedido(@PathVariable Long id) {
         try {
@@ -41,6 +55,11 @@ public class PedidosController {
         }
     }
 
+    /**
+     * Lista todos os pedidos cadastrados.
+     *
+     * @return Lista de DTOs de pedidos.
+     */
     @GetMapping
     public ResponseEntity<List<PedidoDTO>> listarPedidos() {
         List<Pedido> pedidos = pedidoService.findAll();
@@ -48,6 +67,13 @@ public class PedidosController {
         return ResponseEntity.ok(dtos);
     }
 
+    /**
+     * Atualiza o status de um pedido com base no ID e novo status informado.
+     *
+     * @param id     Identificador do pedido.
+     * @param status Novo status a ser atribuído ao pedido.
+     * @return DTO do pedido atualizado ou erro 404 se não encontrado.
+     */
     @PutMapping("/{id}/status")
     public ResponseEntity<PedidoDTO> atualizarStatus(
             @PathVariable Long id,
@@ -59,5 +85,4 @@ public class PedidosController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

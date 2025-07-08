@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador responsável pelas operações relacionadas a pagamentos.
+ */
 @RestController
 @RequestMapping("/api/pagamentos")
 public class PagamentoController {
@@ -16,6 +19,12 @@ public class PagamentoController {
     @Autowired
     private PagamentoService pagamentoService;
 
+    /**
+     * Processa um novo pagamento com base nos dados enviados.
+     *
+     * @param request Objeto contendo as informações para processar o pagamento.
+     * @return Resposta com o resultado do processamento ou mensagem de erro.
+     */
     @PostMapping("/processar")
     public ResponseEntity<?> processarPagamento(@RequestBody PagamentoProcessarRequest request) {
         try {
@@ -29,6 +38,12 @@ public class PagamentoController {
         }
     }
 
+    /**
+     * Verifica o status de um pagamento pelo ID.
+     *
+     * @param id Identificador do pagamento.
+     * @return Objeto Pagamento com status ou erro 404 se não encontrado.
+     */
     @GetMapping("/status/{id}")
     public ResponseEntity<?> verificarStatus(@PathVariable Long id) {
         try {
@@ -39,6 +54,12 @@ public class PagamentoController {
         }
     }
 
+    /**
+     * Cancela um pagamento existente com base no ID informado.
+     *
+     * @param id Identificador do pagamento a ser cancelado.
+     * @return Pagamento cancelado ou erro 404 se não encontrado.
+     */
     @PostMapping("/{id}/cancelar")
     public ResponseEntity<Pagamento> cancelarPagamento(@PathVariable Long id) {
         try {

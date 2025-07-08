@@ -1,7 +1,5 @@
 package com.cantinasa.cantinasa.controller;
 
-
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,16 +12,28 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import java.util.Map;
 
-
-
+/**
+ * Controlador responsável pelo upload de imagens para o serviço Cloudinary.
+ */
 @RestController
 @RequestMapping("/imagens")
 public class CloudinaryController {
 
+    /** Nome da conta Cloudinary */
     private final String CLOUD_NAME  = "dfqu4q6zo";
+
+    /** Chave de API do Cloudinary */
     private final String API_KEY = "728667547255965";
+
+    /** Upload preset configurado no Cloudinary */
     private final String UPLOAD_PRESET = "ml_default";
 
+    /**
+     * Endpoint responsável por receber uma imagem via formulário multipart e enviá-la para o Cloudinary.
+     *
+     * @param file Arquivo de imagem enviado pelo cliente
+     * @return URL da imagem hospedada no Cloudinary ou mensagem de erro
+     */
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImagem(@RequestParam("file") MultipartFile file) {
         try {
@@ -47,5 +57,3 @@ public class CloudinaryController {
         }
     }
 }
-
-
