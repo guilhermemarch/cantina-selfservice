@@ -1,6 +1,0 @@
-{{base_url}}/api/relatorios/horarios-pico
-{{base_url}}/api/relatorios/validade?diasParaVencer=5000
-{{base_url}}/api/relatorios/dia/{{localDateTime}}
-
-tinha que ter um botao de voltar no admin
-nao ta decrementando quando alguma coisa eh comprado
