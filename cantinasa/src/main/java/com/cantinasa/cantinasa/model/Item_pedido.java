@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Item_pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotNull(message = "Pedido é obrigatório")

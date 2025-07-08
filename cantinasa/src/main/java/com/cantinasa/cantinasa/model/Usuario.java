@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotBlank(message = "nao pode ser nulo")

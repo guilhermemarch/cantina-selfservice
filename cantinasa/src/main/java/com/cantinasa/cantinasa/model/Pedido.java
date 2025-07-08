@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne

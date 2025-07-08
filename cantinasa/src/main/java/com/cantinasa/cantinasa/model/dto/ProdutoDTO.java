@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
@@ -31,6 +32,11 @@ public class ProdutoDTO {
 
     @NotNull(message = "Categoria é obrigatória")
     private categoria categoria;
+
+    @JsonProperty("imagemURL")
+    private String imagemUrl;
+
+    private String descricao;
 
     public Long getIdProduto() {
         return idProduto;
@@ -86,6 +92,22 @@ public class ProdutoDTO {
 
     public void setCategoria(categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public ProdutoDTO() {
