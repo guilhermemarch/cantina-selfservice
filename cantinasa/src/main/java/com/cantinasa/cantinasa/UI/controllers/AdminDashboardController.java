@@ -318,9 +318,7 @@ public class AdminDashboardController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Relatório de Vendas");
-            stage.setScene(new Scene(root));
-            stage.setWidth(UIConfig.getPopupWidth());
-            stage.setHeight(UIConfig.getPopupHeight());
+            stage.setScene(new Scene(root, UIConfig.getPopupWidth(), UIConfig.getPopupHeight()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -335,9 +333,7 @@ public class AdminDashboardController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Relatório de Estoque Baixo");
-            stage.setScene(new Scene(root));
-            stage.setWidth(UIConfig.getPopupWidth());
-            stage.setHeight(UIConfig.getPopupHeight());
+            stage.setScene(new Scene(root, UIConfig.getPopupWidth(), UIConfig.getPopupHeight()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -352,9 +348,7 @@ public class AdminDashboardController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Relatório de Produtos Próximos do Vencimento");
-            stage.setScene(new Scene(root));
-            stage.setWidth(UIConfig.getPopupWidth());
-            stage.setHeight(UIConfig.getPopupHeight());
+            stage.setScene(new Scene(root, UIConfig.getPopupWidth(), UIConfig.getPopupHeight()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -369,9 +363,7 @@ public class AdminDashboardController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Relatório de Horários de Pico");
-            stage.setScene(new Scene(root));
-            stage.setWidth(UIConfig.getPopupWidth());
-            stage.setHeight(UIConfig.getPopupHeight());
+            stage.setScene(new Scene(root, UIConfig.getPopupWidth(), UIConfig.getPopupHeight()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
