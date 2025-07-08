@@ -3,8 +3,8 @@ INSERT INTO usuarios (id, created_at, email, password, role, updated_at, usernam
 (2, NOW(), 'joao@aluno.santoangelo.uri.br', 'senha123', 'USERS', NOW(), 'joao123'),
 (3, NOW(), 'maria@aluno.santoangelo.uri.br', 'senha123', 'USERS', NOW(), 'mariazinha'),
 (4, NOW(), 'lucas@uni.edu', 'senha123', 'USERS', NOW(), 'lucasdev'),
-(5, NOW(), 'ana@aluno.santoangelo.uri.br', 'senha123', 'ADMIN', NOW(), 'anaat');
-(6, NOW(), 'admin@admin', 'admin', 'ADMIN', NOW(), 'admin');
+(5, NOW(), 'ana@aluno.santoangelo.uri.br', 'senha123', 'ADMIN', NOW(), 'anaat'),
+(6, NOW(), 'admin@admin', 'admin', 'ADMIN', NOW(), 'admin'),
 (0, NOW(), 'desconhecido', 'desconhecido', 'USERS', NOW(), 'desconhecido');
 
 INSERT INTO produtos (id, categoria, created_at, descricao, estoque_minimo, nome, preco, quantidade_estoque, updated_at, validade, imagem_url) VALUES

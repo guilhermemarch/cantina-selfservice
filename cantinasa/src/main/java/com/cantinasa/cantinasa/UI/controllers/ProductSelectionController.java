@@ -4,7 +4,7 @@ import com.cantinasa.cantinasa.model.Produto;
 import com.cantinasa.cantinasa.service.ProdutoService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.geometry.Pos;
@@ -12,6 +12,8 @@ import javafx.scene.layout.HBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import com.cantinasa.cantinasa.UI.styles.UIStyles;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class ProductSelectionController {
     private ComboBox<String> categoryFilter;
 
     @FXML
-    private GridPane productsGrid;
+    private FlowPane productsFlow;
 
     @FXML
     public void initialize() {
@@ -72,28 +74,30 @@ public class ProductSelectionController {
 
 
     private void displayProducts(List<Produto> produtos) {
-        productsGrid.getChildren().clear();
-        int row = 0;
-        int col = 0;
-        int maxCols = 3;
-
+        productsFlow.getChildren().clear();
         for (Produto produto : produtos) {
             VBox productCard = createProductCard(produto);
-            productsGrid.add(productCard, col, row);
-            
-            col++;
-            if (col >= maxCols) {
-                col = 0;
-                row++;
-            }
+            productsFlow.getChildren().add(productCard);
         }
     }
 
     private VBox createProductCard(Produto produto) {
         VBox card = new VBox(10);
-        UIStyles.applyProductCardStyle(card);
+        card.getStyleClass().add("product-card");
         card.setAlignment(Pos.CENTER);
-        
+        card.setPrefWidth(240);
+        card.setPrefHeight(320);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(80);
+        String imgUrl = produto.getImagemUrl();
+        if (imgUrl != null && !imgUrl.isBlank()) {
+            imageView.setImage(new Image(imgUrl, true));
+        } else {
+            imageView.setImage(new Image("file:/D:/github/apagar/cantinasa/cantinasa/src/main/resources/images/img_4.png", true));
+        }
+
         Text nameText = new Text(produto.getNome());
         nameText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         
@@ -144,7 +148,7 @@ public class ProductSelectionController {
             handleAddToCart(produto, quantity);
         });
         
-        card.getChildren().addAll(nameText, descText, priceText, stockText, quantityBox, addButton);
+        card.getChildren().addAll(imageView, nameText, descText, priceText, stockText, quantityBox, addButton);
         return card;
     }
 
@@ -179,5 +183,10 @@ public class ProductSelectionController {
     @FXML
     private void handleViewCart() {
         MainController.getInstance().loadView("shopping-cart");
+    }
+
+    @FXML
+    private void handleBack() {
+        MainController.getInstance().loadView("welcome");
     }
 } 

@@ -133,7 +133,12 @@ public class ShoppingCartController {
             showAlert("Carrinho vazio", "Adicione itens ao carrinho antes de finalizar o pedido.");
             return;
         }
-        MainController.getInstance().loadView("payment");
+        MainController.getInstance().loadView("user-choice");
+    }
+
+    @FXML
+    private void handleBack() {
+        MainController.getInstance().loadView("product-selection");
     }
 
     public ObservableList<Item_pedido> getCartItems() {

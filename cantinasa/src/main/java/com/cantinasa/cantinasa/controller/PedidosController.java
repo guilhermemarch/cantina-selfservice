@@ -2,6 +2,7 @@ package com.cantinasa.cantinasa.controller;
 
 import com.cantinasa.cantinasa.model.Pedido;
 import com.cantinasa.cantinasa.model.dto.PedidoDTO;
+import com.cantinasa.cantinasa.model.dto.PedidoRequest;
 import com.cantinasa.cantinasa.model.mapper.PedidoMapper;
 import com.cantinasa.cantinasa.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class PedidosController {
     private PedidoMapper pedidoMapper;
 
     @PostMapping
-    public ResponseEntity<PedidoDTO> criarPedido(@RequestBody PedidoDTO pedido) {
-        Pedido novoPedido = pedidoService.create(pedido);
+    public ResponseEntity<PedidoDTO> criarPedido(@RequestBody PedidoRequest pedidoRequest) {
+        Pedido novoPedido = pedidoService.createFromRequest(pedidoRequest);
         PedidoDTO pedidoDTO = pedidoMapper.toDTO(novoPedido);
         URI location = URI.create("/api/pedidos/" + pedidoDTO.getIdPedido());
         return ResponseEntity.created(location).body(pedidoDTO);

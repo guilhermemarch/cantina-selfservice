@@ -45,13 +45,17 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<?> cadastrarProduto(@Valid @RequestBody ProdutoRequest request) {
-        ResponseEntity<?> validationResponse = validateAdmin(request.getUserId(), request.getPassword());
-        if (validationResponse != null) {
-            return validationResponse;
-        }
+        System.out.println("0");
 
+        validateAdmin(request.getUserId(), request.getPassword());
+
+
+        System.out.println("1");
         ProdutoDTO produtoCadastrado = produtoService.cadastrarProduto(request.getProduto());
+        System.out.println("2");
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoCadastrado);
+
+
     }
 
     @GetMapping
@@ -71,10 +75,7 @@ public class ProdutoController {
             @PathVariable Long id,
             @Valid @RequestBody ProdutoRequest request) {
         
-        ResponseEntity<?> validationResponse = validateAdmin(request.getUserId(), request.getPassword());
-        if (validationResponse != null) {
-            return validationResponse;
-        }
+         validateAdmin(request.getUserId(), request.getPassword());
 
         ProdutoDTO produtoAtualizado = produtoService.atualizarProduto(id, request.getProduto());
         return ResponseEntity.ok(produtoAtualizado);
@@ -97,8 +98,8 @@ public class ProdutoController {
 
     @PatchMapping("/{id}/estoque")
     public ResponseEntity<?> atualizarEstoque(
-            @PathVariable Long id,
-            @RequestParam int quantidade,
+            @PathVariable("id") Long id,
+            @RequestParam("quantidade") int quantidade,
             @Valid @RequestBody AdminDTO admin) {
 
         ResponseEntity<?> validationResponse = validateAdmin(admin.getUserId(), admin.getPassword());

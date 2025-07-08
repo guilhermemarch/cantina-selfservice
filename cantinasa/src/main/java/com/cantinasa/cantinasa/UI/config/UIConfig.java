@@ -2,6 +2,10 @@ package com.cantinasa.cantinasa.UI.config;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import javafx.stage.Screen;
 
 public class UIConfig {
     public static final Color PRIMARY_COLOR = Color.web("#2196F3");
@@ -42,4 +46,45 @@ public class UIConfig {
         "CANCELADO",
         "PENDENTE"
     };
+
+    private static final Properties properties = new Properties();
+    static {
+        try (InputStream input = UIConfig.class.getClassLoader().getResourceAsStream("application.properties")) {
+            if (input != null) {
+                properties.load(input);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static int getDefaultWindowWidth() {
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        if (screenWidth >= 1920) {
+            return Integer.parseInt(properties.getProperty("ui.window.width.fullhd", "1024"));
+        } else if (screenWidth >= 1336) {
+            return Integer.parseInt(properties.getProperty("ui.window.width.hd", "900"));
+        } else {
+            return Integer.parseInt(properties.getProperty("ui.window.min.width", "400"));
+        }
+    }
+
+    public static int getDefaultWindowHeight() {
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        if (screenHeight >= 1080) {
+            return Integer.parseInt(properties.getProperty("ui.window.height.fullhd", "768"));
+        } else if (screenHeight >= 768) {
+            return Integer.parseInt(properties.getProperty("ui.window.height.hd", "600"));
+        } else {
+            return Integer.parseInt(properties.getProperty("ui.window.min.height", "300"));
+        }
+    }
+
+    public static int getMinWindowWidth() {
+        return Integer.parseInt(properties.getProperty("ui.window.min.width", "400"));
+    }
+
+    public static int getMinWindowHeight() {
+        return Integer.parseInt(properties.getProperty("ui.window.min.height", "300"));
+    }
 } 

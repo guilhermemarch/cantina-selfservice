@@ -1,5 +1,6 @@
 package com.cantinasa.cantinasa.UI;
 
+import com.cantinasa.cantinasa.UI.config.UIConfig;
 import com.cantinasa.cantinasa.UI.styles.UIStyles;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,14 +31,16 @@ public class JFrame extends Application {
             UIStyles.applyMainContainerStyle((VBox) rootNode);
         }
         
-        Scene scene = new Scene(rootNode, 1024, 768);
+        int width = UIConfig.getDefaultWindowWidth();
+        int height = UIConfig.getDefaultWindowHeight();
+        Scene scene = new Scene(rootNode, width, height);
         scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         
         primaryStage.setResizable(false);
-        primaryStage.setMinWidth(1024);
-        primaryStage.setMinHeight(768);
-        primaryStage.setMaxWidth(1024);
-        primaryStage.setMaxHeight(768);
+        primaryStage.setMinWidth(width);
+        primaryStage.setMinHeight(height);
+        primaryStage.setMaxWidth(width);
+        primaryStage.setMaxHeight(height);
         
         primaryStage.setScene(scene);
         primaryStage.show();

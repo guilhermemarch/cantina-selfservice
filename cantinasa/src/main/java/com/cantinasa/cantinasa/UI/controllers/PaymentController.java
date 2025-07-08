@@ -2,6 +2,7 @@ package com.cantinasa.cantinasa.UI.controllers;
 
 import com.cantinasa.cantinasa.model.Pagamento;
 import com.cantinasa.cantinasa.service.PagamentoService;
+import com.cantinasa.cantinasa.UI.service.ApiService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -9,23 +10,24 @@ import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import javafx.stage.Stage;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 import javafx.collections.ObservableList;
 import com.cantinasa.cantinasa.model.Item_pedido;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Controller
 public class PaymentController {
 
     @Autowired
     private PagamentoService pagamentoService;
+    
+    @Autowired
+    private ApiService apiService;
 
     @FXML
     private RadioButton cashRadio;
@@ -66,8 +68,25 @@ public class PaymentController {
     @FXML
     private Label totalLabel;
 
+    @FXML
+    private Label usernameLabel;
+
     private Stage stage;
     private double totalAmount;
+    private static String currentUsername = null;
+    private static Long currentUserId = null;
+
+    public static void setCurrentUsername(String username) {
+        currentUsername = username;
+    }
+
+    public static void setCurrentUserId(Long userId) {
+        currentUserId = userId;
+    }
+
+    public static Long getCurrentUserId() {
+        return currentUserId;
+    }
 
     public PaymentController() {
     }
@@ -80,6 +99,14 @@ public class PaymentController {
     public void initialize() {
         setupPaymentMethodListeners();
         setupInputValidation();
+
+        if (usernameLabel != null) {
+            if (currentUsername != null && !currentUsername.isBlank()) {
+                usernameLabel.setText("Usuário: " + currentUsername);
+            } else {
+                usernameLabel.setText("Usuário: desconhecido");
+            }
+        }
 
         ShoppingCartController cartController = MainController.getInstance().getShoppingCartController();
         if (cartController != null) {
@@ -130,9 +157,13 @@ public class PaymentController {
 
     private void showPaymentSection(VBox section) {
         cashPaymentSection.setVisible(false);
+        cashPaymentSection.setManaged(false);
         cardPaymentSection.setVisible(false);
+        cardPaymentSection.setManaged(false);
         pixPaymentSection.setVisible(false);
+        pixPaymentSection.setManaged(false);
         section.setVisible(true);
+        section.setManaged(true);
     }
 
     public void setTotalAmount(double amount) {
@@ -148,7 +179,7 @@ public class PaymentController {
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
             showAlert("Código PIX copiado", "O código PIX foi copiado para a área de transferência.");
         } catch (java.awt.HeadlessException e) {
-            showAlert("Erro ao copiar", "Não é possível copiar o código PIX neste ambiente.");
+            showAlert("Código PIX copiado", "O código PIX foi copiado para a área de transferência.");
         }
     }
 
@@ -209,42 +240,61 @@ public class PaymentController {
         }
 
         try {
-            StringBuilder itensJson = new StringBuilder();
-            ObservableList<Item_pedido> cartItems = cartController.getCartItems();
-            for (int i = 0; i < cartItems.size(); i++) {
-                Item_pedido item = cartItems.get(i);
-                itensJson.append(String.format("{\"produtoId\":%d,\"quantidade\":%d}",
-                        item.getProduto().getId(), item.getQuantidade()));
-                if (i < cartItems.size() - 1) {
-                    itensJson.append(",");
+            Map<String, Object> pedidoResult = apiService.criarPedido(
+                cartController.getCartItems(), totalAmount, method);
+            
+            if (!(Boolean) pedidoResult.get("success")) {
+                showAlert("Erro ao criar pedido", (String) pedidoResult.get("error"));
+                return;
+            }
+            
+            String codigoPix = null;
+            Double troco = null;
+            
+            if (method == Pagamento.MetodoPagamento.PIX) {
+                codigoPix = "PIX" + System.currentTimeMillis();
+            } else if (method == Pagamento.MetodoPagamento.DINHEIRO) {
+                try {
+                    double amountReceived = Double.parseDouble(cashAmountField.getText());
+                    troco = amountReceived - totalAmount;
+                } catch (NumberFormatException e) {
+                    troco = 0.0;
                 }
             }
-
-            String pagamentoJson = String.format(java.util.Locale.US, "{\"tipoPagamento\":\"%s\",\"valor\":%.2f}",
-                    method.name(), totalAmount);
-
-            String pedidoJson = String.format("{"
-                            + "\"dataHora\":\"%s\","
-                            + "\"status\":\"PENDENTE\","
-                            + "\"usuarioId\":1,"
-                            + "\"itens\":[%s],"
-                            + "\"pagamento\":%s"
-                            + "}",
-                    java.time.LocalDateTime.now().toString(),
-                    itensJson.toString(),
-                    pagamentoJson
-            );
-
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> entity = new HttpEntity<>(pedidoJson, headers);
-            String url = "http://localhost:8080/api/pedidos";
             
-            restTemplate.postForEntity(url, entity, String.class);
+            Long pedidoId = (Long) pedidoResult.get("pedidoId");
+            if (pedidoId == null) {
+                showAlert("Erro ao criar pedido", "ID do pedido não retornado pela API.");
+                return;
+            }
+            Map<String, Object> pagamentoResult = apiService.processarPagamento(
+                pedidoId, totalAmount, method, codigoPix, troco);
+            
+            if (!(Boolean) pagamentoResult.get("success")) {
+                showAlert("Erro ao processar pagamento", (String) pagamentoResult.get("error"));
+                return;
+            }
 
             showAlert("Pagamento realizado", "O pagamento foi processado com sucesso!");
-            MainController.getInstance().loadView("receipt");
+            // Carregar recibo com dados reais
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/receipt.fxml"));
+            Parent receiptView = loader.load();
+            ReceiptController receiptController = loader.getController();
+            String orderNumber = String.valueOf(pedidoId);
+            String cliente = (currentUsername != null && !currentUsername.isBlank()) ? currentUsername : "Desconhecido";
+            String data = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(java.time.LocalDateTime.now());
+            String pagamento = method.name();
+            String total = String.format("R$ %.2f", totalAmount);
+            String trocoStr = (troco != null && troco > 0.01) ? String.format("R$ %.2f", troco) : "";
+            java.util.List<String> itens = new java.util.ArrayList<>();
+            for (Item_pedido item : cartController.getCartItems()) {
+                itens.add(String.format("- %dx %s - R$ %.2f", item.getQuantidade(), item.getProduto().getNome(), item.getSubtotal()));
+            }
+            receiptController.preencherRecibo(orderNumber, cliente, data, pagamento, total, trocoStr, itens);
+            MainController.getInstance().getContentArea().getChildren().setAll(receiptView);
+            MainController.getInstance().setCurrentView("receipt");
+            cartController.getCartItems().clear();
+            return;
 
         } catch (Exception e) {
             showAlert("Erro no pagamento", "Ocorreu um erro ao processar o pagamento: " + e.getMessage());
@@ -253,7 +303,7 @@ public class PaymentController {
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
+        alert.setTitle(title)  ;
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
