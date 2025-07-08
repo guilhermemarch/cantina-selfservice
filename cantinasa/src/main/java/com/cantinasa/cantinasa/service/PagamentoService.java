@@ -1,8 +1,12 @@
 package com.cantinasa.cantinasa.service;
 
 import com.cantinasa.cantinasa.model.*;
+import com.cantinasa.cantinasa.model.dto.PagamentoProcessarRequest;
 import com.cantinasa.cantinasa.repository.PagamentoRepository;
 import com.cantinasa.cantinasa.repository.PedidoRepository;
+import com.cantinasa.cantinasa.repository.ProdutoRepository;
+import com.cantinasa.cantinasa.exceptions.PagamentoExistenteException;
+import com.cantinasa.cantinasa.exceptions.PedidoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,9 @@ public class PagamentoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
     @Transactional
     public Pagamento processCashPayment(Pedido pedido, BigDecimal amountReceived) {
         validatePayment(pedido, amountReceived);
@@ -31,7 +38,19 @@ public class PagamentoService {
         pagamento.setStatus(Pagamento.Status.APROVADO);
         pagamento.setTroco(amountReceived.subtract(pedido.getValorTotal()).doubleValue());
 
-        return pagamentoRepository.save(pagamento);
+        Pagamento savedPagamento = pagamentoRepository.save(pagamento);
+
+        if (Pagamento.Status.APROVADO.equals(savedPagamento.getStatus())) {
+            for (Item_pedido item : pedido.getItens()) {
+                Produto produto = item.getProduto();
+                int novaQuantidade = produto.getQuantidade() - item.getQuantidade();
+                if (novaQuantidade < 0) novaQuantidade = 0;
+                produto.setQuantidade(novaQuantidade);
+                produtoRepository.save(produto);
+            }
+        }
+
+        return savedPagamento;
     }
 
     @Transactional
@@ -55,7 +74,7 @@ public class PagamentoService {
     @Transactional
     public Pagamento processPixPayment(Pedido pedido) {
         String pixCode = generatePixCode(pedido);
-        
+
         Pagamento pagamento = new Pagamento();
         pagamento.setPedido(pedido);
         pagamento.setValor(pedido.getValorTotal());
@@ -65,19 +84,6 @@ public class PagamentoService {
         pagamento.setCodigo_pix(pixCode);
 
         return pagamentoRepository.save(pagamento);
-    }
-
-    @Transactional
-    public void confirmPixPayment(Long pagamentoId) {
-        Pagamento pagamento = pagamentoRepository.findById(pagamentoId)
-                .orElseThrow(() -> new RuntimeException("Pagamento não encontrado"));
-
-        if (pagamento.getMetodo() != Pagamento.MetodoPagamento.PIX) {
-            throw new RuntimeException("Apenas pagamentos PIX podem ser confirmados");
-        }
-
-        pagamento.setStatus(Pagamento.Status.APROVADO);
-        pagamentoRepository.save(pagamento);
     }
 
     private void validatePayment(Pedido pedido, BigDecimal amount) {
@@ -143,5 +149,43 @@ public class PagamentoService {
 
     private String gerarCodigoPix() {
         return "PIX" + System.currentTimeMillis();
+    }
+
+    @Transactional
+    public Pagamento processarPagamentoFromRequest(PagamentoProcessarRequest request) {
+        Pedido pedido = pedidoRepository.findById(request.getPedido().getId())
+                .orElseThrow(PedidoNotFoundException::new);
+
+        if (pedido.getPagamento() != null) {
+            throw new PagamentoExistenteException();
+        }
+
+        Pagamento pagamento = new Pagamento();
+        pagamento.setPedido(pedido);
+        pagamento.setValor(BigDecimal.valueOf(request.getValor()));
+        pagamento.setMetodo(Pagamento.MetodoPagamento.valueOf(request.getMetodo()));
+        pagamento.setData_pagamento(LocalDateTime.now());
+        pagamento.setCodigo_pix(request.getCodigo_pix());
+        pagamento.setTroco(request.getTroco());
+        
+        if (Pagamento.MetodoPagamento.PIX.equals(pagamento.getMetodo())) {
+            pagamento.setStatus(Pagamento.Status.PENDENTE);
+        } else {
+            pagamento.setStatus(Pagamento.Status.APROVADO);
+        }
+
+        Pagamento savedPagamento = pagamentoRepository.save(pagamento);
+
+        if (Pagamento.Status.APROVADO.equals(savedPagamento.getStatus())) {
+            for (Item_pedido item : pedido.getItens()) {
+                Produto produto = item.getProduto();
+                int novaQuantidade = produto.getQuantidade() - item.getQuantidade();
+                if (novaQuantidade < 0) novaQuantidade = 0;
+                produto.setQuantidade(novaQuantidade);
+                produtoRepository.save(produto);
+            }
+        }
+
+        return savedPagamento;
     }
 }

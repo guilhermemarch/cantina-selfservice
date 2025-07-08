@@ -83,10 +83,10 @@ public class ProdutoService {
 
     @Transactional
     public ProdutoDTO cadastrarProduto(@Valid ProdutoDTO produtoDTO) {
-
-        Produto produtoSalvo = produtoMapper.toEntity(produtoDTO);
+        produtoDTO.setIdProduto(null);
+        Produto produtoSalvo = ProdutoMapper.toEntity(produtoDTO);
         produtoSalvo = produtoRepository.save(produtoSalvo);
-        return convertToDTO(produtoSalvo);
+        return ProdutoMapper.toDTO(produtoSalvo);
     }
 
     public List<ProdutoDTO> listarProdutos() {
@@ -107,9 +107,15 @@ public class ProdutoService {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com ID: " + id));
 
-        Produto produtoAtualizado = produtoMapper.toEntity(produtoDTO);
-
-        produtoAtualizado = produtoRepository.save(produtoAtualizado);
+        produto.setNome(produtoDTO.getNome());
+        produto.setDescricao(produtoDTO.getDescricao());
+        produto.setPreco(java.math.BigDecimal.valueOf(produtoDTO.getPreco()));
+        produto.setQuantidade(produtoDTO.getQuantidade_estoque());
+        produto.setEstoque_minimo(produtoDTO.getEstoque_minimo());
+        produto.setValidade(produtoDTO.getValidade());
+        produto.setCategoria(produtoDTO.getCategoria());
+        produto.setImagemUrl(produtoDTO.getImagemUrl());
+        Produto produtoAtualizado = produtoRepository.save(produto);
         return convertToDTO(produtoAtualizado);
     }
 
@@ -137,8 +143,7 @@ public class ProdutoService {
     }
 
     private ProdutoDTO convertToDTO(Produto produto) {
-        ProdutoDTO ProdutoDTO = produtoMapper.toDTO(produto);
-        return ProdutoDTO;
+        return ProdutoMapper.toDTO(produto);
     }
 
     @Transactional
