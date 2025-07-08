@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.stereotype.Controller;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +41,9 @@ public class MainController {
 
     @FXML
     private BorderPane mainBorderPane;
+
+    @FXML
+    private ImageView imageView;
 
     private HBox headerBox;
 
@@ -77,6 +81,12 @@ public class MainController {
         HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
         headerBox.getChildren().addAll(headerTitle, spacer);
         ((StackPane) mainBorderPane.getParent()).getChildren().add(1, headerBox);
+
+        if (imageView != null && mainBorderPane != null) {
+            StackPane root = (StackPane) mainBorderPane.getParent();
+            imageView.fitWidthProperty().bind(root.widthProperty());
+            imageView.fitHeightProperty().bind(root.heightProperty());
+        }
 
         loadView("shopping-cart");
         loadView("welcome");
