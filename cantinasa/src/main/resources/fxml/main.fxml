@@ -10,24 +10,16 @@
 <StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cantinasa.cantinasa.UI.controllers.MainController">
-    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+    <ImageView fitWidth="729" fitHeight="546" preserveRatio="false">
         <image>
             <Image url="@images/background_welcome.png"/>
         </image>
     </ImageView>
-    <HBox fx:id="headerBox" styleClass="header" style="-fx-background-color: transparent;" prefWidth="1024">
-        <Label text="" styleClass="header-title"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Button fx:id="adminButton" text="Admin" onAction="#handleAdminLogin" styleClass="admin-button"/>
-    </HBox>
     <BorderPane fx:id="mainBorderPane"
-                stylesheets="@../styles/main.css"
+                stylesheets="@../styles/main.css, @../css/styles.css"
                 style="-fx-background-color: transparent;">
         <center>
-            <StackPane>
-                <Rectangle width="1024" height="728" fill="rgba(0,0,0,0.18)" mouseTransparent="true" />
-                <StackPane fx:id="contentArea" />
-            </StackPane>
+            <StackPane fx:id="contentArea" />
         </center>
     </BorderPane>
 </StackPane> 

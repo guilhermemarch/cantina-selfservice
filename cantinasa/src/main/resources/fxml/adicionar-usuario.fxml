@@ -2,10 +2,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.AdicionarUsuarioController" spacing="16" alignment="CENTER" style="-fx-padding: 32;">
-    <Label text="Criar Conta" styleClass="admin-title"/>
+    <Label text="Adicionar Usuário" styleClass="admin-title"/>
     <HBox spacing="8">
         <TextField fx:id="usernameField" promptText="Usuário"/>
-        <TextField fx:id="emailField" promptText="Email"/>f
+        <TextField fx:id="emailField" promptText="Email"/>
         <PasswordField fx:id="senhaField" promptText="Senha"/>
     </HBox>
     <HBox spacing="12" alignment="CENTER_RIGHT">

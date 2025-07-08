@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.AdicionarProdutoController" spacing="16" alignment="CENTER" style="-fx-padding: 32;">
+    <Label text="Adicionar Produto" styleClass="admin-title"/>
+    <HBox spacing="8">
+        <TextField fx:id="nomeField" promptText="Nome do Produto"/>
+        <TextField fx:id="precoField" promptText="Preço"/>
+    </HBox>
+    <HBox spacing="8">
+        <TextField fx:id="descricaoField" promptText="Descrição"/>
+    </HBox>
+    <HBox spacing="8">
+        <TextField fx:id="quantidadeEstoqueField" promptText="Quantidade"/>
+        <TextField fx:id="estoqueMinimoField" promptText="Estoque Mínimo"/>
+    </HBox>
+    <HBox spacing="8">
+        <DatePicker fx:id="validadePicker" promptText="Validade"/>
+        <ComboBox fx:id="categoriaComboBox" promptText="Categoria"/>
+    </HBox>
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Button text="Selecionar Imagem" onAction="#handleSelectImage"/>
+        <ImageView fx:id="imagePreview" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+    </HBox>
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <Button text="Cancelar" onAction="#handleCancel" styleClass="secondary-button"/>
+        <Button text="Salvar" fx:id="saveButton" onAction="#handleSave" styleClass="primary-button"/>
+    </HBox>
+</VBox> 

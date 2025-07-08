@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.RelatorioVendasController">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-background-color: #fff; -fx-padding: 18 32 18 32;">
+            <Label text="Relatório de Vendas" styleClass="admin-title" alignment="CENTER_LEFT" wrapText="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Fechar" onAction="#handleClose" styleClass="secondary-button"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="16" style="-fx-padding: 24;">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Data Inicial:"/>
+                <DatePicker fx:id="startDatePicker"/>
+                <Label text="Data Final:"/>
+                <DatePicker fx:id="endDatePicker"/>
+                <Button text="Buscar" onAction="#handleSearch" styleClass="primary-button"/>
+<!--                <Button text="Exportar" onAction="#handleExport" styleClass="secondary-button"/>-->
+            </HBox>
+            <Label fx:id="summaryLabel" text="" styleClass="admin-section-title"/>
+            <TableView fx:id="salesTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="productColumn" text="Produto"/>
+                    <TableColumn fx:id="quantitySoldColumn" text="Quantidade Vendida"/>
+                </columns>
+                <placeholder>
+                    <Label text="Nenhum dado de venda encontrado."/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane> 

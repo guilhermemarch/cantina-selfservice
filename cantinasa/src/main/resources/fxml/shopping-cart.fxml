@@ -2,42 +2,52 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.cantinasa.cantinasa.UI.controllers.ShoppingCartController"
-      spacing="18"
-      alignment="CENTER"
-      styleClass="content-area">
-    
-    <Label text="Seu Pedido" styleClass="section-title" alignment="CENTER"/>
-    
-    <TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="productColumn" text="Produto"/>
-            <TableColumn fx:id="quantityColumn" text="Quantidade"/>
-            <TableColumn fx:id="priceColumn" text="Preço Unitário"/>
-            <TableColumn fx:id="totalColumn" text="Total"/>
-            <TableColumn fx:id="actionsColumn" text="Ações"/>
-        </columns>
-    </TableView>
-    
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Label text="Total:"/>
-        <Label fx:id="totalLabel" styleClass="total-label"/>
-    </HBox>
-    
-    <HBox spacing="16" alignment="CENTER_RIGHT">
-        <Button text="Continuar Comprando" onAction="#handleContinueShopping" styleClass="secondary-button">
-            <tooltip>
-                <Tooltip text="Voltar para a seleção de produtos"/>
-            </tooltip>
-        </Button>
-        <Button text="Finalizar Pedido" onAction="#handleCheckout" styleClass="primary-button">
-            <tooltip>
-                <Tooltip text="Ir para o pagamento"/>
-            </tooltip>
-        </Button>
-    </HBox>
-    
-</VBox> 
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.cantinasa.cantinasa.UI.controllers.ShoppingCartController">
+    <Region style="-fx-background-color: #FFA500;" StackPane.alignment="CENTER"/>
+    <VBox spacing="18"
+          alignment="CENTER"
+          styleClass="content-area"
+          prefWidth="729"
+          prefHeight="546"
+          maxWidth="Infinity"
+          maxHeight="Infinity"
+          VBox.vgrow="ALWAYS"
+          style="">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+        <Label text="Seu Pedido" styleClass="section-title" alignment="CENTER"/>
+        <TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="productColumn" text="Produto"/>
+                <TableColumn fx:id="quantityColumn" text="Quantidade"/>
+                <TableColumn fx:id="priceColumn" text="Preço Unitário"/>
+                <TableColumn fx:id="totalColumn" text="Total"/>
+                <TableColumn fx:id="actionsColumn" text="Ações"/>
+            </columns>
+        </TableView>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Label text="Total:"/>
+            <Label fx:id="totalLabel" styleClass="total-label"/>
+        </HBox>
+        <HBox spacing="16" alignment="CENTER_RIGHT">
+            <Button text="Voltar" onAction="#handleBack" styleClass="secondary-button">
+                <tooltip>
+                    <Tooltip text="Voltar para a tela de seleção de produtos"/>
+                </tooltip>
+            </Button>
+            <Button text="Continuar Comprando" onAction="#handleContinueShopping" styleClass="secondary-button">
+                <tooltip>
+                    <Tooltip text="Voltar para a seleção de produtos"/>
+                </tooltip>
+            </Button>
+            <Button text="Finalizar Pedido" onAction="#handleCheckout" styleClass="primary-button">
+                <tooltip>
+                    <Tooltip text="Ir para o pagamento"/>
+                </tooltip>
+            </Button>
+        </HBox>
+    </VBox>
+</StackPane> 

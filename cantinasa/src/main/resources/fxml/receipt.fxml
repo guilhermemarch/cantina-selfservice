@@ -3,34 +3,42 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.cantinasa.cantinasa.UI.controllers.ReceiptController"
-      alignment="CENTER"
-      spacing="24.0"
+      alignment="TOP_CENTER"
+      spacing="10"
       styleClass="receipt-container">
 
     <padding>
-        <Insets top="40" bottom="40" left="32" right="32"/>
+        <Insets top="24" bottom="24" left="32" right="32"/>
     </padding>
 
-    <Text text="Compra Confirmada!" styleClass="receipt-title"/>
+    <Label text="Cantina da URI" styleClass="receipt-header"/>
 
-    <Label fx:id="orderNumberLabel"
-           text="Número do pedido: #12345"
-           styleClass="receipt-order-number"
-           wrapText="true"
-           textAlignment="CENTER" />
+    <Separator/>
 
-    <Label text="Seu pedido foi processado com sucesso."
-           styleClass="receipt-message"
-           wrapText="true"
-           textAlignment="CENTER" />
+    <Label fx:id="orderNumberLabel" text="" styleClass="receipt-subtitle"/>
+    <Label fx:id="clientLabel" text="" styleClass="receipt-line"/>
+    <Label fx:id="dateLabel" text="" styleClass="receipt-line"/>
+    <Label fx:id="paymentLabel" text="" styleClass="receipt-line"/>
+
+    <Separator/>
+
+    <Label text="Itens Comprados:" styleClass="receipt-subtitle"/>
+    <VBox fx:id="itemsBox" spacing="4" styleClass="receipt-items"/>
+
+    <Separator/>
+
+    <Label fx:id="totalLabel" text="" styleClass="receipt-total"/>
+    <Label fx:id="trocoLabel" text="" styleClass="receipt-line"/>
 
     <Button text="Voltar ao Início"
             onAction="#handleBackToHome"
-            styleClass="primary-button"/>
+            styleClass="primary-button"
+            prefWidth="200"/>
+
+    <Label text="Obrigado por comprar conosco!" styleClass="receipt-footer"/>
 
 </VBox>

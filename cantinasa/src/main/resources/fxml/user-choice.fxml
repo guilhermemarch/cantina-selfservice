@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tooltip?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cantinasa.cantinasa.UI.controllers.UserChoiceController"
+            fitToWidth="true"
+            styleClass="content-area,payment-screen">
+    
+    <VBox spacing="24" alignment="CENTER">
+        <Label text="Finalizar Compra" styleClass="section-title" alignment="CENTER"/>
+        
+        <Label text="Como você gostaria de prosseguir?" 
+               styleClass="section-subtitle" 
+               alignment="CENTER"
+               wrapText="true"/>
+        
+        <VBox spacing="16" alignment="CENTER" maxWidth="400">
+            <Button text="Criar Nova Conta" 
+                    onAction="#handleCreateAccount" 
+                    styleClass="primary-button"
+                    maxWidth="300">
+                <tooltip>
+                    <Tooltip text="Criar uma nova conta para acompanhar seus pedidos"/>
+                </tooltip>
+            </Button>
+            
+            <Button text="Fazer Login" 
+                    onAction="#handleLogin" 
+                    styleClass="secondary-button"
+                    maxWidth="300">
+                <tooltip>
+                    <Tooltip text="Fazer login com uma conta existente"/>
+                </tooltip>
+            </Button>
+            
+            <Button text="Finalizar sem Conta" 
+                    onAction="#handleContinueWithoutAccount" 
+                    styleClass="secondary-button"
+                    maxWidth="300">
+                <tooltip>
+                    <Tooltip text="Finalizar a compra sem criar conta ou fazer login"/>
+                </tooltip>
+            </Button>
+        </VBox>
+        
+        <Region VBox.vgrow="ALWAYS" minHeight="50"/>
+        
+        <HBox spacing="16" alignment="CENTER_RIGHT" styleClass="payment-buttons">
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Voltar" 
+                    onAction="#handleBack" 
+                    styleClass="secondary-button">
+                <tooltip>
+                    <Tooltip text="Voltar ao carrinho"/>
+                </tooltip>
+            </Button>
+        </HBox>
+    </VBox>
+    
+</ScrollPane> 
