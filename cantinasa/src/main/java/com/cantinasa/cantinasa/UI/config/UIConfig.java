@@ -87,4 +87,26 @@ public class UIConfig {
     public static int getMinWindowHeight() {
         return Integer.parseInt(properties.getProperty("ui.window.min.height", "300"));
     }
+
+    public static int getPopupWidth() {
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        if (screenWidth >= 1920) {
+            return Integer.parseInt(properties.getProperty("ui.popup.width.fullhd", "900"));
+        } else if (screenWidth >= 1336) {
+            return Integer.parseInt(properties.getProperty("ui.popup.width.hd", "700"));
+        } else {
+            return Integer.parseInt(properties.getProperty("ui.popup.min.width", "400"));
+        }
+    }
+
+    public static int getPopupHeight() {
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        if (screenHeight >= 1080) {
+            return Integer.parseInt(properties.getProperty("ui.popup.height.fullhd", "700"));
+        } else if (screenHeight >= 768) {
+            return Integer.parseInt(properties.getProperty("ui.popup.height.hd", "500"));
+        } else {
+            return Integer.parseInt(properties.getProperty("ui.popup.min.height", "300"));
+        }
+    }
 } 
