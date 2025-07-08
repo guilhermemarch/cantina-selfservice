@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import static org.springframework.web.servlet.function.ServerResponse.ok;
 import com.cantinasa.cantinasa.model.dto.relatorioSubDTOs.ProdutoEstoqueBaixoDTO;
 
+/**
+ * Serviço responsável pela geração de relatórios analíticos da cantina.
+ */
 @Service
 public class RelatoriosService {
 
@@ -36,6 +39,9 @@ public class RelatoriosService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    /**
+     * Gera um relatório de vendas entre duas datas.
+     */
     public Map<String, Object> generateSalesReport(LocalDateTime startDate, LocalDateTime endDate) {
         List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(startDate, endDate);
 
@@ -79,6 +85,9 @@ public class RelatoriosService {
     }
 
 
+    /**
+     * Agrupa vendas por método de pagamento.
+     */
     public Map<Pagamento.MetodoPagamento, BigDecimal> generateSalesByPaymentMethod(LocalDateTime start, LocalDateTime end) {
         List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(start, end);
         Map<Pagamento.MetodoPagamento, BigDecimal> salesByPaymentMethod = new HashMap<>();
@@ -92,6 +101,9 @@ public class RelatoriosService {
         return salesByPaymentMethod;
     }
 
+    /**
+     * Gera relatório simples de estoque.
+     */
     public Map<String, Object> generateInventoryReport() {
         List<Produto> produtos = produtoRepository.findAll();
 
@@ -116,6 +128,9 @@ public class RelatoriosService {
         );
     }
 
+    /**
+     * Consolida dados de vendas em um único dia.
+     */
     public Map<String, Object> generateDailyReport(LocalDateTime date) {
         LocalDateTime startOfDay = date.toLocalDate().atStartOfDay();
         LocalDateTime endOfDay = date.toLocalDate().atTime(23, 59, 59);
@@ -143,6 +158,9 @@ public class RelatoriosService {
         );
     }
 
+    /**
+     * Relatório entre duas datas com informações de vendas.
+     */
     public Map<String, Object> generateReportBy2Dates(LocalDateTime date,LocalDateTime date2) {
         LocalDateTime start = date.toLocalDate().atStartOfDay();
         LocalDateTime end = date2.toLocalDate().atTime(23, 59, 59);
@@ -172,6 +190,7 @@ public class RelatoriosService {
 
 
 
+    /** Retorna horários de maior movimento em um dia. */
     public List<Map<String, Object>> horariosPico(LocalDate data) {
         return pedidoRepository.horarioPico(data).stream()
                 .map(entry -> {
@@ -189,10 +208,12 @@ public class RelatoriosService {
     }
 
 
+    /** Lista produtos com estoque abaixo de determinado limite. */
     public List<Produto> produtosEstoqueBaixo(int limiteMinimo) {
         return produtoRepository.findByQuantidadeBelow(limiteMinimo);
     }
 
+    /** Produtos próximos do vencimento. */
     public List<Map<String, Object>> produtosValidade(int diasParaVencer) {
         List<Object[]> resultados = produtoRepository.proximoValidade(diasParaVencer);
 
@@ -205,6 +226,7 @@ public class RelatoriosService {
         }).collect(Collectors.toList());
     }
 
+    /** Versão DTO do relatório de estoque baixo. */
     public List<ProdutoEstoqueBaixoDTO> produtosEstoqueBaixoDTO(int limiteMinimo) {
         return produtoRepository.findByQuantidadeBelow(limiteMinimo)
             .stream()

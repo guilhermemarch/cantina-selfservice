@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Repositório de pedidos com consultas customizadas.
+ */
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findByDataPedidoBetween(LocalDateTime start, LocalDateTime end);

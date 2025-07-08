@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import javafx.stage.Screen;
 
+/**
+ * Define constantes visuais e dimensões utilizadas na aplicação JavaFX.
+ */
 public class UIConfig {
     public static final Color PRIMARY_COLOR = Color.web("#2196F3");
     public static final Color SECONDARY_COLOR = Color.web("#4CAF50");
@@ -58,6 +61,9 @@ public class UIConfig {
         }
     }
 
+    /**
+     * Calcula a largura padrão da janela de acordo com a resolução da tela.
+     */
     public static int getDefaultWindowWidth() {
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         if (screenWidth >= 1920) {
@@ -69,6 +75,9 @@ public class UIConfig {
         }
     }
 
+    /**
+     * Calcula a altura padrão da janela de acordo com a resolução da tela.
+     */
     public static int getDefaultWindowHeight() {
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
         if (screenHeight >= 1080) {
@@ -80,14 +89,17 @@ public class UIConfig {
         }
     }
 
+    /** Largura mínima permitida para a janela principal. */
     public static int getMinWindowWidth() {
         return Integer.parseInt(properties.getProperty("ui.window.min.width", "400"));
     }
 
+    /** Altura mínima permitida para a janela principal. */
     public static int getMinWindowHeight() {
         return Integer.parseInt(properties.getProperty("ui.window.min.height", "300"));
     }
 
+    /** Largura padrão dos diálogos popup. */
     public static int getPopupWidth() {
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         if (screenWidth >= 1920) {
@@ -99,6 +111,7 @@ public class UIConfig {
         }
     }
 
+    /** Altura padrão dos diálogos popup. */
     public static int getPopupHeight() {
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
         if (screenHeight >= 1080) {
@@ -108,5 +121,4 @@ public class UIConfig {
         } else {
             return Integer.parseInt(properties.getProperty("ui.popup.min.height", "300"));
         }
-    }
-} 
+    }} 

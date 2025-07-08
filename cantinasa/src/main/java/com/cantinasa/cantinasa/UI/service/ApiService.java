@@ -14,17 +14,25 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Serviço utilitário usado pela aplicação JavaFX para comunicar-se com a API
+ * REST da cantina.
+ */
 @Service
 public class ApiService {
     
     private static final String BASE_URL = "http://localhost:8080/api";
     private final RestTemplate restTemplate;
     
+    /** Construtor padrão que inicializa o {@link RestTemplate}. */
     public ApiService() {
         this.restTemplate = new RestTemplate();
     }
     
-    public Map<String, Object> criarPedido(ObservableList<Item_pedido> cartItems, double totalAmount, 
+    /**
+     * Envia para a API a criação de um pedido a partir dos itens do carrinho.
+     */
+    public Map<String, Object> criarPedido(ObservableList<Item_pedido> cartItems, double totalAmount,
                                           Pagamento.MetodoPagamento metodoPagamento) {
         try {
             StringBuilder itensJson = new StringBuilder();
@@ -84,8 +92,11 @@ public class ApiService {
         }
     }
     
-    public Map<String, Object> processarPagamento(Long pedidoId, double valor, 
-                                                 Pagamento.MetodoPagamento metodo, 
+    /**
+     * Processa um pagamento para um pedido existente.
+     */
+    public Map<String, Object> processarPagamento(Long pedidoId, double valor,
+                                                 Pagamento.MetodoPagamento metodo,
                                                  String codigoPix, Double troco) {
         try {
             String pagamentoJson = String.format("{"

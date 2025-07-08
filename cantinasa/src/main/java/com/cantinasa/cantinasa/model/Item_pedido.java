@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Representa um item dentro de um pedido.
+ */
 @Entity
 @Table(name = "itens_pedido")
 public class Item_pedido {
