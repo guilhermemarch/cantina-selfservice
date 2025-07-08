@@ -33,7 +33,6 @@ Este documento descreve a análise, projeto e instruções de implementação de
 ### 3.1 Padrões Utilizados
 - **MVC** na UI JavaFX (`Controller`, `Service`, `Repository`).
 - **DTO + Mapper** para comunicação REST interna.
-- **Factory Method** para instanciar meios de pagamento.
 - **Observer** para alertas de estoque.
 
 ---
@@ -88,16 +87,11 @@ Este documento descreve a análise, projeto e instruções de implementação de
    java -jar desktop/target/cantinasa-ui.jar
    ```
 
-4. **Gerar Javadoc**
-   ```bash
-   mvn javadoc:javadoc
-   open backend/target/site/apidocs/index.html
-   ```
-/src
- ├── model/           → Classes de domínio (Produto, Pedido, Estoque, etc.)
- ├── service/         → Regras de negócio (TotemService, PagamentoService, etc.)
- ├── admin/           → Área administrativa (gestão de estoque, relatórios)
- ├── ui/              → Interface gráfica (JFrames, painéis, botões, etc.)
- └── util/            → Utilitários (formatação, datas, geração de relatórios)
+## 📄 Documentação JavaDoc
+
+A documentação JavaDoc foi **escrita manualmente diretamente no código-fonte**, com comentários explicativos em cada classe, método e endpoint relevante.
+
+Essa abordagem visa facilitar a compreensão da estrutura e funcionamento da API para outros desenvolvedores e colaboradores do projeto.
+
 ---
 
