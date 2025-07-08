@@ -9,10 +9,10 @@
 
 
 
-<StackPane xmlns="http://javafx.com/javafx"
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cantinasa.cantinasa.UI.controllers.AdminLoginController">
-    <ImageView fitWidth="729" fitHeight="546" preserveRatio="false">
+    <ImageView fx:id="imageView" preserveRatio="false">
         <image>
             <Image url="/images/admin-page.png"/>
         </image>

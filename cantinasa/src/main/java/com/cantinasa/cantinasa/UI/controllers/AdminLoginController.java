@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -26,6 +28,17 @@ public class AdminLoginController {
 
     @FXML
     private Label errorLabel;
+
+    @FXML private ImageView imageView;
+    @FXML private StackPane rootPane;
+
+    @FXML
+    public void initialize() {
+        if (imageView != null && rootPane != null) {
+            imageView.fitWidthProperty().bind(rootPane.widthProperty());
+            imageView.fitHeightProperty().bind(rootPane.heightProperty());
+        }
+    }
 
     @FXML
     private void handleLogin() {

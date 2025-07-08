@@ -6,9 +6,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
 
-<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController">
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController">
 
-    <ImageView fitWidth="729" fitHeight="546" preserveRatio="false">
+    <ImageView fx:id="imageView" preserveRatio="false">
         <image>
             <Image url="/images/background_welcome.png"/>
         </image>
