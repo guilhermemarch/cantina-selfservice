@@ -15,8 +15,13 @@ import javafx.util.Duration;
 import javafx.scene.image.ImageView;
 import com.cantinasa.cantinasa.UI.styles.UIStyles;
 
+/**
+ * Conjunto de métodos utilitários para criação de componentes visuais
+ * reutilizáveis na aplicação JavaFX.
+ */
 public class    UIComponents {
     
+    /** Cria um card de produto exibindo imagem, nome e preço. */
     public static VBox createProductCard(String name, double price, String imageUrl) {
         VBox card = new VBox(10);
         UIStyles.applyProductCardStyle(card);
@@ -43,6 +48,7 @@ public class    UIComponents {
         return card;
     }
     
+    /** Componente para exibição de item no carrinho de compras. */
     public static VBox createShoppingCartItem(String name, int quantity, double price) {
         VBox item = new VBox(5);
         item.setPadding(new Insets(10));
@@ -77,6 +83,7 @@ public class    UIComponents {
         return item;
     }
     
+    /** Indicador de carregamento simples. */
     public static VBox createLoadingIndicator() {
         VBox loadingBox = new VBox(10);
         loadingBox.setAlignment(Pos.CENTER);
@@ -94,6 +101,7 @@ public class    UIComponents {
         return loadingBox;
     }
     
+    /** Diálogo de confirmação padrão. */
     public static Alert createConfirmationDialog(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -105,6 +113,7 @@ public class    UIComponents {
         return alert;
     }
     
+    /** Diálogo de erro padrão. */
     public static Alert createErrorDialog(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -116,6 +125,7 @@ public class    UIComponents {
         return alert;
     }
     
+    /** Exibe notificação temporária sobre o conteúdo da tela. */
     public static void showNotification(StackPane root, String message) {
         VBox notification = new VBox(5);
         notification.setAlignment(Pos.CENTER);
@@ -159,10 +169,10 @@ public class    UIComponents {
         }).start();
     }
     
+    /** Converte cor para formato hexadecimal. */
     private static String toRGBCode(Color color) {
         return String.format("#%02X%02X%02X",
             (int) (color.getRed() * 255),
             (int) (color.getGreen() * 255),
             (int) (color.getBlue() * 255));
-    }
-} 
+    }} 

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Repositório Spring Data para operações com {@link Produto}.
+ */
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     List<Produto> findByCategoria(String categoria);

@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Serviço responsável pelo fluxo de criação e gerenciamento de pedidos.
+ */
 @Service
 public class PedidoService {
 
@@ -37,6 +40,9 @@ public class PedidoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /**
+     * Cria um novo pedido a partir de um DTO.
+     */
     @Transactional
     public Pedido create(PedidoDTO dto) {
         Pedido pedido = pedidoMapper.toEntity(dto);
@@ -66,6 +72,9 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
+    /**
+     * Cria um pedido baseado nos dados recebidos de uma requisição.
+     */
     @Transactional
     public Pedido createFromRequest(PedidoRequest request) {
         Pedido pedido = new Pedido();
@@ -106,6 +115,9 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
     
+    /**
+     * Retorna um usuário padrão caso não seja informado um usuário válido.
+     */
     private Usuario getOrCreateUnknownUser() {
         return usuarioRepository.findById(0L).orElseGet(() -> {
             Usuario unknownUser = new Usuario();
@@ -118,15 +130,18 @@ public class PedidoService {
         });
     }
 
+    /** Recupera um pedido pelo id. */
     public Pedido findById(Long id) {
         return pedidoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
 
+    /** Lista todos os pedidos existentes. */
     public List<Pedido> findAll() {
         return pedidoRepository.findAll();
     }
 
+    /** Atualiza o status de um pedido. */
     @Transactional
     public Pedido update(Long id, Pedido pedido) {
         Pedido existingPedido = findById(id);
@@ -134,12 +149,16 @@ public class PedidoService {
         return pedidoRepository.save(existingPedido);
     }
 
+    /** Remove um pedido pelo id. */
     @Transactional
     public void delete(Long id) {
         Pedido pedido = findById(id);
         pedidoRepository.delete(pedido);
     }
 
+    /**
+     * Cancela um pedido entregue, devolvendo itens ao estoque.
+     */
     @Transactional
     public void cancel(Long id) {
         Pedido pedido = findById(id);
@@ -157,16 +176,21 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
+    /**
+     * Atualiza somente o status do pedido.
+     */
     public Pedido atualizarStatus(Long id, Pedido.Status status) {
         Pedido pedido = findById(id);
         pedido.setStatus(status);
         return pedidoRepository.save(pedido);
     }
 
+    /** Busca pedidos dentro de um período. */
     public List<Pedido> findByPeriodo(LocalDateTime inicio, LocalDateTime fim) {
         return pedidoRepository.findByDataPedidoBetween(inicio, fim);
     }
 
+    /** Busca pedidos por status. */
     public List<Pedido> findByStatus(Pedido.Status status) {
         return pedidoRepository.findByStatus(status);
     }

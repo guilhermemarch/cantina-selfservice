@@ -27,10 +27,6 @@ public class ReceiptController {
      * Define o número do pedido que será exibido no recibo.
      * @param orderNumber Número do pedido como string (ex: "12345").
      */
-    public void setOrderNumber(String orderNumber) {
-        orderNumberLabel.setText("Número do pedido: #" + orderNumber);
-    }
-
     public void preencherRecibo(String orderNumber, String cliente, String data, String pagamento, String total, String troco, java.util.List<String> itens) {
         orderNumberLabel.setText("Pedido: #" + orderNumber);
         clientLabel.setText("Cliente: " + cliente);

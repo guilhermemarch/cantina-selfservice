@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.time.LocalDateTime;
 
+/**
+ * Usuário do sistema, podendo ser cliente ou administrador.
+ */
 @Entity
 @Table(name = "usuarios")
 public class Usuario {

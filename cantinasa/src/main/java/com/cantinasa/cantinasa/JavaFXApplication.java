@@ -8,8 +8,18 @@ import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import com.cantinasa.cantinasa.UI.config.UIConfig;
 
+/**
+ * Inicializa a interface JavaFX da aplicação consumindo o contexto Spring
+ * previamente criado. Responsável por carregar o FXML principal e aplicar os
+ * estilos.
+ */
 public class JavaFXApplication extends Application {
 
+    /**
+     * Configura e exibe a janela principal da aplicação.
+     *
+     * @param primaryStage palco principal fornecido pelo JavaFX
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         ConfigurableApplicationContext context = CantinasaApplication.getSpringContext();
@@ -34,9 +44,11 @@ public class JavaFXApplication extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Fecha o contexto Spring ao encerrar a aplicação JavaFX.
+     */
     @Override
     public void stop() {
         ConfigurableApplicationContext context = CantinasaApplication.getSpringContext();
         context.close();
-    }
-} 
+    }}

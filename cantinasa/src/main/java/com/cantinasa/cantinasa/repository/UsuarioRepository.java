@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repositório de acesso aos dados de {@link Usuario}.
+ */
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByUsername(String username);
     Optional<Usuario> findByEmail(String email);
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
-    Optional<Usuario> findByIdAndPassword(Long userId, String password);
-} 
+    Optional<Usuario> findByIdAndPassword(Long userId, String password);} 

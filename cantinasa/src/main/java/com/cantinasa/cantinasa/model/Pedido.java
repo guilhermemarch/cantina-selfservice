@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.math.BigDecimal;
 
+/**
+ * Representa um pedido realizado pelo usuário contendo itens e pagamento.
+ */
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
@@ -62,6 +65,9 @@ public class Pedido {
     public Pedido() {
     }
 
+    /**
+     * Estados possíveis de um pedido durante seu ciclo de vida.
+     */
     public enum Status {
         PENDENTE,
         CONFIRMADO,

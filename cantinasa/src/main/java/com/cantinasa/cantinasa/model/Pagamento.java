@@ -9,6 +9,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
+/**
+ * Entidade que registra os detalhes de um pagamento de pedido.
+ */
 @Entity
 @Table(name = "pagamentos")
 public class Pagamento {
@@ -61,12 +64,14 @@ public class Pagamento {
         updatedAt = LocalDateTime.now();
     }
 
+    /** Formas de pagamento suportadas. */
     public enum MetodoPagamento {
         DINHEIRO,
         CARTAO,
         PIX
     }
 
+    /** Estados possíveis do processamento de um pagamento. */
     public enum Status {
         PENDENTE,
         APROVADO,
