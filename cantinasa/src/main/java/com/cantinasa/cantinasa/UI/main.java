@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import com.cantinasa.cantinasa.UI.config.UIConfig;
 
 
 public class main extends Application {
@@ -13,16 +14,18 @@ public class main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
         Parent root = loader.load();
         
-        Scene scene = new Scene(root, 1024, 768);
+        int width = UIConfig.getDefaultWindowWidth();
+        int height = UIConfig.getDefaultWindowHeight();
+        Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(getClass().getResource("/styles/main.css").toExternalForm());
         
         primaryStage.setTitle("CantinaSA - Sistema de Autoatendimento");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.setMinWidth(1024);
-        primaryStage.setMinHeight(768);
-        primaryStage.setMaxWidth(1024);
-        primaryStage.setMaxHeight(768);
+        primaryStage.setMinWidth(width);
+        primaryStage.setMinHeight(height);
+        primaryStage.setMaxWidth(width);
+        primaryStage.setMaxHeight(height);
         primaryStage.show();
     }
-}
+                                                                                                                                                                                        }

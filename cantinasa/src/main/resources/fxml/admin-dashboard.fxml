@@ -4,99 +4,85 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.cantinasa.cantinasa.UI.controllers.AdminDashboardController"
-      spacing="18"
-      styleClass="content-area">
-    
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Button text="Voltar" onAction="#handleBack" styleClass="secondary-button">
-            <tooltip>
-                <Tooltip text="Voltar para tela inicial"/>
-            </tooltip>
-        </Button>
-        <Label text="Painel Administrativo" styleClass="section-title" alignment="CENTER_LEFT"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Button text="Sair" onAction="#handleLogout" styleClass="secondary-button">
-            <tooltip>
-                <Tooltip text="Sair do painel"/>
-            </tooltip>
-        </Button>
-    </HBox>
-    
-    <TabPane VBox.vgrow="ALWAYS">
-        <Tab text="Estoque" closable="false">
-            <VBox spacing="12">
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <TextField fx:id="productSearchField" promptText="Buscar produtos..." HBox.hgrow="ALWAYS"/>
-                    <Button text="Adicionar Produto" onAction="#handleAddProduct" styleClass="primary-button">
-                        <tooltip>
-                            <Tooltip text="Adicionar novo produto ao estoque"/>
-                        </tooltip>
-                    </Button>
-                </HBox>
-                
-                <TableView fx:id="stockTable" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="productNameColumn" text="Produto"/>
-                        <TableColumn fx:id="quantityColumn" text="Quantidade"/>
-                        <TableColumn fx:id="priceColumn" text="Preço"/>
-                        <TableColumn fx:id="categoryColumn" text="Categoria"/>
-                        <TableColumn fx:id="actionsColumn" text="Ações"/>
-                    </columns>
-                </TableView>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cantinasa.cantinasa.UI.controllers.AdminDashboardController">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" styleClass="admin-header" style="-fx-background-color: #fff; -fx-padding: 18 32 18 32; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 1);">
+            <Button text="Voltar" onAction="#handleBack" styleClass="secondary-button admin-nav-btn"/>
+            <Label text="Painel Administrativo" styleClass="admin-title" alignment="CENTER_LEFT" wrapText="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Sair" onAction="#handleLogout" styleClass="secondary-button admin-nav-btn"/>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="admin-scroll">
+            <VBox alignment="TOP_CENTER" spacing="32" styleClass="admin-content" style="-fx-padding: 32 0 32 0;">
+                <TabPane VBox.vgrow="ALWAYS" styleClass="admin-tabs">
+                    <Tab text="Estoque" closable="false">
+                        <VBox spacing="18" styleClass="admin-card" VBox.vgrow="ALWAYS" style="-fx-padding: 32;">
+                            <Label text="Gestão de Estoque" styleClass="admin-section-title"/>
+                            <HBox spacing="16" alignment="CENTER_LEFT">
+                                <TextField fx:id="productIdSearchField" promptText="Buscar por ID" maxWidth="120"/>
+                                <TextField fx:id="productSearchField" promptText="Buscar produtos..." HBox.hgrow="ALWAYS"/>
+                                <ComboBox fx:id="categoriaComboBox" promptText="Categoria"/>
+                                <Button text="Adicionar Produto" onAction="#handleAddProduct" styleClass="primary-button"/>
+                            </HBox>
+                            <StackPane VBox.vgrow="ALWAYS">
+                                <TableView fx:id="stockTable" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="productIdColumn" text="ID" maxWidth="60"/>
+                                        <TableColumn fx:id="productNameColumn" text="Produto" minWidth="150"/>
+                                        <TableColumn fx:id="priceColumn" text="Preço" maxWidth="100"/>
+                                        <TableColumn fx:id="quantityColumn" text="Quantidade" maxWidth="100"/>
+                                        <TableColumn fx:id="minStockColumn" text="Estoque Mín." maxWidth="100"/>
+                                        <TableColumn fx:id="expiryDateColumn" text="Validade" maxWidth="100"/>
+                                        <TableColumn fx:id="categoryColumn" text="Categoria" maxWidth="120"/>
+                                        <TableColumn fx:id="actionsColumn" text="Ações" maxWidth="120"/>
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Nenhum produto encontrado." style="-fx-text-fill: #888; -fx-font-style: italic;"/>
+                                    </placeholder>
+                                </TableView>
+                                <ProgressIndicator fx:id="estoqueLoading" visible="false" maxWidth="60" maxHeight="60" StackPane.alignment="CENTER"/>
+                            </StackPane>
+                        </VBox>
+                    </Tab>
+                    <Tab text="Relatórios" closable="false">
+                        <VBox spacing="24" styleClass="admin-card" VBox.vgrow="ALWAYS" style="-fx-padding: 32;">
+                            <Label text="Relatórios" styleClass="admin-section-title"/>
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <Button text="Relatório de Vendas" onAction="#handleOpenVendasReport" styleClass="primary-button"/>
+                                <Button text="Estoque Baixo" onAction="#handleOpenEstoqueBaixoReport" styleClass="primary-button"/>
+                                <Button text="Próximos do Vencimento" onAction="#handleOpenValidadeReport" styleClass="primary-button"/>
+                                <Button text="Horários de Pico" onAction="#handleOpenHorarioPicoReport" styleClass="primary-button"/>
+                            </HBox>
+                            <Label text="Clique em um dos botões acima para abrir o relatório desejado." style="-fx-text-fill: #666; -fx-font-style: italic;"/>
+                        </VBox>
+                    </Tab>
+                    <Tab text="Usuários" closable="false">
+                        <VBox spacing="18" styleClass="admin-card" VBox.vgrow="ALWAYS" style="-fx-padding: 32;">
+                            <Label text="Gestão de Usuários" styleClass="admin-section-title"/>
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <TextField fx:id="userSearchField" promptText="Buscar usuários..." HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="userRefreshButton" text="Atualizar" styleClass="secondary-button"/>
+                                <Button text="Adicionar Usuário" onAction="#handleAddUser" styleClass="primary-button"/>
+                            </HBox>
+                            <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="usernameColumn" text="Usuário"/>
+                                    <TableColumn fx:id="nameColumn" text="Email"/>
+                                    <TableColumn fx:id="roleColumn" text="Função"/>
+                                    <TableColumn fx:id="userActionsColumn" text="Ações"/>
+                                </columns>
+                                <placeholder>
+                                    <Label text="Nenhum usuário encontrado." style="-fx-text-fill: #888; -fx-font-style: italic;"/>
+                                </placeholder>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+                </TabPane>
             </VBox>
-        </Tab>
-        
-        <Tab text="Relatórios" closable="false">
-            <VBox spacing="12">
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <DatePicker fx:id="startDate" promptText="Data Inicial"/>
-                    <DatePicker fx:id="endDate" promptText="Data Final"/>
-                    <Button text="Gerar Relatório" onAction="#handleGenerateReport" styleClass="primary-button">
-                        <tooltip>
-                            <Tooltip text="Gerar relatório de vendas"/>
-                        </tooltip>
-                    </Button>
-                </HBox>
-                
-                <TableView fx:id="reportTable" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="dateColumn" text="Data"/>
-                        <TableColumn fx:id="productColumn" text="Produto"/>
-                        <TableColumn fx:id="quantityColumn" text="Quantidade"/>
-                        <TableColumn fx:id="totalColumn" text="Total"/>
-                    </columns>
-                </TableView>
-                
-                <HBox spacing="10" alignment="CENTER_RIGHT">
-                    <Label text="Total de Vendas:"/>
-                    <Label fx:id="totalSalesLabel" styleClass="total-label"/>
-                </HBox>
-            </VBox>
-        </Tab>
-        
-        <Tab text="Usuários" closable="false">
-            <VBox spacing="12">
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button text="Adicionar Usuário" onAction="#handleAddUser" styleClass="primary-button">
-                        <tooltip>
-                            <Tooltip text="Adicionar novo usuário"/>
-                        </tooltip>
-                    </Button>
-                </HBox>
-                
-                <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="usernameColumn" text="Usuário"/>
-                        <TableColumn fx:id="nameColumn" text="Nome"/>
-                        <TableColumn fx:id="roleColumn" text="Função"/>
-                        <TableColumn fx:id="actionsColumn" text="Ações"/>
-                    </columns>
-                </TableView>
-            </VBox>
-        </Tab>
-    </TabPane>
-    
-</VBox> 
+        </ScrollPane>
+    </center>
+</BorderPane> 

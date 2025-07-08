@@ -3,6 +3,7 @@ package com.cantinasa.cantinasa.service;
 import com.cantinasa.cantinasa.model.Usuario;
 import com.cantinasa.cantinasa.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +60,23 @@ public class UsuarioService {
             }
         }
         return null;
+    }
+
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+
+    public ResponseEntity<Usuario> login(String username, String password) {
+
+        Optional<Usuario> usuarioOpt = findByUsername(username);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            if (usuario.getPassword().equals(password)) {
+                return ResponseEntity.ok().body(usuario);
+            }
+        }
+        return ResponseEntity.status(401).build();
+
     }
 }

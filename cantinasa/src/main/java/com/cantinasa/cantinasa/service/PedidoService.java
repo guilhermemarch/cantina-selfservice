@@ -3,10 +3,13 @@ package com.cantinasa.cantinasa.service;
 import com.cantinasa.cantinasa.controller.ProdutoController;
 import com.cantinasa.cantinasa.model.*;
 import com.cantinasa.cantinasa.model.dto.PedidoDTO;
+import com.cantinasa.cantinasa.model.dto.PedidoRequest;
 import com.cantinasa.cantinasa.model.enums.status;
+import com.cantinasa.cantinasa.model.enums.tipoPagamento;
 import com.cantinasa.cantinasa.model.mapper.PedidoMapper;
 import com.cantinasa.cantinasa.repository.PedidoRepository;
 import com.cantinasa.cantinasa.repository.ProdutoRepository;
+import com.cantinasa.cantinasa.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
@@ -29,6 +33,9 @@ public class PedidoService {
 
     @Autowired
     private PedidoMapper pedidoMapper;
+    
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Transactional
     public Pedido create(PedidoDTO dto) {
@@ -57,6 +64,58 @@ public class PedidoService {
         }
 
         return pedidoRepository.save(pedido);
+    }
+
+    @Transactional
+    public Pedido createFromRequest(PedidoRequest request) {
+        Pedido pedido = new Pedido();
+        pedido.setDataPedido(request.getDataHora());
+        pedido.setStatus(Pedido.Status.valueOf(request.getStatus()));
+        
+        Usuario usuario;
+        if (request.getUsuarioId() == 0) {
+            usuario = getOrCreateUnknownUser();
+        } else {
+            usuario = usuarioRepository.findById(request.getUsuarioId())
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        }
+        pedido.setUsuario(usuario);
+        
+        List<Item_pedido> itens = request.getItens().stream()
+                .map(itemRequest -> {
+                    Item_pedido item = new Item_pedido();
+                    Produto produto = produtoService.findById(itemRequest.getProdutoId());
+                    item.setProduto(produto);
+                    item.setQuantidade(itemRequest.getQuantidade());
+                    item.setPrecoUnitario(produto.getPreco());
+                    item.setPedido(pedido);
+                    return item;
+                })
+                .collect(Collectors.toList());
+        
+        pedido.setItens(itens);
+        
+        BigDecimal valorTotal = itens.stream()
+                .map(Item_pedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        pedido.setValorTotal(valorTotal);
+        
+        if (request.getPagamento() != null) {
+        }
+        
+        return pedidoRepository.save(pedido);
+    }
+    
+    private Usuario getOrCreateUnknownUser() {
+        return usuarioRepository.findById(0L).orElseGet(() -> {
+            Usuario unknownUser = new Usuario();
+            unknownUser.setId(0L);
+            unknownUser.setUsername("usuario_desconhecido");
+            unknownUser.setEmail("desconhecido@cantina.com");
+            unknownUser.setPassword("n/a");
+            unknownUser.setRole(com.cantinasa.cantinasa.model.enums.role.USERS);
+            return usuarioRepository.save(unknownUser);
+        });
     }
 
     public Pedido findById(Long id) {

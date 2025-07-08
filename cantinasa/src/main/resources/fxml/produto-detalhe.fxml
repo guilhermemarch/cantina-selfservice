@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.ProdutoDetalheController" spacing="18" alignment="CENTER" style="-fx-padding: 32;">
+    <Label text="Detalhes do Produto" styleClass="admin-title"/>
+    <GridPane hgap="12" vgap="8">
+        <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="idLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="Nome:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="nomeLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Preço:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="precoLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Quantidade:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label fx:id="quantidadeLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <Label text="Estoque Mínimo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Label fx:id="estoqueMinimoLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <Label text="Validade:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <Label fx:id="validadeLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <Label text="Categoria:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <Label fx:id="categoriaLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+    </GridPane>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="estoqueField" promptText="Quantidade (+/-)" maxWidth="100"/>
+        <Button text="Atualizar Estoque" onAction="#handleAtualizarEstoque" styleClass="primary-button"/>
+        <Button text="Remover Produto" onAction="#handleRemoverProduto" styleClass="button-danger"/>
+    </HBox>
+    <Button text="Fechar" onAction="#handleClose" styleClass="secondary-button"/>
+</VBox> 

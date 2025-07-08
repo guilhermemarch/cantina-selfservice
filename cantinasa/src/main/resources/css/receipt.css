@@ -1,0 +1,64 @@
+.receipt-container {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cc0000;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-max-width: 420;
+    -fx-effect: dropshadow(gaussian, #00000022, 4, 0.2, 2, 2);
+}
+
+.receipt-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #cc0000;
+    -fx-padding: 0 0 8 0;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.receipt-subtitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.receipt-line {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.receipt-items {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 8;
+}
+
+.receipt-item-line {
+    -fx-font-size: 13px;
+    -fx-text-fill: #444;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.receipt-total {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-padding: 8 0 16 0;
+}
+
+.receipt-footer {
+    -fx-font-size: 13px;
+    -fx-text-fill: #777;
+    -fx-padding: 16 0 0 0;
+    -fx-font-style: italic;
+}
+
+.primary-button {
+    -fx-background-color: #0078d7;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
+    -fx-padding: 8 16;
+}

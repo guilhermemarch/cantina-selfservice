@@ -8,7 +8,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cantinasa.cantinasa.UI.controllers.WelcomeController">
 
-    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+    <ImageView fitWidth="729" fitHeight="546" preserveRatio="false">
         <image>
             <Image url="/images/background_welcome.png"/>
         </image>
@@ -18,26 +18,22 @@
     <VBox alignment="CENTER" spacing="40.0" styleClass="welcome-content">
 
         <VBox alignment="CENTER" spacing="16.0" styleClass="welcome-header">
-            <Text text="Cantina da URI!" styleClass="welcome-title"/>
-            <Text text="Sistema de Autoatendimento" styleClass="welcome-subtitle"/>
+            <Text text="Cantina da URI!" styleClass="welcome-title" textAlignment="CENTER"/>
+            <Text text="Sistema de Autoatendimento" styleClass="welcome-subtitle" textAlignment="CENTER"/>
         </VBox>
 
         <VBox alignment="CENTER" spacing="8.0" styleClass="welcome-description">
-            <Text text="Faça seu pedido de forma rápida e fácil!" styleClass="welcome-text"/>
-            <Text text="Escolha seus produtos favoritos e finalize seu pedido em poucos cliques!" styleClass="welcome-text-secondary"/>
+            <Text text="Faça seu pedido de forma rápida e fácil!" styleClass="welcome-text" textAlignment="CENTER"/>
+            <Text text="Escolha seus produtos favoritos e finalize seu pedido em poucos cliques!" styleClass="welcome-text-secondary" textAlignment="CENTER"/>
         </VBox>
 
-        <VBox alignment="CENTER" spacing="20.0" styleClass="welcome-buttons">
-            <Button text="Fazer um pedido" onAction="#handleContinue" styleClass="primary-button">
-                <tooltip>
-                    <Tooltip text="Ir para a seleção de produtos"/>
-                </tooltip>
-            </Button>
-            <Button text="Setor Administrativo" onAction="#handleAdminLogin" styleClass="secondary-button">
-                <tooltip>
-                    <Tooltip text="Acesso ao painel administrativo"/>
-                </tooltip>
-            </Button>
+        <VBox alignment="CENTER" spacing="20.0" styleClass="welcome-buttons" maxWidth="400">
+            <HBox alignment="CENTER">
+                <Button text="Fazer um pedido" onAction="#handleContinue" styleClass="primary-button" maxWidth="Infinity" alignment="CENTER"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button text="Setor Administrativo" onAction="#handleAdminLogin" styleClass="secondary-button" maxWidth="Infinity" alignment="CENTER"/>
+            </HBox>
         </VBox>
 
         <VBox alignment="CENTER" styleClass="welcome-footer">

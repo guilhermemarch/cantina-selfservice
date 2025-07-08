@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.RelatorioValidadeController">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-background-color: #fff; -fx-padding: 18 32 18 32;">
+            <Label text="Relatório de Produtos Próximos do Vencimento" styleClass="admin-title" alignment="CENTER_LEFT" wrapText="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Fechar" onAction="#handleClose" styleClass="secondary-button"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="16" style="-fx-padding: 24;">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Dias para vencer:"/>
+                <TextField fx:id="diasField" promptText="Ex: 5" maxWidth="80"/>
+                <Button text="Buscar" onAction="#handleSearch" styleClass="primary-button"/>
+<!--                <Button text="Exportar" onAction="#handleExport" styleClass="secondary-button"/>-->
+            </HBox>
+            <TableView fx:id="validadeTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="nomeColumn" text="Produto"/>
+                    <TableColumn fx:id="validadeColumn" text="Validade"/>
+                </columns>
+                <placeholder>
+                    <Label text="Nenhum produto próximo do vencimento."/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane> 

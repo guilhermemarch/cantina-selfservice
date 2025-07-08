@@ -4,11 +4,15 @@ import java.sql.Timestamp;
 import com.cantinasa.cantinasa.model.Item_pedido;
 import com.cantinasa.cantinasa.model.Pedido;
 import com.cantinasa.cantinasa.model.Produto;
+import com.cantinasa.cantinasa.model.dto.RelatorioFinalDTO;
+import com.cantinasa.cantinasa.model.dto.relatorioSubDTOs.ProdutoProximoValidadeDTO;
 import com.cantinasa.cantinasa.model.enums.categoria;
 import com.cantinasa.cantinasa.model.Pagamento;
 import com.cantinasa.cantinasa.repository.PedidoRepository;
 import com.cantinasa.cantinasa.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,6 +23,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.ArrayList;
+
+import static org.springframework.web.servlet.function.ServerResponse.ok;
+import com.cantinasa.cantinasa.model.dto.relatorioSubDTOs.ProdutoEstoqueBaixoDTO;
 
 @Service
 public class RelatoriosService {
@@ -36,9 +43,15 @@ public class RelatoriosService {
                 .map(Pedido::getValorTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        BigDecimal totalTroco = pedidos.stream()
+                .filter(p -> p.getPagamento() != null && p.getPagamento().getStatus() == Pagamento.Status.APROVADO && p.getPagamento().getTroco() != null)
+                .map(p -> BigDecimal.valueOf(p.getPagamento().getTroco()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalLiquido = totalSales.subtract(totalTroco);
+
         Map<Pagamento.MetodoPagamento, BigDecimal> salesByPaymentMethod = generateSalesByPaymentMethod(startDate, endDate);
 
-        List<Map.Entry<Produto, Long>> topSellingProducts = pedidos.stream()
+        List<Map<String, Object>> topSellingProducts = pedidos.stream()
                 .flatMap(pedido -> pedido.getItens().stream())
                 .collect(Collectors.groupingBy(
                         Item_pedido::getProduto,
@@ -48,14 +61,23 @@ public class RelatoriosService {
                 .stream()
                 .sorted(Map.Entry.<Produto, Long>comparingByValue().reversed())
                 .limit(10)
+                .map(entry -> {
+                    Map<String, Object> produtoInfo = new HashMap<>();
+                    produtoInfo.put("nome", entry.getKey().getNome());
+                    produtoInfo.put("quantidadeVendida", entry.getValue());
+                    return produtoInfo;
+                })
                 .collect(Collectors.toList());
 
         Map<String, Object> result = new HashMap<>();
         result.put("totalSales", totalSales);
         result.put("salesByPaymentMethod", salesByPaymentMethod);
         result.put("topSellingProducts", topSellingProducts);
+        result.put("totalTroco", totalTroco);
+        result.put("totalLiquido", totalLiquido);
         return result;
     }
+
 
     public Map<Pagamento.MetodoPagamento, BigDecimal> generateSalesByPaymentMethod(LocalDateTime start, LocalDateTime end) {
         List<Pedido> pedidos = pedidoRepository.findByDataPedidoBetween(start, end);
@@ -183,5 +205,22 @@ public class RelatoriosService {
         }).collect(Collectors.toList());
     }
 
+    public List<ProdutoEstoqueBaixoDTO> produtosEstoqueBaixoDTO(int limiteMinimo) {
+        return produtoRepository.findByQuantidadeBelow(limiteMinimo)
+            .stream()
+            .map(produto -> new ProdutoEstoqueBaixoDTO(
+                produto.getId(),
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getPreco(),
+                produto.getQuantidade(),
+                produto.getEstoque_minimo(),
+                produto.getValidade(),
+                produto.getCategoria() != null ? produto.getCategoria().name() : null,
+                produto.getCreatedAt(),
+                produto.getUpdatedAt()
+            ))
+            .collect(java.util.stream.Collectors.toList());
+    }
 
 }

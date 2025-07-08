@@ -6,73 +6,96 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.Tooltip?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.cantinasa.cantinasa.UI.controllers.PaymentController"
-      spacing="18"
-      alignment="CENTER"
-      styleClass="content-area">
+<?import javafx.scene.image.Image?>
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cantinasa.cantinasa.UI.controllers.PaymentController"
+            fitToWidth="true"
+            styleClass="content-area,payment-screen">
     
-    <Label text="Pagamento" styleClass="section-title" alignment="CENTER"/>
-    
-    <VBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Método de Pagamento:"/>
-        <HBox spacing="10">
-            <RadioButton fx:id="cashRadio" text="Dinheiro" selected="true"/>
-            <RadioButton fx:id="cardRadio" text="Cartão"/>
-            <RadioButton fx:id="pixRadio" text="PIX"/>
+    <VBox spacing="18" alignment="TOP_LEFT">
+        <Label fx:id="usernameLabel" text="Usuário: " styleClass="user-label" alignment="CENTER"/>
+        <Label text="Pagamento" styleClass="section-title" alignment="CENTER"/>
+        
+        <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Método de Pagamento:"/>
+            <HBox spacing="10">
+                <RadioButton fx:id="cashRadio" text="Dinheiro" selected="true"/>
+                <RadioButton fx:id="cardRadio" text="Cartão"/>
+                <RadioButton fx:id="pixRadio" text="PIX"/>
+            </HBox>
+        </VBox>
+        
+        <VBox fx:id="cashPaymentSection" spacing="10" alignment="CENTER_LEFT">
+            <Label text="Valor Recebido:"/>
+            <TextField fx:id="cashAmountField" promptText="Digite o valor recebido"/>
+            <Label fx:id="changeLabel" styleClass="total-label"/>
+        </VBox>
+        
+        <VBox fx:id="cardPaymentSection" spacing="10" visible="false" managed="false" alignment="CENTER_LEFT">
+            <Label text="Número do Cartão:"/>
+            <TextField fx:id="cardNumberField" promptText="Número do cartão (16 dígitos)"/>
+            <HBox spacing="10">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="Validade:"/>
+                    <TextField fx:id="expiryField" promptText="MM/AA"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="CVV:"/>
+                    <TextField fx:id="cvvField" promptText="CVV"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="pixPaymentSection"
+              spacing="1"
+              visible="false"
+              managed="false"
+              alignment="CENTER"
+              style="-fx-background-color: transparent;">
+
+            <Label text="Escaneie o QR Code: " />
+
+            <ImageView fitWidth="200" fitHeight="200" preserveRatio="false">
+                <image>
+                    <Image url="/images/img_7.png"/>
+                </image>
+            </ImageView>
+
+            <StackPane styleClass="qr-code-box" alignment="CENTER">
+                <ImageView fx:id="pixQrCode" fitWidth="100" fitHeight="100" preserveRatio="true"/>
+                <Label text="789213876286@6273627sdfhjaCANTINA-URI"
+                       style="-fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold;"
+                       StackPane.alignment="CENTER"/>
+            </StackPane>
+
+            <Button text="Copiar Código PIX" onAction="#handleCopyPixCode">
+                <tooltip>
+                    <Tooltip text="Copia o código PIX para a área de transferência"/>
+                </tooltip>
+            </Button>
+
+        </VBox>
+
+        
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Label text="Total a Pagar:"/>
+            <Label fx:id="totalLabel" styleClass="total-label"/>
+        </HBox>
+        
+        <HBox spacing="16" alignment="CENTER_RIGHT" styleClass="payment-buttons">
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Cancelar" onAction="#handleCancel" styleClass="secondary-button">
+                <tooltip>
+                    <Tooltip text="Voltar ao carrinho"/>
+                </tooltip>
+            </Button>
+            <Button text="Confirmar Pagamento" onAction="#handleConfirmPayment" styleClass="primary-button">
+                <tooltip>
+                    <Tooltip text="Finalizar e pagar o pedido"/>
+                </tooltip>
+            </Button>
         </HBox>
     </VBox>
     
-    <VBox fx:id="cashPaymentSection" spacing="10" alignment="CENTER_LEFT">
-        <Label text="Valor Recebido:"/>
-        <TextField fx:id="cashAmountField" promptText="Digite o valor recebido"/>
-        <Label fx:id="changeLabel" styleClass="total-label"/>
-    </VBox>
-    
-    <VBox fx:id="cardPaymentSection" spacing="10" visible="false" alignment="CENTER_LEFT">
-        <Label text="Número do Cartão:"/>
-        <TextField fx:id="cardNumberField" promptText="Número do cartão (16 dígitos)"/>
-        <HBox spacing="10">
-            <VBox HBox.hgrow="ALWAYS">
-                <Label text="Validade:"/>
-                <TextField fx:id="expiryField" promptText="MM/AA"/>
-            </VBox>
-            <VBox HBox.hgrow="ALWAYS">
-                <Label text="CVV:"/>
-                <TextField fx:id="cvvField" promptText="CVV"/>
-            </VBox>
-        </HBox>
-    </VBox>
-    
-    <VBox fx:id="pixPaymentSection" spacing="10" visible="false" alignment="CENTER">
-        <Label text="Escaneie o QR Code:"/>
-        <StackPane styleClass="qr-code-box">
-            <ImageView fx:id="pixQrCode" fitWidth="200" fitHeight="200"/>
-        </StackPane>
-        <Button text="Copiar Código PIX" onAction="#handleCopyPixCode">
-            <tooltip>
-                <Tooltip text="Copia o código PIX para a área de transferência"/>
-            </tooltip>
-        </Button>
-    </VBox>
-    
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Label text="Total a Pagar:"/>
-        <Label fx:id="totalLabel" styleClass="total-label"/>
-    </HBox>
-    
-    <HBox spacing="16" alignment="CENTER_RIGHT">
-        <Button text="Cancelar" onAction="#handleCancel" styleClass="secondary-button">
-            <tooltip>
-                <Tooltip text="Voltar ao carrinho"/>
-            </tooltip>
-        </Button>
-        <Button text="Confirmar Pagamento" onAction="#handleConfirmPayment" styleClass="primary-button">
-            <tooltip>
-                <Tooltip text="Finalizar e pagar o pedido"/>
-            </tooltip>
-        </Button>
-    </HBox>
-    
-</VBox> 
+</ScrollPane> 

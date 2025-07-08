@@ -1,7 +1,10 @@
 package com.cantinasa.cantinasa.controller;
 
 import com.cantinasa.cantinasa.model.Pagamento;
+import com.cantinasa.cantinasa.model.dto.PagamentoProcessarRequest;
 import com.cantinasa.cantinasa.service.PagamentoService;
+import com.cantinasa.cantinasa.exceptions.PagamentoExistenteException;
+import com.cantinasa.cantinasa.exceptions.PedidoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +16,16 @@ public class PagamentoController {
     @Autowired
     private PagamentoService pagamentoService;
 
-
     @PostMapping("/processar")
-    public ResponseEntity<Pagamento> processarPagamento(@RequestBody Pagamento pagamento) {
+    public ResponseEntity<?> processarPagamento(@RequestBody PagamentoProcessarRequest request) {
         try {
-            return ResponseEntity.ok(pagamentoService.processarPagamento(pagamento));
+            return ResponseEntity.ok(pagamentoService.processarPagamentoFromRequest(request));
+        } catch (PagamentoExistenteException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        } catch (PedidoNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 

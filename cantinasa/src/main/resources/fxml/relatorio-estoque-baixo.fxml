@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.RelatorioEstoqueBaixoController">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-background-color: #fff; -fx-padding: 18 32 18 32;">
+            <Label text="Relatório de Estoque Baixo" styleClass="admin-title" alignment="CENTER_LEFT" wrapText="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Fechar" onAction="#handleClose" styleClass="secondary-button"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="16" style="-fx-padding: 24;">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Limite mínimo:"/>
+                <TextField fx:id="limiteField" promptText="Ex: 40" maxWidth="80"/>
+                <Button text="Buscar" onAction="#handleSearch" styleClass="primary-button"/>
+<!--                <Button text="Exportar" onAction="#handleExport" styleClass="secondary-button"/>-->
+            </HBox>
+            <TableView fx:id="estoqueTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="nomeColumn" text="Produto"/>
+                    <TableColumn fx:id="descricaoColumn" text="Descrição"/>
+                    <TableColumn fx:id="precoColumn" text="Preço"/>
+                    <TableColumn fx:id="quantidadeColumn" text="Quantidade"/>
+                    <TableColumn fx:id="estoqueMinimoColumn" text="Estoque Mínimo"/>
+                    <TableColumn fx:id="validadeColumn" text="Validade"/>
+                    <TableColumn fx:id="categoriaColumn" text="Categoria"/>
+                </columns>
+                <placeholder>
+                    <Label text="Nenhum produto com estoque baixo."/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane> 

@@ -12,16 +12,13 @@
 <StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cantinasa.cantinasa.UI.controllers.AdminLoginController">
-    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+    <ImageView fitWidth="729" fitHeight="546" preserveRatio="false">
         <image>
             <Image url="/images/admin-page.png"/>
         </image>
     </ImageView>
-    <VBox alignment="CENTER" spacing="10">
-        <Button text="Voltar" styleClass="back-button" onAction="#handleBack" maxWidth="120"/>
-    </VBox>
     <VBox spacing="16" maxWidth="400" styleClass="login-container" alignment="CENTER">
-        <Label text="Login Administrativo" styleClass="section-title" alignment="CENTER"/>
+        <Label text="" styleClass="section-title" alignment="CENTER"/>
         <TextField fx:id="usernameField" promptText="Usuário"/>
         <PasswordField fx:id="passwordField" promptText="Senha"/>
         <Button text="Entrar" onAction="#handleLogin" maxWidth="Infinity" styleClass="primary-button">
@@ -29,6 +26,7 @@
                 <Tooltip text="Entrar no painel administrativo"/>
             </tooltip>
         </Button>
+        <Button text="Voltar" styleClass="back-button" onAction="#handleBack" maxWidth="120"/>
         <Label fx:id="errorLabel" styleClass="error-message" visible="false" alignment="CENTER"/>
     </VBox>
 </StackPane> 

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.RelatorioDetalhadoController">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-background-color: #fff; -fx-padding: 18 32 18 32;">
+            <Label text="Relatórios Detalhados" styleClass="admin-title" alignment="CENTER_LEFT" wrapText="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Fechar" onAction="#handleClose" styleClass="secondary-button"/>
+        </HBox>
+    </top>
+    <center>
+        <TabPane fx:id="reportTabPane" VBox.vgrow="ALWAYS" styleClass="admin-tabs">
+            <Tab text="Vendas por Período" closable="false">
+                <VBox spacing="16" style="-fx-padding: 24;">
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="Data Inicial:"/>
+                        <DatePicker fx:id="salesStartDatePicker"/>
+                        <Label text="Data Final:"/>
+                        <DatePicker fx:id="salesEndDatePicker"/>
+                        <Button text="Buscar" onAction="#handleSalesReport" styleClass="primary-button"/>
+<!--                        <Button text="Exportar" onAction="#handleExportSales" styleClass="secondary-button"/>-->
+                    </HBox>
+                    <Label fx:id="salesSummaryLabel" text="" styleClass="admin-section-title"/>
+                    <TableView fx:id="salesTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="productColumn" text="Produto"/>
+                            <TableColumn fx:id="quantitySoldColumn" text="Quantidade Vendida"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Nenhum dado de venda encontrado."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+            <Tab text="Estoque Baixo" closable="false">
+                <VBox spacing="16" style="-fx-padding: 24;">
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="Limite mínimo:"/>
+                        <TextField fx:id="estoqueBaixoLimiteField" promptText="Ex: 40" maxWidth="80"/>
+                        <Button text="Buscar" onAction="#handleEstoqueBaixoReport" styleClass="primary-button"/>
+<!--                        <Button text="Exportar" onAction="#handleExportEstoqueBaixo" styleClass="secondary-button"/>-->
+                    </HBox>
+                    <TableView fx:id="estoqueBaixoTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="estoqueBaixoNomeColumn" text="Produto"/>
+                            <TableColumn fx:id="estoqueBaixoDescricaoColumn" text="Descrição"/>
+                            <TableColumn fx:id="estoqueBaixoPrecoColumn" text="Preço"/>
+                            <TableColumn fx:id="estoqueBaixoQtdColumn" text="Quantidade"/>
+                            <TableColumn fx:id="estoqueBaixoMinColumn" text="Estoque Mínimo"/>
+                            <TableColumn fx:id="estoqueBaixoValidadeColumn" text="Validade"/>
+                            <TableColumn fx:id="estoqueBaixoCategoriaColumn" text="Categoria"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Nenhum produto com estoque baixo."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+            <Tab text="Próximos do Vencimento" closable="false">
+                <VBox spacing="16" style="-fx-padding: 24;">
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="Dias para vencer:"/>
+                        <TextField fx:id="validadeDiasField" promptText="Ex: 5" maxWidth="80"/>
+                        <Button text="Buscar" onAction="#handleValidadeReport" styleClass="primary-button"/>
+<!--                        <Button text="Exportar" onAction="#handleExportValidade" styleClass="secondary-button"/>-->
+                    </HBox>
+                    <TableView fx:id="validadeTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="validadeNomeColumn" text="Produto"/>
+                            <TableColumn fx:id="validadeDataColumn" text="Validade"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Nenhum produto próximo do vencimento."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+            <Tab text="Horários de Pico" closable="false">
+                <VBox spacing="16" style="-fx-padding: 24;">
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="Data:"/>
+                        <DatePicker fx:id="horarioPicoDatePicker"/>
+                        <Button text="Buscar" onAction="#handleHorarioPicoReport" styleClass="primary-button"/>
+<!--                        <Button text="Exportar" onAction="#handleExportHorarioPico" styleClass="secondary-button"/>-->
+                    </HBox>
+                    <TableView fx:id="horarioPicoTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="horarioPicoHoraColumn" text="Hora"/>
+                            <TableColumn fx:id="horarioPicoTotalColumn" text="Total Vendido"/>
+                        </columns>
+                        <placeholder>
+                            <Label text="Nenhum dado de pico encontrado."/>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane> 

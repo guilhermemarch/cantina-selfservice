@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.cantinasa.cantinasa.UI.controllers.RelatorioHorarioPicoController">
+    <top>
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-background-color: #fff; -fx-padding: 18 32 18 32;">
+            <Label text="Relatório de Horários de Pico" styleClass="admin-title" alignment="CENTER_LEFT" wrapText="true"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Fechar" onAction="#handleClose" styleClass="secondary-button"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="16" style="-fx-padding: 24;">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Data:"/>
+                <DatePicker fx:id="datePicker"/>
+                <Button text="Buscar" onAction="#handleSearch" styleClass="primary-button"/>
+<!--                <Button text="Exportar" onAction="#handleExport" styleClass="secondary-button"/>-->
+            </HBox>
+            <TableView fx:id="horarioTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="horaColumn" text="Hora"/>
+                    <TableColumn fx:id="totalColumn" text="Total Vendido"/>
+                </columns>
+                <placeholder>
+                    <Label text="Nenhum dado de pico encontrado."/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane> 

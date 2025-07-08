@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
+import com.cantinasa.cantinasa.UI.config.UIConfig;
 
 public class JavaFXApplication extends Application {
 
@@ -16,16 +17,20 @@ public class JavaFXApplication extends Application {
         loader.setControllerFactory(context::getBean);
         
         Parent root = loader.load();
-        Scene scene = new Scene(root, 1024, 768);
+        int width = UIConfig.getDefaultWindowWidth();
+        int height = UIConfig.getDefaultWindowHeight();
+        Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(getClass().getResource("/styles/main.css").toExternalForm());
-        
-        primaryStage.setTitle("CantinaSA - Sistema de Autoatendimento");
+        scene.getStylesheets().add(getClass().getResource("/css/receipt.css").toExternalForm());
+
+
+        primaryStage.setTitle("Cantina da Uri - Sistema de Autoatendimento");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.setMinWidth(1024);
-        primaryStage.setMinHeight(768);
-        primaryStage.setMaxWidth(1024);
-        primaryStage.setMaxHeight(768);
+        primaryStage.setMinWidth(width);
+        primaryStage.setMinHeight(height);
+        primaryStage.setMaxWidth(width);
+        primaryStage.setMaxHeight(height);
         primaryStage.show();
     }
 
