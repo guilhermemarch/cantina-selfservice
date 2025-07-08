@@ -169,7 +169,7 @@ public class PagamentoService {
         pagamento.setTroco(request.getTroco());
         
         if (Pagamento.MetodoPagamento.PIX.equals(pagamento.getMetodo())) {
-            pagamento.setStatus(Pagamento.Status.PENDENTE);
+            pagamento.setStatus(Pagamento.Status.APROVADO);
         } else {
             pagamento.setStatus(Pagamento.Status.APROVADO);
         }

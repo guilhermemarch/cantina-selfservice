@@ -19,10 +19,9 @@
         
         <VBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Método de Pagamento:"/>
-            <HBox spacing="10">
-                <RadioButton fx:id="cashRadio" text="Dinheiro" selected="true"/>
-                <RadioButton fx:id="cardRadio" text="Cartão"/>
-                <RadioButton fx:id="pixRadio" text="PIX"/>
+            <HBox spacing="20" alignment="CENTER">
+                <ToggleButton fx:id="cashRadio" text="Dinheiro" selected="true" styleClass="payment-toggle" minWidth="140" minHeight="60"/>
+                <ToggleButton fx:id="pixRadio" text="PIX" styleClass="payment-toggle" minWidth="140" minHeight="60"/>
             </HBox>
         </VBox>
         
@@ -32,25 +31,9 @@
             <Label fx:id="changeLabel" styleClass="total-label"/>
         </VBox>
         
-        <VBox fx:id="cardPaymentSection" spacing="10" visible="false" managed="false" alignment="CENTER_LEFT">
-            <Label text="Número do Cartão:"/>
-            <TextField fx:id="cardNumberField" promptText="Número do cartão (16 dígitos)"/>
-            <HBox spacing="10">
-                <VBox HBox.hgrow="ALWAYS">
-                    <Label text="Validade:"/>
-                    <TextField fx:id="expiryField" promptText="MM/AA"/>
-                </VBox>
-                <VBox HBox.hgrow="ALWAYS">
-                    <Label text="CVV:"/>
-                    <TextField fx:id="cvvField" promptText="CVV"/>
-                </VBox>
-            </HBox>
-        </VBox>
-
         <VBox fx:id="pixPaymentSection"
               spacing="1"
-              visible="false"
-              managed="false"
+              visible="false" managed="false"
               alignment="CENTER"
               style="-fx-background-color: transparent;">
 

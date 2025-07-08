@@ -14,6 +14,8 @@ import javafx.collections.ObservableList;
 import com.cantinasa.cantinasa.model.Item_pedido;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -30,20 +32,13 @@ public class PaymentController {
     private ApiService apiService;
 
     @FXML
-    private RadioButton cashRadio;
-
+    private ToggleButton cashRadio;
     @FXML
-    private RadioButton cardRadio;
-
-    @FXML
-    private RadioButton pixRadio;
+    private ToggleButton pixRadio;
+    private ToggleGroup paymentToggleGroup = new ToggleGroup();
 
     @FXML
     private VBox cashPaymentSection;
-
-    @FXML
-    private VBox cardPaymentSection;
-
     @FXML
     private VBox pixPaymentSection;
 
@@ -52,15 +47,6 @@ public class PaymentController {
 
     @FXML
     private Label changeLabel;
-
-    @FXML
-    private TextField cardNumberField;
-
-    @FXML
-    private TextField expiryField;
-
-    @FXML
-    private TextField cvvField;
 
     @FXML
     private ImageView pixQrCode;
@@ -97,6 +83,8 @@ public class PaymentController {
 
     @FXML
     public void initialize() {
+        cashRadio.setToggleGroup(paymentToggleGroup);
+        pixRadio.setToggleGroup(paymentToggleGroup);
         setupPaymentMethodListeners();
         setupInputValidation();
 
@@ -116,10 +104,18 @@ public class PaymentController {
     }
 
     private void setupPaymentMethodListeners() {
-        cashRadio.setOnAction(e -> showPaymentSection(cashPaymentSection));
-        cardRadio.setOnAction(e -> showPaymentSection(cardPaymentSection));
-        pixRadio.setOnAction(e -> showPaymentSection(pixPaymentSection));
-
+        paymentToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            if (newToggle == cashRadio) {
+                showPaymentSection(cashPaymentSection);
+            } else if (newToggle == pixRadio) {
+                showPaymentSection(pixPaymentSection);
+            }
+        });
+        if (cashRadio.isSelected()) {
+            showPaymentSection(cashPaymentSection);
+        } else if (pixRadio.isSelected()) {
+            showPaymentSection(pixPaymentSection);
+        }
         cashAmountField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
                 try {
@@ -136,30 +132,11 @@ public class PaymentController {
     }
 
     private void setupInputValidation() {
-        cardNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                cardNumberField.setText(oldValue);
-            }
-        });
-
-        expiryField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,2}/\\d{0,2}")) {
-                expiryField.setText(oldValue);
-            }
-        });
-
-        cvvField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*") || newValue.length() > 3) {
-                cvvField.setText(oldValue);
-            }
-        });
     }
 
     private void showPaymentSection(VBox section) {
         cashPaymentSection.setVisible(false);
         cashPaymentSection.setManaged(false);
-        cardPaymentSection.setVisible(false);
-        cardPaymentSection.setManaged(false);
         pixPaymentSection.setVisible(false);
         pixPaymentSection.setManaged(false);
         section.setVisible(true);
@@ -192,8 +169,6 @@ public class PaymentController {
     private void handleConfirmPayment() {
         if (cashRadio.isSelected()) {
             handleCashPayment();
-        } else if (cardRadio.isSelected()) {
-            handleCardPayment();
         } else if (pixRadio.isSelected()) {
             handlePixPayment();
         }
@@ -210,22 +185,6 @@ public class PaymentController {
         } catch (NumberFormatException e) {
             showAlert("Valor inválido", "Por favor, insira um valor válido.");
         }
-    }
-
-    private void handleCardPayment() {
-        if (cardNumberField.getText().length() != 16) {
-            showAlert("Cartão inválido", "O número do cartão deve ter 16 dígitos.");
-            return;
-        }
-        if (!expiryField.getText().matches("\\d{2}/\\d{2}")) {
-            showAlert("Data inválida", "A data de validade deve estar no formato MM/AA.");
-            return;
-        }
-        if (cvvField.getText().length() != 3) {
-            showAlert("CVV inválido", "O CVV deve ter 3 dígitos.");
-            return;
-        }
-        processPayment(Pagamento.MetodoPagamento.CARTAO);
     }
 
     private void handlePixPayment() {
@@ -276,7 +235,6 @@ public class PaymentController {
             }
 
             showAlert("Pagamento realizado", "O pagamento foi processado com sucesso!");
-            // Carregar recibo com dados reais
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/receipt.fxml"));
             Parent receiptView = loader.load();
             ReceiptController receiptController = loader.getController();

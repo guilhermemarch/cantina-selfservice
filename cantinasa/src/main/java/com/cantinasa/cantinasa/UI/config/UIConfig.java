@@ -37,7 +37,7 @@ public class UIConfig {
     
     public static final String[] PAYMENT_METHODS = {
         "DINHEIRO",
-        "CARTAO",
+      //  "CARTAO",
         "PIX"
     };
     
