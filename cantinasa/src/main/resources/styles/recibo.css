@@ -20,7 +20,7 @@
 }
 
 .primary-button {
-    -fx-background-color: #2ecc71;
+    -fx-background-color: #fb0000;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8px 16px;

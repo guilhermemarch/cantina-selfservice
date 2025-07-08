@@ -1,21 +1,19 @@
 .root {
     -fx-font-family: "Inter", "Segoe UI", Arial, sans-serif;
-    -fx-text-fill: #222831;      /* neutral‑900 */
-    -fx-background-color: transparent !important; /* hero via .root-bg */
+    -fx-text-fill: #222831;
+    -fx-background-color: transparent !important;
 }
 
-/* ========== HERO BACKGROUND (LOGIN) ========== */
 .root-bg {
-    -fx-background-image: url("/assets/bg-cantina.jpg"); /* hero photo */
+    -fx-background-image: url("/assets/bg-cantina.jpg");
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
-.overlay { /* Rectangle overlay in FXML */
+.overlay {
     -fx-fill: linear-gradient(from 0% 0% to 100% 100%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 100%);
 }
 
-/* ========== HEADER (in‑app) ========== */
 .header {
     -fx-background-color: rgba(0,0,0,0.18) !important;
     -fx-padding: 6 24;
@@ -30,12 +28,11 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 2, 0, 0, 1);
 }
 .logo {
-    -fx-fit-height: 42px; /* set in FXML */
+    -fx-fit-height: 42px;
     -fx-preserve-ratio: true;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.20), 4, 0, 0, 1);
 }
 
-/* ========== WELCOME CARD (LOGIN) ========== */
 .welcome-card {
     -fx-background-color: rgba(255,255,255,0.82);
     -fx-background-radius: 16px;
@@ -46,9 +43,28 @@
     -fx-alignment: center;
 }
 .welcome-title {
-    -fx-font-size: 36px;
-    -fx-font-weight: 800;
-    -fx-text-fill: #222831;
+    -fx-font-size: 54px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 6, 0, 0, 2);
+}
+.welcome-subtitle {
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 4, 0, 0, 1);
+}
+.welcome-text {
+    -fx-font-size: 22px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 2, 0, 0, 1);
+}
+.welcome-text-secondary {
+    -fx-font-size: 18px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 2, 0, 0, 1);
 }
 .section-subtitle {
     -fx-font-size: 16px;
@@ -56,8 +72,14 @@
     -fx-text-alignment: center;
     -fx-max-width: 280px;
 }
+.section-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-max-width: 280px;
+}
 
-/* ========== BUTTONS (unified) ========== */
 .button,
 .primary-button,
 .secondary-button,
@@ -72,7 +94,6 @@
     -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0);
 }
 
-/* — Primary solid — */
 .primary-button,
 .button,
 .welcome-button {
@@ -91,13 +112,12 @@
     -fx-scale-x: 0.97; -fx-scale-y: 0.97;
 }
 
-/* — Outline secondary — */
 .secondary-button,
 .admin-button {
     -fx-background-color: transparent;
-    -fx-border-color: #1976d2;
+    -fx-border-color: #ffffff;
     -fx-border-width: 2;
-    -fx-text-fill: #1976d2;
+    -fx-text-fill: #fb0000;
 }
 .secondary-button:hover,
 .admin-button:hover {
@@ -108,21 +128,22 @@
     -fx-scale-x: 0.97; -fx-scale-y: 0.97;
 }
 
-/* — Muted back button — */
 .back-button {
     -fx-background-color: #90a4ae;
     -fx-text-fill: white;
 }
 .back-button:hover { -fx-background-color: #78909c; }
 
-/* ========== CONTENT AREA PANELS ========== */
 .content-area {
     -fx-background-color: #ffffff;
     -fx-background-radius: 8px;
-    -fx-padding: 24;
+    -fx-padding: 15;
+    -fx-min-height: 500px;
+    -fx-pref-height: 500px;
+    -fx-max-width: 800px;
+    -fx-pref-width: 800px;
 }
 
-/* ========== TEXTFIELD ========== */
 .text-field {
     -fx-background-color: #ffffff;
     -fx-border-color: #d0d5da;
@@ -135,7 +156,6 @@
     -fx-effect: dropshadow(gaussian, rgba(25,118,210,0.18), 6, 0, 0, 1);
 }
 
-/* ========== TABLEVIEW ========== */
 .table-view {
     -fx-background-color: #ffffff;
     -fx-border-color: #d0d5da;
@@ -153,25 +173,12 @@
     -fx-text-fill: white;
 }
 
-/* ========== PRODUCT CARD ========== */
-.product-card {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #e0e3e8;
-    -fx-border-radius: 8px;
-    -fx-padding: 16;
-    -fx-spacing: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 1);
-}
-.product-card:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 2);
-}
 
-/* ========== LABEL & STATUS ======= */
+
 .total-label      { -fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #333; }
 .error-message    { -fx-text-fill: #e53935; -fx-font-weight: 700; }
-.success-message  { -fx-text-fill: #43a047; -fx-font-weight: 700; }
+.success-message  { -fx-text-fill: #fb0000; -fx-font-weight: 700; }
 
-/* ========== SCROLLPANE ========== */
 .scroll-pane { -fx-background-color: transparent; }
 .scroll-pane > .viewport { -fx-background-color: transparent; }
 .scroll-pane > .scroll-bar:vertical {
@@ -184,7 +191,6 @@
     -fx-background-color: #9aa0a6;
 }
 
-/* ========== TABPANE ========== */
 .tab-pane { -fx-background-color: transparent; }
 .tab-pane .tab-header-area .tab-header-background { -fx-background-color: #eef1f5; }
 .tab-pane .tab { -fx-background-color: #d0d5da; -fx-padding: 8 16; }
@@ -195,7 +201,6 @@
 .tab-pane .tab .tab-label { -fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #555555; }
 .tab-pane .tab:selected .tab-label { -fx-text-fill: #1976d2; }
 
-/* ========== ALERT DIALOG ========== */
 .alert {
     -fx-background-color: #ffffff;
     -fx-background-radius: 10px;
@@ -220,8 +225,26 @@
 }
 .alert .button-bar .button:hover { -fx-background-color: #1155b6; }
 
-/* ========== DECORATIVE FOOD ICONS (optional ImageView) ========== */
 .food-icon {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.16), 6, 0, 0, 2);
     -fx-smooth: true;
+}
+
+.payment-buttons {
+    -fx-padding: 20 0;
+    -fx-spacing: 16;
+}
+
+.payment-buttons .button {
+    -fx-min-width: 120px;
+    -fx-min-height: 40px;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+}
+
+.payment-screen {
+    -fx-alignment: top-center;
+    -fx-padding: 1;
+    -fx-spacing: 5;
+    -fx-background-color: transparent;
 }
