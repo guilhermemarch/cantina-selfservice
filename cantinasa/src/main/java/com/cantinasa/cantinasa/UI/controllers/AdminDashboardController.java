@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.cantinasa.cantinasa.model.Usuario;
 import javafx.scene.control.TableRow;
+import com.cantinasa.cantinasa.UI.config.UIConfig;
 
 @Controller
 public class AdminDashboardController {
@@ -318,8 +319,8 @@ public class AdminDashboardController {
             Stage stage = new Stage();
             stage.setTitle("Relatório de Vendas");
             stage.setScene(new Scene(root));
-            stage.setWidth(600);
-            stage.setHeight(780);
+            stage.setWidth(UIConfig.getPopupWidth());
+            stage.setHeight(UIConfig.getPopupHeight());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -335,6 +336,8 @@ public class AdminDashboardController {
             Stage stage = new Stage();
             stage.setTitle("Relatório de Estoque Baixo");
             stage.setScene(new Scene(root));
+            stage.setWidth(UIConfig.getPopupWidth());
+            stage.setHeight(UIConfig.getPopupHeight());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -350,6 +353,8 @@ public class AdminDashboardController {
             Stage stage = new Stage();
             stage.setTitle("Relatório de Produtos Próximos do Vencimento");
             stage.setScene(new Scene(root));
+            stage.setWidth(UIConfig.getPopupWidth());
+            stage.setHeight(UIConfig.getPopupHeight());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -365,6 +370,8 @@ public class AdminDashboardController {
             Stage stage = new Stage();
             stage.setTitle("Relatório de Horários de Pico");
             stage.setScene(new Scene(root));
+            stage.setWidth(UIConfig.getPopupWidth());
+            stage.setHeight(UIConfig.getPopupHeight());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
