@@ -5,11 +5,6 @@
 
 .content-area {
     -fx-background-color: #FFA500;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
 }
 
 .product-card {
@@ -34,7 +29,7 @@
 }
 
 .product-card .button {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #fb0000;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 5 10;
@@ -42,7 +37,7 @@
 }
 
 .product-card .button:hover {
-    -fx-background-color: #45a049;
+    -fx-background-color: #fb0000;
 }
 
 .products-scroll-pane {
@@ -77,12 +72,12 @@
 }
 
 .text-field:focused, .combo-box:focused, .password-field:focused {
-    -fx-border-color: #2196F3;
+    -fx-border-color: #fb0000;
     -fx-effect: dropshadow(three-pass-box, rgba(33,150,243,0.08), 4, 0, 0, 0);
 }
 
 .primary-button {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #fb0000;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -93,11 +88,11 @@
 }
 
 .primary-button:hover {
-    -fx-background-color: #45a049;
+    -fx-background-color: #fb0000;
 }
 
 .primary-button:pressed {
-    -fx-background-color: #388E3C;
+    -fx-background-color: #fb0000;
 }
 
 .quantity-button {
@@ -135,7 +130,7 @@
 .total-label {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2196F3;
+    -fx-text-fill: #fb0000;
 }
 
 .table-view {
@@ -169,11 +164,11 @@
 }
 
 .radio-button .radio {
-    -fx-border-color: #2196F3;
+    -fx-border-color: #fb0000;
 }
 
 .radio-button:selected .radio .dot {
-    -fx-background-color: #2196F3;
+    -fx-background-color: #fb0000;
 }
 
 .tab-pane .tab-header-area .tab-header-background {
@@ -188,7 +183,7 @@
 
 .tab-pane .tab:selected {
     -fx-background-color: white;
-    -fx-border-color: #2196F3;
+    -fx-border-color: #fb0000;
 }
 
 .tab-pane .tab .tab-label {
@@ -217,7 +212,7 @@
 }
 
 .alert .header-panel {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #fb0000;
 }
 
 .alert .header-panel .label {
@@ -231,7 +226,7 @@
 }
 
 .alert .button-bar .button {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #fb0000;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8 15;
@@ -239,7 +234,7 @@
 }
 
 .alert .button-bar .button:hover {
-    -fx-background-color: #45a049;
+    -fx-background-color: #fb0000;
 }
 
 .secondary-button {
@@ -264,7 +259,7 @@
 }
 
 .qr-code-box {
-    -fx-background-color: #fafafa;
+    -fx-background-color: white;
     -fx-border-color: #e0e0e0;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
