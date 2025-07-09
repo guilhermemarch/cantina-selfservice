@@ -68,8 +68,8 @@ Este documento descreve a análise, projeto e instruções de implementação de
 | **ProductService** | Regras de negócio do produto e estoque. |
 | **OrderService** | Orquestra criação do pedido. |
 | **PaymentStrategy** | Implementa `Pagamento` para dinheiro, cartão, PIX. |
-| **ReportService** | Gera relatórios via JasperReports. |
-| **AuthController** | Endpoints de login/logout admin (JWT). |
+| **ReportService** | Gera relatórios |
+| **AuthController** | Endpoints de login/logout admin. |
 
 ---
 
