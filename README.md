@@ -71,7 +71,6 @@ Abaixo, algumas telas do sistema em funcionamento:
 ### 3.1 Padrões Utilizados
 - **MVC** na UI JavaFX (`Controller`, `Service`, `Repository`).
 - **DTO + Mapper** para comunicação REST interna.
-- **Factory Method** para instanciar meios de pagamento.
 - **Observer** para alertas de estoque.
 
 ---
@@ -107,8 +106,8 @@ Abaixo, algumas telas do sistema em funcionamento:
 | **ProductService** | Regras de negócio do produto e estoque. |
 | **OrderService** | Orquestra criação do pedido. |
 | **PaymentStrategy** | Implementa `Pagamento` para dinheiro, cartão, PIX. |
-| **ReportService** | Gera relatórios via JasperReports. |
-| **AuthController** | Endpoints de login/logout admin (JWT). |
+| **ReportService** | Gera relatórios |
+| **AuthController** | Endpoints de login/logout admin. |
 
 ---
 
@@ -126,16 +125,11 @@ Abaixo, algumas telas do sistema em funcionamento:
    java -jar desktop/target/cantinasa-ui.jar
    ```
 
-4. **Gerar Javadoc**
-   ```bash
-   mvn javadoc:javadoc
-   open backend/target/site/apidocs/index.html
-   ```
-/src
- ├── model/           → Classes de domínio (Produto, Pedido, Estoque, etc.)
- ├── service/         → Regras de negócio (TotemService, PagamentoService, etc.)
- ├── admin/           → Área administrativa (gestão de estoque, relatórios)
- ├── ui/              → Interface gráfica (JFrames, painéis, botões, etc.)
- └── util/            → Utilitários (formatação, datas, geração de relatórios)
+## 📄 Documentação JavaDoc
+
+A documentação JavaDoc foi **escrita manualmente diretamente no código-fonte**, com comentários explicativos em cada classe, método e endpoint relevante.
+
+Essa abordagem visa facilitar a compreensão da estrutura e funcionamento da API para outros desenvolvedores e colaboradores do projeto.
+
 ---
 
