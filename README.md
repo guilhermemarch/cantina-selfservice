@@ -25,6 +25,44 @@ Este documento descreve a análise, projeto e instruções de implementação de
 - **Relatórios**: produtos mais vendidos, horários de pico, transações, itens vencidos/próximos do vencimento.
 - **Tratamento de Exceções**: falta de produto, ausência de troco, cancelamento de compra.
 
+### 2.2 Exemplos Visuais do Sistema
+
+Abaixo, algumas telas do sistema em funcionamento:
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/tela-inicial.png" alt="Tela Inicial" width="500"/>
+  <br/><em>Tela Inicial</em>
+</p>
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/produtos-section.png" alt="Seção de Produtos" width="500"/>
+  <br/><em>Seção de Produtos</em>
+</p>
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/img_1.png" alt="Exemplo 1" width="500"/>
+  <br/><em>Exemplo 1</em>
+</p>
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/img_2.png" alt="Exemplo 2" width="500"/>
+  <br/><em>Exemplo 2</em>
+</p>
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/img_3.png" alt="Exemplo 3" width="500"/>
+  <br/><em>Exemplo 3</em>
+</p>
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/img_4.png" alt="Exemplo 4" width="500"/>
+  <br/><em>Exemplo 4</em>
+</p>
+
+<p align="center">
+  <img src="cantinasa/src/main/resources/images/examples/img.png" alt="Exemplo Geral" width="500"/>
+  <br/><em>Exemplo Geral</em>
+</p>
 
 ## 3. Arquitetura de Software
 
