@@ -1,135 +1,120 @@
-# Sistema de Autoatendimento para Cantina Universitária – Documentação
+# Cantina Self-Service
 
-**Curso:** Ciência da Computação (URI – Santo Ângelo)  
-**Disciplina:** Linguagem de Programação III  
-**Professor:** Prof. Denilson Rodrigues da Silva
+Projeto academico de um sistema de autoatendimento para cantina universitaria, desenvolvido com **Spring Boot** e **JavaFX**. A aplicacao concentra fluxo de pedido, pagamento, administracao de produtos e relatorios operacionais em uma unica base.
 
-**Autores:** `Thiago Ruiz e Guilherme Marschall`  
-**Versão:** 1.0 – 14/06/2025  
-**Repositório:** `https://github.com/guilhermemarch/cantinasa`
+**Curso:** Ciencia da Computacao (URI Santo Angelo)<br/>
+**Disciplina:** Linguagem de Programacao III<br/>
+**Professor:** Prof. Denilson Rodrigues da Silva<br/>
+**Autores:** Thiago Ruiz e Guilherme Marschall
 
----
+## Visao geral
 
-## 1. Visão Geral
+O sistema foi pensado como um terminal digital de autoatendimento para uso em cantinas universitarias. A camada de negocio e persistencia roda com Spring Boot, enquanto a experiencia do usuario foi implementada em JavaFX.
 
-Este documento descreve a análise, projeto e instruções de implementação de um *terminal digital de autoatendimento* para cantinas universitárias. O sistema foi desenvolvido em **Spring Boot** (camada de negócio e persistência) e **JavaFX** (interface gráfica), seguindo arquitetura MVC e princípios SOLID.
+Principais capacidades do prototipo:
 
----
+- cadastro e consulta de produtos;
+- montagem e confirmacao de pedidos;
+- simulacao de pagamento e calculo de troco;
+- autenticacao administrativa;
+- relatorios de vendas, estoque baixo, validade e horario de pico.
 
-## 2. Escopo do Protótipo
+## Stack e estrutura
 
-### 2.1 Funcionalidades Principais
-- **Autoatendimento**: seleção de produtos, montagem do pedido, confirmação e pagamento.
-- **Pagamentos**: simulação de valores em moeda/cédula com cálculo de troco.
-- **Administração**: autenticação de funcionários, abastecimento de estoque, retirada de valores.
-- **Relatórios**: produtos mais vendidos, horários de pico, transações, itens vencidos/próximos do vencimento.
-- **Tratamento de Exceções**: falta de produto, ausência de troco, cancelamento de compra.
+- **Java 17**
+- **Spring Boot 3.2.3**
+- **JavaFX 21**
+- **Maven Wrapper**
+- **H2** como banco local em arquivo
 
-### 2.2 Exemplos Visuais do Sistema
+Estrutura principal do repositorio:
 
-Abaixo, algumas telas do sistema em funcionamento:
+- `cantinasa/`: codigo-fonte da aplicacao, recursos JavaFX e configuracoes Maven.
+- `docs/diagramas/`: diagramas de arquitetura, classes, banco e caso de uso.
+- `README.md`: visao geral do projeto e instrucoes de execucao.
+
+## Telas do sistema
 
 <p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/tela-inicial.png" alt="Tela Inicial" width="500"/>
-  <br/><em>Tela Inicial</em>
+  <img src="cantinasa/src/main/resources/images/examples/tela-inicial.png" alt="Tela inicial do sistema" width="500"/>
+  <br/><em>Tela inicial</em>
 </p>
 
 <p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/produtos-section.png" alt="Seção de Produtos" width="500"/>
-  <br/><em>Seção de Produtos</em>
+  <img src="cantinasa/src/main/resources/images/examples/produtos-section.png" alt="Secao de produtos" width="500"/>
+  <br/><em>Secao de produtos</em>
 </p>
 
 <p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/img_1.png" alt="Exemplo 1" width="500"/>
-  <br/><em>Exemplo 1</em>
+  <img src="cantinasa/src/main/resources/images/examples/img_1.png" alt="Tela adicional do fluxo de compra" width="500"/>
+  <br/><em>Fluxo de compra</em>
 </p>
 
 <p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/img_2.png" alt="Exemplo 2" width="500"/>
-  <br/><em>Exemplo 2</em>
+  <img src="cantinasa/src/main/resources/images/examples/img_2.png" alt="Tela adicional do fluxo de compra" width="500"/>
+  <br/><em>Fluxo complementar</em>
 </p>
 
-<p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/img_3.png" alt="Exemplo 3" width="500"/>
-  <br/><em>Exemplo 3</em>
-</p>
+## Diagramas
 
-<p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/img_4.png" alt="Exemplo 4" width="500"/>
-  <br/><em>Exemplo 4</em>
-</p>
+### Arquitetura
 
-<p align="center">
-  <img src="cantinasa/src/main/resources/images/examples/img.png" alt="Exemplo Geral" width="500"/>
-  <br/><em>Exemplo Geral</em>
-</p>
+![Diagrama de arquitetura](docs/diagramas/diag1.png)
 
-## 3. Arquitetura de Software
+Padroes observados no projeto:
 
-![Diagrama de Arquitetura](diag1.png)
+- MVC na camada JavaFX;
+- DTOs e mappers para transporte de dados;
+- separacao entre controller, service, repository e model.
 
-### 3.1 Padrões Utilizados
-- **MVC** na UI JavaFX (`Controller`, `Service`, `Repository`).
-- **DTO + Mapper** para comunicação REST interna.
-- **Observer** para alertas de estoque.
+### Modelagem de dominio
 
----
+![Diagrama de classes](docs/diagramas/diag2.png)
 
-## 4. Modelagem de Domínio
+### Esquema de banco
 
-### 4.1 Diagrama de Classes (resumido)
+![Diagrama do banco de dados](docs/diagramas/diagsql.png)
 
-![Diagrama de Classes](diag2.png)
+### Caso de uso principal
 
-### 4.2 Esquema de Banco (PostgreSQL)
-
-![Diagrama do Esquema de Banco](diagsql.png)
-
----
-
-## 5. Casos de Uso
-
-### UC‑01 – Realizar Pedido
-| Atores | Fluxo Principal |
+| Atores | Fluxo principal |
 |--------|-----------------|
-| **Cliente** | 1. Seleciona categoria e produto.<br>2. Ajusta quantidades.<br>3. Confirma pedido.<br>4. Realiza pagamento.<br>5. Recebe comprovante. |
+| Cliente | 1. Seleciona categoria e produto.<br>2. Ajusta quantidades.<br>3. Confirma pedido.<br>4. Realiza pagamento.<br>5. Recebe comprovante. |
 
-![Diagrama de Caso de Uso - Realizar Pedido](diag3.png)
+![Diagrama de caso de uso](docs/diagramas/diag3.png)
 
+## Como executar
 
----
+### Requisitos
 
-## 6. Componentes Principais
+- Java 17
+- Permissao para abrir interface grafica JavaFX
 
-| Componente | Descrição |
-|------------|-----------|
-| **ProductService** | Regras de negócio do produto e estoque. |
-| **OrderService** | Orquestra criação do pedido. |
-| **PaymentStrategy** | Implementa `Pagamento` para dinheiro, cartão, PIX. |
-| **ReportService** | Gera relatórios |
-| **AuthController** | Endpoints de login/logout admin. |
+### Build
 
----
+```bash
+cd cantinasa
+./mvnw clean package
+```
 
+No Windows, use `mvnw.cmd`.
 
-2. **Clone e Build**
-   ```bash
-   git clone https://github.com/guilhermemarch/cantinasa.git
-   cd cantinasa
-   mvn clean package -DskipTests
-   ```
+### Execucao local
 
-3. **Execução**
-   ```bash
-   java -jar backend/target/cantinasa-api.jar
-   java -jar desktop/target/cantinasa-ui.jar
-   ```
+```bash
+cd cantinasa
+./mvnw spring-boot:run
+```
 
-## 📄 Documentação JavaDoc
+A aplicacao sobe o contexto Spring e abre a interface JavaFX. O banco H2 local e criado em `cantinasa/data/`.
 
-A documentação JavaDoc foi **escrita manualmente diretamente no código-fonte**, com comentários explicativos em cada classe, método e endpoint relevante.
+### Dados iniciais
 
-Essa abordagem visa facilitar a compreensão da estrutura e funcionamento da API para outros desenvolvedores e colaboradores do projeto.
+O projeto carrega dados de exemplo a partir de `src/main/resources/data.sql`, incluindo usuarios, produtos, pedidos e pagamentos. Uma credencial administrativa de teste presente nesse arquivo e:
 
----
+- usuario: `admin@admin`
+- senha: `admin`
 
+## Documentacao do codigo
+
+As classes principais ja possuem JavaDoc no codigo-fonte. Isso ajuda na navegacao da base e complementa esta documentacao de alto nivel.
