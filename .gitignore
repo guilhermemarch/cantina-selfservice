@@ -1,0 +1,22 @@
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Java and Maven
+target/
+**/target/
+out/
+*.class
+
+# Runtime files
+*.log
+hs_err_pid*
+
+# Local database artifacts
+*.mv.db
+*.trace.db
+
+# Common generated folders
+bin/
+tmp/
