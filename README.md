@@ -110,7 +110,7 @@ A aplicacao sobe o contexto Spring e abre a interface JavaFX. O banco H2 local e
 
 ### Dados iniciais
 
-O projeto carrega dados de exemplo a partir de `src/main/resources/data.sql`, incluindo usuarios, produtos, pedidos e pagamentos. Uma credencial administrativa de teste presente nesse arquivo e:
+O projeto carrega dados de exemplo a partir de `cantinasa/initializr.sql`, incluindo usuarios, produtos, pedidos e pagamentos. Uma credencial administrativa de teste presente nesse arquivo e:
 
 - usuario: `admin@admin`
 - senha: `admin`
